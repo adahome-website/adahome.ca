@@ -135,7 +135,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <li style="display: flex; gap: 14px; align-items: baseline"><span style="font-family: {{t.display}}; font-size: 28px; line-height: 1">02</span><span>I hand-pick homes that match, including ones you might miss online</span></li>
 <li style="display: flex; gap: 14px; align-items: baseline"><span style="font-family: {{t.display}}; font-size: 28px; line-height: 1">03</span><span>I email you your options and we talk next steps</span></li>
 </ol>
-<p style="margin: auto 0 0; padding-top: 16px; border-top: 1px solid #3A3833; font-size: 13px; color: #8E877B">No obligation. No automated spam, just me.</p>
+
 </div>
 <div style="display: grid"><div aria-hidden="{{forms.home_brief.formHid}}" style="grid-area: 1 / 1; min-width: 0; visibility: {{forms.home_brief.formVis}}"><form data-form="home-brief" data-send-to="ada.celik@century21.ca" style="flex: 1.6 1 520px; min-width: 0; padding: 40px; display: flex; flex-direction: column; gap: 28px">
 <div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Budget</div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{budgetChips}}" as="c" hint-placeholder-count="5"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer">{{c.label}}</button></sc-for></div></div>

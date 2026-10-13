@@ -34,6 +34,7 @@ PAGES.length = 0;
 for (const l of LANGS) for (const [n, u] of BASE_PAGES) PAGES.push(l === 'en' ? [n, u] : [n + '-' + l, '/' + l + u]);
 const langOf = (name) => (/-(fr|tr)$/.exec(name) || [, 'en'])[1];
 const baseOf = (name) => name.replace(/-(fr|tr)$/, '');
+const PAGES_BY_PATH = Object.fromEntries(BASE_PAGES.map(([n, u]) => [u, n]));
 const urlFor = (base, l) => (l === 'en' ? '' : '/' + l) + Object.fromEntries(BASE_PAGES)[base];
 const HTML_LANG = { en: 'en-CA', fr: 'fr-CA', tr: 'tr' }, OG_LOCALE = { en: 'en_CA', fr: 'fr_CA', tr: 'tr_TR' };
 const LINKS = Object.fromEntries(PAGES);
@@ -182,6 +183,32 @@ const NAMES_BY_LANG = {
   tr: { '/': 'Ana sayfa', '/buying-selling/': 'Alım ve satım', '/buying-selling/selling/': 'Satış', '/listings/': 'İlanlar', '/about/': 'Hakkımda', '/newcomers/': 'Yeni gelenler', '/market-stats/': 'Piyasa istatistikleri', '/calculators/': 'Hesaplayıcılar', '/privacy/': 'Gizlilik' }
 };
 const EN_HTML = {};
+const EVENTS = {}; // open houses by listing path (language-free), filled from the Listings page
+function calgaryOffset(d) {
+  const y = +d.slice(0, 4), md = d.slice(5, 10);
+  const nthSunday = (m, n) => { const first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay(); return 1 + ((7 - first) % 7) + 7 * (n - 1); };
+  const pad = (n) => String(n).padStart(2, '0');
+  const start = '03-' + pad(nthSunday(3, 2)), end = '11-' + pad(nthSunday(11, 1));
+  return md >= start && md < end ? '-06:00' : '-07:00';
+}
+function openHouses(html) {
+  const out = [];
+  for (const m of html.matchAll(/<a href="(\/(?:fr\/|tr\/)?listings\/[^"#]+\/)" class="lc" data-start="(\d{4}-\d\d-\d\dT\d\d:\d\d)" data-end="(\d{4}-\d\d-\d\dT\d\d:\d\d)"([\s\S]*?)<\/a>/g)) {
+    const card = m[4];
+    const address = txt((/<div style="font-weight: 600; font-size: 17px">([\s\S]*?)<\/div>/.exec(card) || [, ''])[1]);
+    const area = txt((/<div style="font-size: 14px; color: #5A564E">([\s\S]*?)<\/div>/.exec(card) || [, ''])[1]).split('·')[0].trim();
+    const img = (/url\('?(\/assets\/img\/[^')]+)'?\)/.exec(card) || [])[1];
+    out.push({ img: img ? SITE + img : null, href: m[1], path: m[1].replace(/^\/(fr|tr)\//, '/'), start: m[2], end: m[3], address, area });
+  }
+  return out;
+}
+function eventLd(e, lang, img) {
+  const name = { en: 'Open house: ', fr: 'Visite libre : ', tr: 'Açık ev: ' }[lang] + e.address;
+  return { '@type': 'Event', name, url: SITE + e.href, startDate: e.start + ':00' + calgaryOffset(e.start), endDate: e.end + ':00' + calgaryOffset(e.end),
+    eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', isAccessibleForFree: true, inLanguage: HTML_LANG[lang],
+    location: { '@type': 'Place', name: e.address + (e.area ? ', ' + e.area : '') + ', Calgary', address: { '@type': 'PostalAddress', streetAddress: e.address, addressLocality: 'Calgary', addressRegion: 'AB', addressCountry: 'CA' } },
+    image: img ? [img] : undefined, organizer: { '@id': AGENT_ID }, performer: { '@id': AGENT_ID } };
+}
 const NAMES = { '/': 'Home', '/buying-selling/': 'Buying & selling', '/buying-selling/selling/': 'Selling', '/listings/': 'Listings', '/about/': 'About Ada', '/newcomers/': 'Newcomers', '/market-stats/': 'Market stats', '/calculators/': 'Calculators', '/privacy/': 'Privacy policy' };
 const AGENT_ID = SITE + '/#agent';
 const txt = (h) => decode(h.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
@@ -233,9 +260,15 @@ function schema(fullName, url, p, html, title, desc) {
     if (mls) listing.identifier = { '@type': 'PropertyValue', propertyID: 'MLS®', value: mls };
     if (realtorUrl) listing.sameAs = realtorUrl;
     graph.push(listing);
+    const ev = EVENTS[path];
+    if (ev && ev.start.slice(0, 10) >= new Date().toISOString().slice(0, 10)) graph.push(eventLd(Object.assign({}, ev, { href: url }), lang, listing.image[0]));
     page.mainEntity = { '@id': SITE + url + '#listing' };
   }
   if (path === '/listings/') {
+    const evs = openHouses(html);
+    for (const e of evs) { const lp = urlFor(PAGES_BY_PATH[e.path], 'en'); EVENTS[e.path] = e; }
+    const today = new Date().toISOString().slice(0, 10);
+    for (const e of evs) if (e.start.slice(0, 10) >= today) graph.push(eventLd(Object.assign({}, e, { href: pre + e.path }), lang, e.img));
     const urls = [...new Set([...html.matchAll(/href="(\/(?:fr\/|tr\/)?listings\/[^"#]+\/)"/g)].map((m) => m[1]))];
     if (urls.length) graph.push({ '@type': 'ItemList', name: 'Featured Calgary listings', itemListElement: urls.map((u, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + u })) });
   }

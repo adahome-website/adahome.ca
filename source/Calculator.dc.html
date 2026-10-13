@@ -33,7 +33,7 @@
 <div style="flex: 1 1 460px; min-width: 0; background: #FBF8F2; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 26px">
 <div>
 <label for="hprice" style="display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Home price</label>
-<div style="display: flex; align-items: center; gap: 12px; max-width: 420px; width: 318px">
+<div style="display: flex; align-items: center; gap: 12px; width: 318px; max-width: 100%">
 <button type="button" aria-label="Decrease" onClick="{{priceDown}}" style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 50%; border: 1px solid #0D0D0D; background: transparent; font-size: 22px; cursor: pointer">−</button>
 <span style="flex: 1; min-width: 0; display: flex; align-items: baseline; justify-content: center; gap: 2px; font-family: 'Cormorant Garamond', serif; font-size: 44px; line-height: 1">$<input id="hprice" type="text" inputmode="numeric" value="{{priceVal}}" onChange="{{setPrice}}" onBlur="{{priceBlur}}" style="width: 100%; min-width: 0; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; color: inherit; font: inherit; text-align: center; padding: 0"></span>
 <button type="button" aria-label="Increase" onClick="{{priceUp}}" style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 50%; border: 1px solid #0D0D0D; background: transparent; font-size: 22px; cursor: pointer">+</button>
@@ -75,7 +75,7 @@
 <div style="flex: 1 1 460px; min-width: 0; background: #FBF8F2; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 24px">
 <div>
 <label for="iprice" style="display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Purchase price</label>
-<div style="display: flex; align-items: center; gap: 12px; max-width: 420px; width: 318px">
+<div style="display: flex; align-items: center; gap: 12px; width: 318px; max-width: 100%">
 <button type="button" aria-label="Decrease" onClick="{{iPriceDown}}" style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 50%; border: 1px solid #0D0D0D; background: transparent; font-size: 22px; cursor: pointer">−</button>
 <span style="flex: 1; min-width: 0; display: flex; align-items: baseline; justify-content: center; gap: 2px; font-family: 'Cormorant Garamond', serif; font-size: 44px; line-height: 1">$<input id="iprice" type="text" inputmode="numeric" value="{{iPriceVal}}" onChange="{{setIPrice}}" onBlur="{{iPriceBlur}}" style="width: 100%; min-width: 0; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; color: inherit; font: inherit; text-align: center; padding: 0"></span>
 <button type="button" aria-label="Increase" onClick="{{iPriceUp}}" style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 50%; border: 1px solid #0D0D0D; background: transparent; font-size: 22px; cursor: pointer">+</button>
@@ -83,7 +83,7 @@
 </div>
 <div>
 <label for="irent" style="display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Monthly rent</label>
-<div style="display: flex; align-items: center; gap: 12px; max-width: 420px; width: 318px">
+<div style="display: flex; align-items: center; gap: 12px; width: 318px; max-width: 100%">
 <button type="button" aria-label="Decrease" onClick="{{iRentDown}}" style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 50%; border: 1px solid #0D0D0D; background: transparent; font-size: 22px; cursor: pointer">−</button>
 <span style="flex: 1; min-width: 0; display: flex; align-items: baseline; justify-content: center; gap: 2px; font-family: 'Cormorant Garamond', serif; font-size: 44px; line-height: 1">$<input id="irent" type="text" inputmode="numeric" value="{{iRentVal}}" onChange="{{setIRent}}" onBlur="{{iRentBlur}}" style="width: 100%; min-width: 0; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; color: inherit; font: inherit; text-align: center; padding: 0"><span style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #5A564E">/mo</span></span>
 <button type="button" aria-label="Increase" onClick="{{iRentUp}}" style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 50%; border: 1px solid #0D0D0D; background: transparent; font-size: 22px; cursor: pointer">+</button>
@@ -97,7 +97,7 @@
 </sc-for>
 <div><p style="margin: 0 0 10px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600">Monthly costs</p>
 <div style="background: #FBF8F2; border: 1px solid #D9D1C3; border-radius: 20px; padding: 8px 18px">
-<sc-for list="{{costs}}" as="c" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #E9E2D5"><label for="{{c.id}}" style="font-size: 15px"><span style="display: block; font-weight: 600">{{c.label}}</span><span style="display: block; font-size: 12px; color: #5A564E">{{c.hint}}</span></label><span style="display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #0D0D0D; font-weight: 600; flex: 0 0 auto">$<input id="{{c.id}}" type="text" inputmode="decimal" value="{{c.val}}" onChange="{{c.set}}" onBlur="{{c.blur}}" style="width: 64px; height: 26px; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: inherit; font: inherit; text-align: center; padding: 0"></span></div></sc-for>
+<sc-for list="{{costs}}" as="c" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #E9E2D5"><label for="{{c.id}}" style="font-size: 15px"><span style="display: block; font-weight: 600">{{c.label}}</span><span style="display: block; font-size: 12px; color: #5A564E">{{c.hint}}</span></label><span style="display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #0D0D0D; font-weight: 600; flex: 0 0 auto">{{c.pre}}<input id="{{c.id}}" type="text" inputmode="decimal" value="{{c.val}}" onChange="{{c.set}}" onBlur="{{c.blur}}" style="width: 64px; height: 26px; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: inherit; font: inherit; text-align: center; padding: 0">{{c.suf}}</span></div></sc-for>
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0 6px; font-weight: 700"><span>Total monthly costs</span><span>{{costTotal}}</span></div>
 </div>
 <p style="margin: 8px 0 0; font-size: 13px; color: #5A564E">Starting amounts are examples. Swap in real figures from the listing, condo documents and your insurance quote.</p></div>
@@ -148,7 +148,7 @@ class Component extends DCLogic {
     ["consultation"].forEach((k) => { forms[k] = { show: !sent[k], done: !!sent[k], formVis: sent[k] ? 'hidden' : 'visible', doneVis: sent[k] ? 'visible' : 'hidden', formHid: sent[k] ? 'true' : 'false', doneHid: sent[k] ? 'false' : 'true', submit: (e) => { if (e && e.preventDefault) e.preventDefault(); const fm = e && e.target && e.target.form; if (fm && fm.reportValidity && !fm.reportValidity()) return; this.setState({ sent: Object.assign({}, sent, { [k]: true }) }); }, reset: () => this.setState({ sent: Object.assign({}, sent, { [k]: false }) }) }; });
     return Object.assign({}, this._vals(), { forms });
   }
-  constructor(p) { super(p); this.state = { price: 550000, rate: 4.5, dp: 'min', iPrice: 412400, iRent: 2300, iRate: 4.5, cTax: 250, cIns: 75, cFees: 250, cMaint: 75, cVac: 50 }; }
+  constructor(p) { super(p); this.state = { price: 550000, rate: 4.5, dp: 'min', iPrice: 412400, iRent: 2300, iRate: 4.5, cTax: 250, cIns: 75, cFees: 250, cMaint: 75, cVac: 5 }; }
   _vals() {
     const s = this.state;
     const dr = s.drafts || {};
@@ -180,7 +180,9 @@ class Component extends DCLogic {
     const iLoan = s.iPrice * 0.8;
     const iPay = pay(iLoan, s.iRate);
     const COSTS = [['cTax', 'Property tax', 'City of Calgary, monthly share'], ['cIns', 'Insurance', 'Landlord policy'], ['cFees', 'Condo fees', 'Set to 0 if not a condo'], ['cMaint', 'Maintenance', 'Repairs and upkeep'], ['cVac', 'Vacancy allowance', 'Months between tenants']];
-    const iCost = COSTS.reduce((t, c) => t + (s[c[0]] || 0), 0);
+    // Vacancy allowance is a percentage of rent; every other cost is a dollar amount.
+    const vacAmt = s.iRent * Math.min(100, Math.max(0, s.cVac || 0)) / 100;
+    const iCost = COSTS.reduce((t, c) => t + (c[0] === 'cVac' ? vacAmt : (s[c[0]] || 0)), 0);
     const flow = s.iRent - iCost - iPay;
     const noi = (s.iRent - iCost) * 12;
     const fPrice = field('price', Math.round(price).toLocaleString('en-CA'), (v) => ({ price: Math.min(10000000, v) }));
@@ -188,7 +190,17 @@ class Component extends DCLogic {
     const fRate = field('rate', [4, 4.5, 5].includes(s.rate) ? '' : String(s.rate), (v) => ({ rate: Math.min(30, v) }));
     const fIPrice = field('iPrice', Math.round(s.iPrice).toLocaleString('en-CA'), (v) => ({ iPrice: v }));
     const fIRent = field('iRent', Math.round(s.iRent).toLocaleString('en-CA'), (v) => ({ iRent: v }));
-    const costs = COSTS.map(([k, label, hint]) => { const f = field(k, Math.round(s[k] || 0).toLocaleString('en-CA'), (v) => ({ [k]: v })); return { id: 'cost-' + k, label, hint, val: f.val, set: f.set, blur: f.blur }; });
+    const costs = COSTS.map(([k, label, hint]) => {
+      if (k === 'cVac') {
+        // Percentage field: accepts a decimal comma or point, kept between 0 and 100.
+        const dr = (s.drafts || {})[k];
+        const shown = (s.cVac || 0).toLocaleString('en-CA', { maximumFractionDigits: 1 });
+        return { id: 'cost-' + k, label, hint: 'Share of rent, about ' + money(vacAmt) + '/mo', pre: '', suf: '%', val: dr !== undefined ? dr : shown,
+          set: (e) => { const raw = String(e.target.value); const v = parseFloat(raw.replace(',', '.').replace(/[^0-9.]/g, '')); this.setState({ drafts: Object.assign({}, this.state.drafts, { [k]: raw }), cVac: isNaN(v) ? 0 : Math.min(100, v) }); },
+          blur: () => { const d = Object.assign({}, this.state.drafts); delete d[k]; this.setState({ drafts: d }); } };
+      }
+      const f = field(k, Math.round(s[k] || 0).toLocaleString('en-CA'), (v) => ({ [k]: v })); return { id: 'cost-' + k, label, hint, pre: '$', suf: '', val: f.val, set: f.set, blur: f.blur };
+    });
     const fIRate = field('iRate', [3.9, 4.5, 5.2].includes(s.iRate) ? '' : String(s.iRate), (v) => ({ iRate: Math.min(30, v) }));
     const pctTxt = (num, den) => (den > 0 ? (num / den * 100).toFixed(1) + '%' : '—');
     const ichip = (key, list, fmt) => list.map((v) => Object.assign({ label: fmt(v), pick: () => this.setState({ [key]: v }) }, pill(s[key] === v)));

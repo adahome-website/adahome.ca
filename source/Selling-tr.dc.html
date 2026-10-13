@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Calgary'de ev satma, adım adım · Ada Celik</title>
+<meta name="description" content="Calgary&#x27;de evinizi satmak adım adım: fiyatlandırma, hazırlık, pazarlama, teklifler ve kapanış; ayrıca satışa hazırlık kontrol listesi.">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F4EFE6}a{color:inherit}input,button{font:inherit}input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}</style>
+</helmet>
+<div style="font-family: 'Montserrat', system-ui, sans-serif; background: #F4EFE6; color: #0D0D0D; width: 100%; line-height: 1.6">
+<dc-import name="SiteHeader" language="tr" page="Selling" hint-size="100%,124px"></dc-import>
+<main id="main" tabindex="-1" style="display: block; outline: none">
+
+<section style="background: #0D0D0D; color: #F4EFE6">
+<div style="max-width: 1240px; margin: 0 auto; padding: 64px 24px 80px">
+<p style="margin: 0 0 14px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #C9BFAE">Alım ve satım · Ev satmak</p>
+<h1 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(48px, 6.4vw, 96px); line-height: 0.98">Evinizi satmak, <em>adım adım.</em></h1>
+<p style="margin: 0 0 32px; max-width: 700px; font-size: 18px; color: #C9BFAE">Tahmine yer yok. İlk görüşmemizden anahtarları teslim ettiğiniz güne kadar benimle satışın tam olarak nasıl ilerlediği burada. Ayrıntılar için bir adıma dokunun.</p>
+<nav aria-label="Yolunuzu seçin" style="display: inline-flex; gap: 6px; background: #1B1A18; border-radius: 999px; padding: 6px"><a href="Steps-tr.dc.html" style="min-height: 48px; display: inline-flex; align-items: center; padding: 0 28px; border-radius: 999px; color: #F4EFE6; font-weight: 600; font-size: 15px; text-decoration: none">Ev alıyorum</a><a href="Selling-tr.dc.html" aria-current="page" style="min-height: 48px; display: inline-flex; align-items: center; padding: 0 28px; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; font-weight: 600; font-size: 15px; text-decoration: none">Ev satıyorum</a></nav>
+</div>
+</section>
+
+<section style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 40px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+<div style="flex: 1 1 280px; min-width: 0; position: sticky; top: 24px">
+<p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">{{sideLabel}}</p>
+<h2 style="margin: 0 0 12px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(36px, 4vw, 52px); line-height: 1.05">{{sideTitle}}</h2>
+<p style="margin: 0 0 20px; color: #5A564E; max-width: 356px">{{sideIntro}}</p>
+
+</div>
+<ol style="flex: 2 1 560px; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="10">
+<li style="background: {{s.bg}}; color: {{s.ink}}; border-radius: 24px; overflow: hidden">
+<button type="button" onClick="{{s.toggle}}" aria-expanded="{{s.open}}" style="width: 100%; display: flex; align-items: center; gap: 20px; padding: 22px 26px; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer">
+<span style="flex: 0 0 auto; font-family: 'Cormorant Garamond', serif; font-size: 40px; line-height: 1; width: 52px">{{s.n}}</span>
+<span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 600; font-size: 18px">{{s.t}}</span><span style="display: block; font-size: 14px; color: {{s.sub}}">{{s.short}}</span></span>
+<sc-if value="{{s.condo}}" hint-placeholder-val="false"><span style="flex: 0 0 auto; padding: 2px 10px; border-radius: 999px; background: {{s.tagBg}}; color: {{s.tagInk}}; font-size: 11px; font-weight: 600; letter-spacing: 0.1em">YALNIZCA DAİRELER</span></sc-if>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; border: 1px solid {{s.sub}}; display: flex; align-items: center; justify-content: center; font-size: 20px">{{s.icon}}</span>
+</button>
+<sc-if value="{{s.open}}" hint-placeholder-val="false">
+<div style="padding: 0 26px 26px 98px; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{s.body}}" as="p" hint-placeholder-count="2"><p style="margin: 0; font-size: 16px">{{p.x}}</p></sc-for>
+<sc-if value="{{s.hasNote}}" hint-placeholder-val="false"><div style="border-radius: 18px; padding: 16px 20px; background: {{s.noteBg}}; color: {{s.noteInk}}; font-size: 15px"><strong style="display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">Önemli</strong>{{s.note}}</div></sc-if>
+</div>
+</sc-if>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<section style="max-width: 1240px; margin: 0 auto; padding: 48px 24px 88px">
+<p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">İlana çıkmadan önce</p>
+<h2 style="margin: 0 0 12px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(36px, 4vw, 56px); line-height: 1.05">Evinizi satışa hazırlamak</h2>
+<p style="margin: 0 0 28px; max-width: 680px; font-size: 17px; color: #5A564E">Küçük ve ucuz değişiklikler fotoğraflarda ve gezmelerde en büyük farkı yaratır. Size oda oda bir plan vereceğim ama işte başlangıç noktası.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px"><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Sadeleştirin ve kişisel eşyaları kaldırın</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Yüzeyleri, dolapları ve aile fotoğraflarını toplayın ki alıcılar kendi hayatlarını orada hayal edebilsin.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Küçük tamirler, büyük etki</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Fotoğraflardan önce damlayan muslukları, sıkışan kapıları, yanmış ampulleri ve çizilmiş boyaları düzeltin.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Derin temizlik</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Pencereler, süpürgelikler, derzler ve beyaz eşyalar. Temiz ev, bakımlı görünür.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Dış görünüm</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Bahçeyi toplayın, girişi süpürün, yeni bir paspas ya da saksı ekleyin.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Işık ve hava</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Perdeleri açın, sönük ampulleri değiştirin ve evin kokusunu nötr tutun.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Gezmelere hazırlık</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Evcil hayvanlar, değerli eşyalar ve kısa sürede evden çıkabilmeniz için hızlı bir toparlama rutini.</p></div></div>
+</section>
+
+<section style="background: #DDD3C2">
+<div style="max-width: 1240px; margin: 0 auto; padding: 88px 24px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; margin-bottom: 32px">
+<div style="flex: 1 1 420px; min-width: 0">
+<p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">Belgeler</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(36px, 4vw, 56px); line-height: 1.05">Erkenden toplanması gereken belgeler.</h2>
+</div>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px">Bunları ilandan önce hazır tutmak, alıcının şart süresinin aksamadan ilerlemesini sağlar ve satışınızı korur.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px"><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Real Property Report (mülk ölçüm raporu)</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Belediye uygunluk onaylı güncel bir RPR; Alberta'da genellikle istenir.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Kredi bilgileri</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Bankanız, kredi numaranız ve kapatma ya da erken ödeme koşulları.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Emlak vergisi ve faturalar</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Alıcıların ne bekleyeceğini bilmesi için son faturalar.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Site yönetimi belgeleri (yalnızca daireler)</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Yönetmelikler, toplantı tutanakları, mali tablolar, yedek fon çalışması ve sigorta.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Garantiler ve izinler</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Çatı, kombi, beyaz eşyalar, tadilatlar ve tüm izinler.</p></div><div style="background: #FBF8F2; border-radius: 20px; padding: 22px 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; line-height: 1.15">Kira sözleşmeleri (kiradaysa)</h3><p style="margin: 0; font-size: 15px; color: #5A564E">Kira şartları, bildirim tarihleri ve depozito bilgileri.</p></div></div>
+<div style="margin-top: 24px; background: #0D0D0D; color: #F4EFE6; border-radius: 24px; padding: 24px 28px; font-size: 16px"><strong>Elinizde ne olduğundan emin değil misiniz?</strong> Bulabildiklerinizi gönderin, size neyin eksik olduğunu ve nasıl alınacağını söyleyeyim.</div>
+</div>
+</section>
+
+<section id="contact" style="background: #0D0D0D; color: #F4EFE6">
+<div style="max-width: 820px; margin: 0 auto; padding: 88px 24px">
+<h2 style="margin: 0 0 8px; text-align: center; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(36px, 4vw, 52px)">Özel bir görüşme ayarlayın.</h2>
+<p style="margin: 0 0 32px; text-align: center; color: #C9BFAE">Her şey bir sohbetle başlar. Baskı yok, zorunluluk yok.</p>
+<div style="display: grid"><div aria-hidden="{{forms.consultation.formHid}}" style="grid-area: 1 / 1; min-width: 0; visibility: {{forms.consultation.formVis}}"><form data-form="consultation" data-send-to="ada.celik@century21.ca" style="max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px 32px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center"><label for="sn" style="font-size: 11px; letter-spacing: 0.24em">AD SOYAD</label><input id="sn" name="Name" type="text" style="height: 48px; border: 0; border-bottom: 1px solid #F4EFE6; background: transparent; color: #F4EFE6; font-size: 17px; text-align: center; width: 100%"></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center"><label for="se" style="font-size: 11px; letter-spacing: 0.24em">E-POSTA VEYA TELEFON</label><input id="se" type="text" inputmode="email" autocomplete="email" required pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}|\+?1?[\s.\-]?\(?[0-9]{3}\)?[\s.\-]?[0-9]{3}[\s.\-]?[0-9]{4}" title="Geçerli bir e-posta (ad@ornek.com) veya 10 haneli bir telefon numarası girin" name="Email or phone" style="height: 48px; border: 0; border-bottom: 1px solid #F4EFE6; background: transparent; color: #F4EFE6; font-size: 17px; text-align: center; width: 100%"></div>
+<label style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 13px; color: #C9BFAE; text-align: center"><input type="checkbox" name="Consent" value="Yes" style="width: 18px; height: 18px">Ada Celik'in benimle e-posta veya telefon yoluyla iletişime geçmesine onay veriyorum. Onayımı istediğim zaman geri çekebilirim.</label>
+<button type="submit" onClick="{{forms.consultation.submit}}" style="grid-column: 1 / -1; justify-self: center; min-height: 54px; padding: 0 44px; border: 0; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; font-weight: 600; cursor: pointer">Özel görüşme talep et →</button>
+</form></div><div aria-hidden="{{forms.consultation.doneHid}}" style="grid-area: 1 / 1; min-width: 0; align-self: center; visibility: {{forms.consultation.doneVis}}"><div role="status" style="max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px"><span aria-hidden="true" style="width: 56px; height: 56px; border: 1px solid currentColor; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px">&#10003;</span><p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 38px); line-height: 1.15">Teşekkürler. Talebiniz alındı.</p><p style="margin: 0; max-width: 460px; font-size: 16px; opacity: 0.85">Size uygun bir zaman bulmak için yakında iletişime geçeceğim.</p><button type="button" onClick="{{forms.consultation.reset}}" style="margin-top: 4px; min-height: 44px; padding: 0 18px; border: 0; background: transparent; color: inherit; font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer">Yeni bir form gönder</button></div></div></div>
+</div>
+</section>
+
+</main>
+<dc-import name="SiteFooter" language="tr" hint-size="100%,440px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Form success states. On the live site each form also posts every field to ada.celik@century21.ca (see data-form / data-send-to on each form).
+    const sent = (this.state && this.state.sent) || {};
+    const forms = {};
+    ["consultation"].forEach((k) => { forms[k] = { show: !sent[k], done: !!sent[k], formVis: sent[k] ? 'hidden' : 'visible', doneVis: sent[k] ? 'visible' : 'hidden', formHid: sent[k] ? 'true' : 'false', doneHid: sent[k] ? 'false' : 'true', submit: (e) => { if (e && e.preventDefault) e.preventDefault(); const fm = e && e.target && e.target.form; if (fm && fm.reportValidity && !fm.reportValidity()) return; this.setState({ sent: Object.assign({}, sent, { [k]: true }) }); }, reset: () => this.setState({ sent: Object.assign({}, sent, { [k]: false }) }) }; });
+    return Object.assign({}, this._vals(), { forms });
+  }
+  constructor(p) { super(p); this.state = { side: 'sell', open: 0 }; }
+  _vals() {
+    const BUY = [
+      { t: 'Özel görüşme', short: 'Hedefleri, bütçeyi ve zaman planını konuşuruz', body: ['Ne istediğiniz, nerede ve ne zaman üzerine rahat bir sohbet. Sürecin nasıl işlediğini anlatır, tüm sorularınızı yanıtlarım.'] },
+      { t: 'Alıcı temsil sözleşmesini imzalayın', short: 'Çalışmamızı resmileştirmek', body: ['Sizi temsil etmeden önce, Alberta\'da zorunlu olduğu gibi yazılı bir alıcı temsil sözleşmesi imzalarız. Sizin için tam olarak ne yaptığımı, sözleşmenin ne kadar sürdüğünü ve nasıl ücret aldığımı bilmeniz için Real Estate Council of Alberta (RECA) Tüketici İlişkileri Rehberi\'ni sizinle birlikte gözden geçiririm.'] },
+      { t: 'Kesin ön onay alın', short: 'Gerçek fiyat aralığınızı bilin', body: ['Sizi güvenilir mortgage uzmanlarıyla tanıştırırım. Ev gezmeye başlamadan gerçek bütçenizi bilmemiz için sadece ön değerlendirme değil, kesin ön onay gerekir.'], note: 'Daire aidatları bankanın onaylayacağı tutarı düşürür; daire düşünüyorsanız, aidatları hesaba katan kesin bir ön onay şarttır.' },
+      { t: 'Arama ve gezmeler', short: 'Seçilmiş evler ve bir puan kartı', body: ['Olmazsa olmazlarınıza uyan ilanları gönderir ve gezmeleri ayarlarım. Her ev için basit bir puan kartı alırsınız; böylece sonrasında evleri net biçimde karşılaştırabilirsiniz.'] },
+      { t: 'Teklifi yazın ve pazarlık edin', short: 'Yerel verilere dayanan strateji', body: ['Son satışların karşılaştırmalı analizini hazırlarım, ardından fiyatı, şartları, kaporayı ve tarihleri birlikte belirleriz. Anlaşmaya varana ya da vazgeçmeye karar verene kadar sizin adınıza pazarlık ederim.'] },
+      { t: 'Kaporanızı yatırın', short: 'Genellikle 10.000 $ civarında', body: ['Teklifiniz kabul edildiğinde kaporanızı yatırırsınız. Kapora emanet hesapta tutulur ve kapanışta peşinatınıza sayılır.'] },
+      { t: 'Şart süresi', short: 'Finansman, ekspertiz ve daha fazlası', body: ['Şartlarınızı yerine getirmek için belirli bir gün sayınız vardır. Bankanız finansmanı kesinleştirir; biz de ekspertizi ve diğer incelemeleri tamamlarız.'], note: 'Bu süre boyunca iyi niyetle hareket etmemiz gerekir: finansmanı takip etmek, ekspertizi ayarlamak ve zamanında yanıt vermek. Dürüst bir çaba göstermemek kaporanızı riske atabilir.' },
+      { t: 'Site yönetimi belgelerinin incelenmesi', short: 'Binanın ince ayrıntılarını okumak', body: ['Site yönetimi belgelerini toplarım: yönetmelikler, son yönetim kurulu tutanakları, mali tablolar, yedek fon çalışması ve sigorta bilgileri. Özel aidatları, yaklaşan tamirleri, kiralama veya evcil hayvan kurallarını ve yedek fonun durumunu inceleriz.', 'Bu şartı kaldırmadan önce belgeleri profesyonel bir uzmana da inceletebilirsiniz.'], condo: true },
+      { t: 'Şartları kaldırın', short: 'Alımınız kesinleşir', body: ['Her şey yolundaysa şart kaldırma belgesini imzalarsınız ve satış kesinleşir. Bir sorun çıkarsa son tarihten önce seçeneklerinizi birlikte konuşuruz.'] },
+      { t: 'Evrak işini avukatınız devralır', short: 'Tapu, kredi ve ödemeler', body: ['Gayrimenkul avukatınız sözleşmeyi inceler, ipoteğinizi ve tapu devrini tescil eder ve ödemeleri yönetir. Teslimden birkaç gün önce son belgeleri imzalamak için onunla görüşürsünüz.', 'İhtiyacı olan her şeyi ona gönderir ve kapanışa kadar iletişimde kalırım.'] },
+      { t: 'Son kontrol ve teslim günü', short: 'Anahtarlar elinizde', body: ['Evin kararlaştırılan durumda olup olmadığını kontrol ederiz. Avukatınız ödemeyi ve tapuyu onayladığında anahtarlar sizindir. Nakliyeyi ayarlamanıza da memnuniyetle yardım ederim.'] }
+    ];
+    const SELL = [
+      { t: 'Özel görüşme', short: 'Hedefleriniz ve zaman planınız', body: ['Neden sattığınızı, zamanlamanızı ve neyi başarmak istediğinizi konuşuruz. İlandan teslime kadar sürecin nasıl işlediğini anlatırım.'] },
+      { t: 'Satıcı temsil sözleşmesini imzalayın', short: 'Çalışmamızı resmileştirmek', body: ['Alberta\'da zorunlu olduğu gibi yazılı bir satıcı temsil (ilan) sözleşmesi imzalarız. RECA Tüketici İlişkileri Rehberi\'ni, ilan süresini, dahil olan hizmetleri ve nasıl ücret aldığımı sizinle birlikte gözden geçiririm.'] },
+      { t: 'Fiyat stratejisi', short: 'Ayrıntılı bir piyasa analizi', body: ['Evinize göre uyarlanmış, yakın çevredeki son satışlara dayanan bir karşılaştırmalı piyasa analizi hazırlar ve fiyat önerisinin nasıl oluşturulduğunu size tam olarak gösteririm.'] },
+      { t: 'Real Property Report ve belgeler', short: 'Evrakı erkenden hazırlamak', body: ['Alberta\'da satıcılar genellikle belediye uygunluk onaylı güncel bir Real Property Report sunar. Hiçbir şey gecikmesin diye sizinkinin güncel olup olmadığını erkenden kontrol ederiz.'] },
+      { t: 'Site yönetimi belgelerini toplayın', short: 'Alıcıların incelemesine hazır', body: ['Alıcıların isteyeceği site yönetimi belgelerini (yönetmelikler, tutanaklar, mali tablolar ve yedek fon çalışması gibi) sipariş ederim; böylece satışınız şart süresinde aksamaz.'], condo: true },
+      { t: 'Hazırlık, dekorasyon ve medya', short: 'Evinizi parlatın', body: ['Oda oda bir dekorasyon planı; isterseniz bir ev hazırlama (staging) firması da ayarlanır. Ardından profesyonel fotoğraflar, drone çekimleri ve kendi bünyemde kurgulanan video.'] },
+      { t: 'Kiracı beklentileri', short: 'Eviniz kiradaysa', body: ['Kiracılarınızla gezme saatleri, bildirimler ve hakları konusunda net beklentiler belirler, olası endişelerde arabuluculuk yaparım; böylece satış herkes için sorunsuz ilerler.'] },
+      { t: 'Lansman, açık evler ve geri bildirim', short: 'Haftalık etkinlik ve güncellemeler', body: ['İlanınız tasarlanmış bir kampanyayla yayına girer. Her hafta açık ev düzenler, her birinin ardından alıcı geri bildirimlerini paylaşır ve size haftalık bir güncelleme gönderirim.'] },
+      { t: 'Haftalık strateji görüşmeleri', short: 'Piyasanın tepkisine göre ayar yapmak', body: ['Her hafta gezmeleri, geri bildirimleri ve piyasa hareketlerini gözden geçirir, bir şeyin değişmesi gerekip gerekmediğine birlikte karar veririz.'] },
+      { t: 'Teklifler ve pazarlık', short: 'Size en iyi şartları almak', body: ['Fiyat, kapora, şartlar ve tarihler dahil her teklifi sizinle birlikte inceler ve sizin adınıza pazarlık ederim.'] },
+      { t: 'Şart süresi', short: 'Alıcı şartlarını yerine getirir', body: ['Alıcının finansman ve ekspertiz gibi şartlarını yerine getirmek için belirli bir gün sayısı vardır. Genellikle 10.000 $ civarındaki kaporası emanet hesapta tutulur ve peşinatına sayılır.'], note: 'Bu süre boyunca iki taraf da iyi niyetle hareket etmelidir. Sizi bilgilendirir ve işlem yolunda gitsin diye tüm taleplere hızla yanıt veririm.' },
+      { t: 'Avukatınız ve kapanış', short: 'Tapu devri ve kredinin kapatılması', body: ['Avukatınız devir belgelerini hazırlar, kredinizi kapatır ve satış bedelini teslim alır. Teslimden kısa süre önce onunla imzalarsınız.'] },
+      { t: 'Taşınma ve teslim günü', short: 'Anahtarları teslim etmek', body: ['İsterseniz nakliyecileri sizin için ayarlayabilirim. Teslim günü anahtarlar alıcılara geçer ve siz hayatınızın yeni bölümüne geçersiniz.'] }
+    ];
+    const side = this.state.side;
+    const list = side === 'buy' ? BUY : SELL;
+    const open = this.state.open;
+    return {
+      sides: [['buy', "Ev alıyorum"], ['sell', "Ev satıyorum"]].map(([k, l]) => ({ l, on: k === side ? 'true' : 'false', bg: k === side ? '#F4EFE6' : 'transparent', color: k === side ? '#0D0D0D' : '#F4EFE6', pick: () => this.setState({ side: k, open: 0 }) })),
+      sideLabel: side === 'buy' ? 'Alıcılar için' : 'Satıcılar için',
+      sideTitle: side === 'buy' ? 'Anahtarlara giden yolunuz' : 'Satışa giden yolunuz',
+      sideIntro: side === 'buy' ? list.length + ' adımda ilk görüşmeden teslim gününe. Ne olduğunu ve sizden neye ihtiyacım olduğunu görmek için bir adıma dokunun.' : list.length + ' adımda ilk görüşmeden anahtarları teslim etmeye. Ne olduğunu ve sizden neye ihtiyacım olduğunu görmek için bir adıma dokunun.',
+      steps: list.map((s, i) => {
+        const o = i === open;
+        return {
+          n: String(i + 1).padStart(2, '0'), t: s.t, short: s.short,
+          body: s.body.map((x) => ({ x })), note: s.note || '', hasNote: !!s.note, condo: !!s.condo,
+          open: o, icon: o ? '−' : '+',
+          toggle: () => this.setState({ open: o ? -1 : i }),
+          bg: o ? '#0D0D0D' : '#FBF8F2', ink: o ? '#F4EFE6' : '#0D0D0D', sub: o ? '#C9BFAE' : '#5A564E',
+          tagBg: o ? '#F4EFE6' : '#0D0D0D', tagInk: o ? '#0D0D0D' : '#F4EFE6',
+          noteBg: '#DDD3C2', noteInk: '#0D0D0D'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

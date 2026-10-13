@@ -102,6 +102,8 @@ open(os.path.join(OUT, 'llms.txt'), 'w').write('''# Ada Celik, REALTOR®, Calgar
 - [Calculators](https://adahome.ca/calculators/): mortgage payments and rental cash flow
 - [About Ada](https://adahome.ca/about/)
 - [Privacy policy](https://adahome.ca/privacy/)
+
+The site is also available in French (https://adahome.ca/fr/) and Turkish (https://adahome.ca/tr/), with the same pages under those paths.
 ''' + llms_extra())
 open(os.path.join(OUT, 'CNAME'), 'w').write('adahome.ca')
 open(os.path.join(OUT, '.nojekyll'), 'w').write('')

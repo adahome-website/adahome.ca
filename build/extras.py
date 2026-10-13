@@ -1,4 +1,4 @@
-import os, sys, datetime
+import os, re, sys, datetime
 OUT = sys.argv[1]
 SITE = 'https://adahome.ca'
 urls = []
@@ -9,9 +9,34 @@ for root, dirs, files in os.walk(OUT):
 urls.sort(key=lambda u: (u.count('/'), u))
 today = datetime.date.today().isoformat()
 pri = lambda u: '1.0' if u == '/' else ('0.8' if u.count('/') == 2 else '0.6')
-sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+
+# lastmod: keep the previous date unless the page actually changed, so search engines can trust it.
+PREV = os.path.join(os.path.dirname(os.path.abspath(OUT)), 'docs')
+prev_dates = {}
+try:
+    for m in re.finditer(r'<loc>https://adahome\.ca([^<]*)</loc><lastmod>([^<]+)</lastmod>', open(os.path.join(PREV, 'sitemap.xml')).read()):
+        prev_dates[m.group(1)] = m.group(2)
+except OSError:
+    pass
+def page_html(base, u):
+    try: return open(os.path.join(base, u.lstrip('/'), 'index.html')).read()
+    except OSError: return None
+def lastmod(u):
+    old = page_html(PREV, u)
+    if os.path.abspath(PREV) != os.path.abspath(OUT) and old is not None and old == page_html(OUT, u) and u in prev_dates:
+        return prev_dates[u]
+    return today
+
+# listing photos go in the sitemap too (Google Images)
+def images(u):
+    h = page_html(OUT, u) or ''
+    m = re.search(r'"@type":"RealEstateListing".*?"image":\[([^\]]*)\]', h)
+    return re.findall(r'"([^"]+)"', m.group(1)) if m else []
+
+sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
 for u in urls:
-    sm.append('  <url><loc>%s%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>' % (SITE, u, today, pri(u)))
+    imgs = ''.join('<image:image><image:loc>%s</image:loc></image:image>' % i for i in images(u))
+    sm.append('  <url><loc>%s%s</loc><lastmod>%s</lastmod><priority>%s</priority>%s</url>' % (SITE, u, lastmod(u), pri(u), imgs))
 sm.append('</urlset>')
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('\n'.join(sm) + '\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write('''User-agent: *
@@ -28,9 +53,41 @@ User-agent: PerplexityBot
 Allow: /
 User-agent: Google-Extended
 Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://adahome.ca/sitemap.xml
 ''')
+
+import html as _html, json as _json
+def _txt(h): return re.sub(r'\s+', ' ', _html.unescape(re.sub(r'<[^>]+>', ' ', h))).strip()
+def llms_extra():
+    out = []
+    rows = []
+    for u in urls:
+        if not u.startswith('/listings/') or u == '/listings/': continue
+        h = page_html(OUT, u) or ''
+        m = re.search(r'<script type="application/ld\+json">(.*?)</script>', h, re.S)
+        if not m: continue
+        for g in _json.loads(m.group(1)).get('@graph', []):
+            if g.get('@type') == 'RealEstateListing':
+                o = g.get('offers', {}); mls = g.get('identifier', {}).get('value', '')
+                rows.append('- [%s](%s%s): $%s CAD%s' % (g['name'], SITE, u, format(o.get('price', 0), ','), (', MLS® ' + mls) if mls else ''))
+    if rows:
+        out.append('\n## Featured listings (Century 21 Masters)\n' + '\n'.join(rows) + '\n')
+    h = page_html(OUT, '/') or ''
+    qa = re.findall(r'<details[^>]*>\s*<summary[^>]*>(.*?)</summary>(.*?)</details>', h, re.S)
+    if qa:
+        out.append('\n## Common questions\n' + '\n'.join('- **%s** %s' % (_txt(q), _txt(a)) for q, a in qa) + '\n')
+    return ''.join(out)
 open(os.path.join(OUT, 'llms.txt'), 'w').write('''# Ada Celik, REALTOR®, Calgary
 
 > Ada Celik is a Calgary real estate agent (REALTOR®) with Century 21 Masters, an independently owned and operated brokerage at 338 24 Avenue SW, Calgary, AB. She helps buyers, sellers and newcomers across Calgary and the surrounding areas, in English, French and Turkish. Phone (403) 464-1595, ada.celik@century21.ca.
@@ -45,7 +102,7 @@ open(os.path.join(OUT, 'llms.txt'), 'w').write('''# Ada Celik, REALTOR®, Calgar
 - [Calculators](https://adahome.ca/calculators/): mortgage payments and rental cash flow
 - [About Ada](https://adahome.ca/about/)
 - [Privacy policy](https://adahome.ca/privacy/)
-''')
+''' + llms_extra())
 open(os.path.join(OUT, 'CNAME'), 'w').write('adahome.ca')
 open(os.path.join(OUT, '.nojekyll'), 'w').write('')
 open(os.path.join(OUT, '404.html'), 'w').write('''<!doctype html>

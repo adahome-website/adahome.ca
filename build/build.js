@@ -99,6 +99,51 @@ function strip(nodes) { // remove 'tag' from for/if/imp stack markers and keep J
   });
 }
 
+
+// ---------- image sizes (JPEG/PNG headers) ----------
+function imgSize(file) {
+  const b = fs.readFileSync(file);
+  if (b[0] === 0x89 && b[1] === 0x50) return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  let i = 2;
+  while (i < b.length) {
+    if (b[i] !== 0xFF) { i++; continue; }
+    const m = b[i + 1], len = b.readUInt16BE(i + 2);
+    if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5) };
+    i += 2 + len;
+  }
+  return null;
+}
+
+// ---------- tree enhancements (applied to the template, so server HTML and the browser agree) ----------
+// - images: intrinsic width/height (no layout shift), async decoding, lazy loading except the page's first image
+// - a space before <br> so text read by search engines and AI tools doesn't run words together
+function enhance(nodes, ctx) {
+  for (let k = 0; k < nodes.length; k++) {
+    const n = nodes[k];
+    if (n.t === 'text') {
+      const nx = nodes[k + 1];
+      if (nx && nx.t === 'el' && nx.tag === 'br' && /\S$/.test(n.v)) n.v += ' ';
+      continue;
+    }
+    if (n.t === 'el' && n.tag === 'img') {
+      const A = Object.fromEntries(n.attrs);
+      const set = (key, v) => { if (!(key in A)) { n.attrs.push([key, v]); A[key] = v; } };
+      const m = /^\/assets\/img\/([0-9a-f]{32}\.\w+)$/.exec(A.src || '');
+      if (m) {
+        const sz = imgSize(path.join(RAW, m[1]));
+        if (sz) { set('width', String(sz.w)); set('height', String(sz.h)); }
+        if (A.style && !/(^|;)\s*height\s*:/.test(A.style)) n.attrs = n.attrs.map(([a, v]) => a === 'style' ? [a, v.replace(/;?\s*$/, '; height: auto')] : [a, v]);
+      }
+      set('decoding', 'async');
+      if (ctx.first && !ctx.seenFirst) { ctx.seenFirst = true; set('fetchpriority', 'high'); }
+      else set('loading', 'lazy');
+    }
+    if (n.kids) enhance(n.kids, ctx);
+  }
+  return nodes;
+}
+
+const COMPONENT_NAMES = ['SiteHeader', 'SiteFooter'];
 // ---------- read a .dc.html file ----------
 function readDC(name) {
   let s = fs.readFileSync(path.join(SRC, name + '.dc.html'), 'utf8');
@@ -113,10 +158,10 @@ function readDC(name) {
   const helmet = hm ? hm[1].trim() : '';
   const body = xdc.replace(/<helmet>[\s\S]*?<\/helmet>/, '');
   const sm = /<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/.exec(s);
-  return { head, helmet, tree: strip(parse(body)), src: sm[1] };
+  return { head, helmet, tree: enhance(strip(parse(body)), { first: !COMPONENT_NAMES.includes(name) }), src: sm[1] };
 }
 
-const COMPONENTS = ['SiteHeader', 'SiteFooter'];
+const COMPONENTS = COMPONENT_NAMES;
 const comp = Object.fromEntries(COMPONENTS.map((c) => [c, readDC(c)]));
 
 // ---------- write ----------
@@ -125,6 +170,63 @@ const runtime = fs.readFileSync(path.join(__dirname, 'dc.js'), 'utf8');
 write('assets/dc.js', runtime);
 for (const c of COMPONENTS) write('assets/c/' + c + '.js', 'window.DCDEFS=window.DCDEFS||{};DCDEFS[' + JSON.stringify(c) + ']=' + JSON.stringify({ tree: comp[c].tree, src: comp[c].src }) + ';');
 
+
+// ---------- structured data (schema.org JSON-LD) for search engines and AI assistants ----------
+const NAMES = { '/': 'Home', '/buying-selling/': 'Buying & selling', '/buying-selling/selling/': 'Selling', '/listings/': 'Listings', '/about/': 'About Ada', '/newcomers/': 'Newcomers', '/market-stats/': 'Market stats', '/calculators/': 'Calculators', '/privacy/': 'Privacy policy' };
+const AGENT_ID = SITE + '/#agent';
+const txt = (h) => decode(h.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+function schema(name, url, p, html, title, desc) {
+  const graph = [];
+  const srcLd = (/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(p.head) || [])[1];
+  if (url === '/') {
+    const agent = Object.assign(srcLd ? JSON.parse(srcLd) : {}, { '@id': AGENT_ID, image: SITE + ASSET['7a3d8d3da0d485171459ca723502a8d1'], logo: SITE + '/apple-touch-icon.png' });
+    delete agent['@context'];
+    graph.push(agent);
+    graph.push({ '@type': 'WebSite', '@id': SITE + '/#website', url: SITE + '/', name: 'Ada Celik, REALTOR®', inLanguage: 'en-CA', publisher: { '@id': AGENT_ID } });
+    const faqs = [...html.matchAll(/<details[^>]*>\s*<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g)].map((m) => ({ '@type': 'Question', name: txt(m[1]), acceptedAnswer: { '@type': 'Answer', text: txt(m[2]) } }));
+    if (faqs.length) graph.push({ '@type': 'FAQPage', '@id': SITE + '/#faq', mainEntity: faqs });
+  }
+  const page = { '@type': name === 'About' ? 'ProfilePage' : 'WebPage', '@id': SITE + url + '#webpage', url: SITE + url, name: title, description: desc, inLanguage: 'en-CA', isPartOf: { '@id': SITE + '/#website' }, about: { '@id': AGENT_ID } };
+  if (name === 'About') page.mainEntity = { '@id': AGENT_ID };
+  graph.push(page);
+  if (url !== '/') {
+    const parts = url.split('/').filter(Boolean);
+    const items = [{ name: 'Home', item: SITE + '/' }];
+    let acc = '/';
+    for (const part of parts) { acc += part + '/'; items.push({ name: NAMES[acc] || txt((/<h1[^>]*>([\s\S]*?)<\/h1>/.exec(html) || [, ''])[1]), item: SITE + acc }); }
+    graph.push({ '@type': 'BreadcrumbList', itemListElement: items.map((it, i) => Object.assign({ '@type': 'ListItem', position: i + 1 }, it)) });
+  }
+  if (name === 'Listing' || name.startsWith('Listing-')) {
+    const fact = (k) => { const m = new RegExp('>' + k + '</div><div[^>]*>([^<]*)</div>').exec(html); return m ? decode(m[1]).trim() : null; };
+    const address = txt((/<h1[^>]*>([\s\S]*?)<\/h1>/.exec(html) || [, ''])[1]);
+    const area = txt((/<\/h1>\s*<p[^>]*>([\s\S]*?)<\/p>/.exec(html) || [, ''])[1]).split('·')[0].trim();
+    const price = Number((/const price = (\d+)/.exec(p.src) || [])[1]);
+    const ids = JSON.parse((/const IDS = (\[[^\]]*\])/.exec(p.src) || [, '[]'])[1]);
+    const mls = (/mls: 'MLS® (A\d+)'/.exec(p.src) || [])[1];
+    const realtorUrl = (/const realtorUrl = '([^']+)'/.exec(p.src) || [])[1];
+    const about = [...html.matchAll(/About this home<\/h2>([\s\S]*?)<\/div>/g)].map((m) => txt(m[1]))[0];
+    const type = fact('Type') || '';
+    const homeType = /condo|apartment/i.test(type) ? 'Apartment' : (/town/i.test(type) ? 'House' : (/semi/i.test(type) ? 'House' : 'SingleFamilyResidence'));
+    const beds = fact('Bedrooms'), baths = fact('Bathrooms'), sqft = fact('Living area'), built = fact('Built');
+    const home = { '@type': homeType, name: address + ', ' + area + ', Calgary', address: { '@type': 'PostalAddress', streetAddress: address, addressLocality: 'Calgary', addressRegion: 'AB', addressCountry: 'CA' } };
+    if (beds) home.numberOfBedrooms = beds.split('+').reduce((t, x) => t + (parseInt(x, 10) || 0), 0);
+    if (baths) home.numberOfBathroomsTotal = parseFloat(baths);
+    if (sqft) home.floorSize = { '@type': 'QuantitativeValue', value: parseInt(sqft.replace(/[^0-9]/g, ''), 10), unitCode: 'FTK' };
+    if (built) home.yearBuilt = parseInt(built, 10);
+    const listing = { '@type': 'RealEstateListing', '@id': SITE + url + '#listing', url: SITE + url, name: address + ', ' + area + ', Calgary: ' + ({ detached: 'detached home', 'semi-detached': 'semi-detached home', townhouse: 'townhouse', condo: 'condo' }[type.toLowerCase()] || 'home') + ' for sale', description: about || desc, image: ids.slice(0, 6).map((id) => SITE + '/assets/img/' + id + '.jpg'), mainEntity: home,
+      offers: { '@type': 'Offer', price, priceCurrency: 'CAD', availability: 'https://schema.org/InStock', offeredBy: { '@type': 'RealEstateAgent', name: 'Century 21 Masters' } } };
+    if (mls) listing.identifier = { '@type': 'PropertyValue', propertyID: 'MLS®', value: mls };
+    if (realtorUrl) listing.sameAs = realtorUrl;
+    graph.push(listing);
+    page.mainEntity = { '@id': SITE + url + '#listing' };
+  }
+  if (url === '/listings/') {
+    const urls = [...new Set([...html.matchAll(/href="(\/listings\/[^"#]+\/)"/g)].map((m) => m[1]))];
+    if (urls.length) graph.push({ '@type': 'ItemList', name: 'Featured Calgary listings', itemListElement: urls.map((u, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + u })) });
+  }
+  return '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c') + '</script>';
+}
+
 const report = [];
 for (const [name, url] of PAGES) {
   const p = readDC(name);
@@ -132,12 +234,16 @@ for (const [name, url] of PAGES) {
   let html = DC.renderToString(defs, 'Page', {});
   const title = (/<title>([\s\S]*?)<\/title>/.exec(p.head) || [])[1] || 'Ada Celik, REALTOR®';
   const desc = (/<meta name="description" content="([^"]*)">/.exec(p.head) || [])[1] || '';
-  const ld = (/<script type="application\/ld\+json">[\s\S]*?<\/script>/.exec(p.head) || [''])[0];
+
   // share image: a listing's first photo, otherwise Ada's portrait
   const firstPhoto = (/\/assets\/img\/[0-9a-f]{32}\.jpg/.exec(p.src) || [])[0];
   const ogImg = SITE + (name.startsWith('Listing-') || name === 'Listing' ? firstPhoto : ASSET['7a3d8d3da0d485171459ca723502a8d1']);
   const helmets = [...new Set([p.helmet, comp.SiteHeader.helmet, comp.SiteFooter.helmet].join('\n').split('\n').map((l) => l.trim()).filter(Boolean))].join('\n');
+  // Load Google Fonts without blocking the first paint (text shows in a fallback font for a moment instead).
+  const headStyles = helmets.replace(/<link href="(https:\/\/fonts\.googleapis\.com\/[^"]+)" rel="stylesheet">/g, (_, href) => `<link rel="preload" as="style" href="${href}"><link rel="stylesheet" href="${href}" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="${href}"></noscript>`);
   const canon = SITE + url;
+  const isListing = name === 'Listing' || name.startsWith('Listing-');
+  const ogAlt = isListing ? 'Photo of ' + decode(title).split(' · ')[0] : 'Ada Celik, Calgary REALTOR®';
   const doc = `<!doctype html>
 <html lang="en-CA">
 <head>
@@ -153,12 +259,19 @@ for (const [name, url] of PAGES) {
 <meta property="og:url" content="${canon}">
 <meta property="og:image" content="${ogImg}">
 <meta property="og:locale" content="en_CA">
+<meta property="og:image:alt" content="${ogAlt}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${ogImg}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="theme-color" content="#0D0D0D">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-${helmets}
-${ld}
+${headStyles}
+${schema(name, url, p, html, decode(title), decode(desc))}
 </head>
 <body>
 <div id="dc-root">${html}</div>

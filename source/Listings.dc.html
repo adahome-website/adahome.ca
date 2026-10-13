@@ -14,6 +14,7 @@
 </helmet>
 <div style="font-family: 'Montserrat', system-ui, sans-serif; background: #F4EFE6; color: #0D0D0D; width: 100%; line-height: 1.6">
 <dc-import name="SiteHeader" language="en" page="Listings" hint-size="100%,124px"></dc-import>
+<main id="main" tabindex="-1" style="display: block; outline: none">
 
 <section style="background: #0D0D0D; color: #F4EFE6">
 <div style="max-width: 1240px; margin: 0 auto; padding: 64px 24px 72px">
@@ -41,7 +42,7 @@
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1">{{o.price}}</span><span style="font-size: 12px; color: #5A564E; white-space: nowrap">{{o.type}}</span></div>
 <div><div style="font-weight: 600; font-size: 17px">{{o.address}}</div><div style="font-size: 14px; color: #5A564E">{{o.area}}</div></div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; padding-top: 12px; border-top: 1px solid #D9D1C3; margin-top: auto"><span><strong>{{o.beds}}</strong> beds</span><span><strong>{{o.baths}}</strong> baths</span><span><strong>{{o.sqft}}</strong> sq ft</span></div>
-<div style="font-size: 11px; color: #8E877B">{{o.mls}} · Listed by Century 21 Masters</div>
+<div style="font-size: 11px; color: #6B655B">{{o.mls}} · Listed by Century 21 Masters</div>
 </div>
 </a>
 </sc-for>
@@ -81,7 +82,7 @@
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1">{{c.price}}</span><span style="font-size: 12px; color: #5A564E; white-space: nowrap">{{c.type}}</span></div>
 <div><div style="font-weight: 600; font-size: 17px">{{c.address}}</div><div style="font-size: 14px; color: #5A564E">{{c.area}}</div></div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; padding-top: 12px; border-top: 1px solid #D9D1C3; margin-top: auto"><span><strong>{{c.beds}}</strong> beds</span><span><strong>{{c.baths}}</strong> baths</span><span><strong>{{c.sqft}}</strong> sq ft</span></div>
-<div style="font-size: 11px; color: #8E877B">{{c.mls}} · Listed by Century 21 Masters</div>
+<div style="font-size: 11px; color: #6B655B">{{c.mls}} · Listed by Century 21 Masters</div>
 </div>
 </a>
 </sc-for>
@@ -97,7 +98,7 @@
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1">{{c.price}}</span><span style="font-size: 12px; color: #5A564E; white-space: nowrap">{{c.type}}</span></div>
 <div><div style="font-weight: 600; font-size: 17px">{{c.address}}</div><div style="font-size: 14px; color: #5A564E">{{c.area}}</div></div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; padding-top: 12px; border-top: 1px solid #D9D1C3; margin-top: auto"><span><strong>{{c.beds}}</strong> beds</span><span><strong>{{c.baths}}</strong> baths</span><span><strong>{{c.sqft}}</strong> sq ft</span></div>
-<div style="font-size: 11px; color: #8E877B">{{c.mls}} · Listed by Century 21 Masters</div>
+<div style="font-size: 11px; color: #6B655B">{{c.mls}} · Listed by Century 21 Masters</div>
 </div>
 </a>
 </div></sc-for>
@@ -106,9 +107,10 @@
 <div><p style="margin: 0 0 4px; font-family: 'Cormorant Garamond', serif; font-size: 32px; line-height: 1.1">Looking for something else?</p><p style="margin: 0; color: #C9BFAE">Search every home for sale in Calgary and the surrounding areas, or tell me what you want and I'll send you matches first.</p></div>
 <div style="display: flex; flex-wrap: wrap; gap: 12px"><a href="https://www.realtor.ca/map" target="_blank" rel="noopener" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 26px; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; font-weight: 600; text-decoration: none">Search all Calgary homes ↗</a><a href="Gallery-tjka-th8q.dc.html#buying" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 26px; border-radius: 999px; border: 1px solid #F4EFE6; color: #F4EFE6; font-weight: 600; text-decoration: none">Get matches by email →</a></div>
 </div>
-<p style="margin: 20px 0 0; font-size: 12px; color: #8E877B; max-width: 900px">Listing data is deemed reliable but not guaranteed. The trademarks MLS®, Multiple Listing Service® and the associated logos are owned by The Canadian Real Estate Association (CREA) and identify the quality of services provided by real estate professionals who are members of CREA.</p>
+<p style="margin: 20px 0 0; font-size: 12px; color: #6B655B; max-width: 900px">Listing data is deemed reliable but not guaranteed. The trademarks MLS®, Multiple Listing Service® and the associated logos are owned by The Canadian Real Estate Association (CREA) and identify the quality of services provided by real estate professionals who are members of CREA.</p>
 </section>
 
+</main>
 <dc-import name="SiteFooter" language="en" hint-size="100%,440px"></dc-import>
 </div>
 </x-dc>

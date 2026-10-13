@@ -6,13 +6,11 @@ Website of Ada Celik, REALTOR®, Century 21 Masters, Calgary.
 - `source/` holds the page designs (`.dc.html`) the site is built from, and `source/images/` the original images.
 - `build/` holds the build scripts.
 
-## Rebuild
+## Update the live site
 
-```
-node build/build.js source source/images docs-new   # with FORM_KEY=<Web3Forms key> in the environment
-python3 build/extras.py docs-new                    # sitemap, robots.txt, llms.txt, 404, CNAME
-```
+1. Copy the updated English `.dc.html` files from the design canvas into `source/` (the French and Turkish pages are not live yet).
+2. Save any new images they reference (`/_blob/<id>`) into `source/images/<id>.jpg` or `.png`.
+3. Run `bash build/release.sh` from the repository root. It rebuilds `docs/` (pages, sitemap, robots.txt, llms.txt, 404, images) and stops if anything looks wrong.
+4. Review `git diff --stat`, commit and push to `main`. GitHub Pages publishes within a minute or two.
 
-Then optimize images into `docs-new/assets/img/`, check the result, and replace `docs/`.
-
-Forms send to Ada's inbox through Web3Forms. Visits are counted with Cloudflare Web Analytics (no cookies).
+Forms send to Ada's inbox through Web3Forms. Cloudflare Web Analytics can be added later by setting `CF_BEACON=<token>` when running the release script.

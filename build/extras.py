@@ -46,7 +46,7 @@ open(os.path.join(OUT, 'llms.txt'), 'w').write('''# Ada Celik, REALTOR®, Calgar
 - [About Ada](https://adahome.ca/about/)
 - [Privacy policy](https://adahome.ca/privacy/)
 ''')
-open(os.path.join(OUT, 'CNAME'), 'w').write('adahome.ca\n')
+open(os.path.join(OUT, 'CNAME'), 'w').write('adahome.ca')
 open(os.path.join(OUT, '.nojekyll'), 'w').write('')
 open(os.path.join(OUT, '404.html'), 'w').write('''<!doctype html>
 <html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

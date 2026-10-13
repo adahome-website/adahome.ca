@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Site footer · shared</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<footer style="background: #0D0D0D; color: #C9BFAE; border-top: 1px solid #2A2925; font-family: 'Montserrat', system-ui, sans-serif; line-height: 1.6; width: 100%">
+<div style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px">
+<div><p style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-size: 36px; line-height: 1; color: #F4EFE6">Ada Celik</p><p style="margin: 0 0 14px; font-size: 14px">{{t.role}}</p><p style="margin: 20px 0 0"><img src="/_blob/4dc833884d05596c3689df4206bceae5" alt="Century 21" style="display: block; height: 61px; width: 48px"></p><p style="margin: 20px 0 0; font-size: 14px; max-width: 280px">Century 21 Masters<br>{{t.indep}}</p></div>
+<div><p style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8E877B; margin: 0 0 14px">{{t.touch}}</p><div style="display: flex; flex-direction: column; gap: 4px; font-size: 15px"><a href="tel:+14034641595" style="color: #F4EFE6; text-decoration: none; min-height: 32px; display: inline-flex; align-items: center">(403) 464-1595</a><a href="mailto:ada.celik@century21.ca" style="color: #F4EFE6; text-decoration: none; min-height: 32px; display: inline-flex; align-items: center">ada.celik@century21.ca</a></div></div>
+<div><p style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8E877B; margin: 0 0 14px">{{t.explore}}</p><div style="display: flex; flex-direction: column; gap: 4px; font-size: 15px"><sc-for list="{{links}}" as="lk" hint-placeholder-count="7"><a href="{{lk.href}}" style="color: #F4EFE6; text-decoration: none; min-height: 32px; display: inline-flex; align-items: center">{{lk.label}}</a></sc-for></div></div>
+<div><p style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8E877B; margin: 0 0 14px">{{t.follow}}</p><div style="display: flex; flex-wrap: wrap; gap: 10px"><a href="https://www.instagram.com/your_realtor_ada/" aria-label="Instagram" title="Instagram" style="width: 44px; height: 44px; border: 1px solid #F4EFE6; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #F4EFE6; text-decoration: none; font-size: 13px; font-weight: 700">IG</a><a href="https://www.linkedin.com/in/adacelik/" aria-label="LinkedIn" title="LinkedIn" style="width: 44px; height: 44px; border: 1px solid #F4EFE6; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #F4EFE6; text-decoration: none; font-size: 13px; font-weight: 700">in</a><a href="https://www.tiktok.com/@your_realtor_ada" aria-label="TikTok" title="TikTok" style="width: 44px; height: 44px; border: 1px solid #F4EFE6; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #F4EFE6; text-decoration: none; font-size: 13px; font-weight: 700">TT</a></div></div>
+</div>
+<div style="max-width: 1240px; margin: 0 auto; padding: 20px 24px 32px; border-top: 1px solid #2A2925; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px; color: #8E877B"><span>{{t.copy}}</span><span><a href="{{privacyHref}}" style="color: #8E877B">{{t.privacy}}</a></span></div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"language":{"editor":"enum","options":["en","fr","tr"],"default":"en"},"$preview":{"width":1440,"height":440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Shared footer for every page. Edit layout or styling here once and every page in every language updates.
+    const lang = this.props.language || 'en';
+    const TXT = {
+      en: { role: 'REALTOR® · Calgary, Alberta', indep: 'Independently owned and operated', touch: 'Get in touch', explore: 'Explore', follow: 'Follow along', copy: 'Copyright © 2026 Ada Celik. All rights reserved.', privacy: 'Privacy policy', nav: ['Home', 'Buying & selling', 'Listings', 'About me', 'Newcomers', 'Monthly stats', 'Calculators'] },
+      fr: { role: 'Courtière immobilière (REALTOR®) · Calgary, Alberta', indep: 'Agence franchisée indépendante', touch: 'Me joindre', explore: 'Explorer', follow: 'Me suivre', copy: 'Copyright © 2026 Ada Celik. Tous droits réservés.', privacy: 'Politique de confidentialité', nav: ['Accueil', 'Acheter et vendre', 'Propriétés', 'À propos', 'Nouveaux arrivants', 'Statistiques mensuelles', 'Calculatrices'] },
+      tr: { role: 'Emlak danışmanı (REALTOR®) · Calgary, Alberta', indep: 'Bağımsız olarak sahiplenilen ve işletilen ofis', touch: 'İletişim', explore: 'Keşfedin', follow: 'Takip edin', copy: 'Telif hakkı © 2026 Ada Celik. Tüm hakları saklıdır.', privacy: 'Gizlilik politikası', nav: ['Ana sayfa', 'Alım ve satım', 'İlanlar', 'Hakkımda', 'Yeni gelenler', 'Aylık istatistikler', 'Hesaplayıcılar'] }
+    };
+    const t = TXT[lang] || TXT.en;
+    const file = (base) => base + (lang === 'en' ? '' : '-' + lang) + '.dc.html';
+    const PAGES = ['Gallery-tjka-th8q', 'Steps', 'Listings', 'About', 'Newcomers', 'Stats', 'Calculator'];
+    return {
+      t,
+      links: PAGES.map((p, i) => ({ label: t.nav[i], href: file(p) })),
+      privacyHref: file('Privacy')
+    };
+  }
+}
+</script>
+</body>
+</html>

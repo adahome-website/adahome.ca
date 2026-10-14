@@ -299,6 +299,7 @@ for (const [name, url] of PAGES) {
 <html lang="${HTML_LANG[lang]}">
 <head>
 <meta charset="utf-8">
+<script>if(location.protocol==='http:'&&/(^|\.)adahome\.ca$/.test(location.hostname))location.replace('https://adahome.ca'+location.pathname+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${desc}">

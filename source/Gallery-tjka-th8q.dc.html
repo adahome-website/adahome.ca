@@ -12,7 +12,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&amp;family=EB+Garamond:wght@400;500;600&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>
+<style>@media (max-width:760px){.rv-empty{display:none!important}}
 html{scroll-behavior:smooth}
 #buying,#selling,#contact{scroll-margin-top:16px}
 body{margin:0}
@@ -75,11 +75,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <button type="button" aria-expanded="{{rv.open}}" aria-controls="robyn-review" onClick="{{rv.toggle}}" style="align-self: flex-start; min-height: 44px; padding: 0 20px; border: 1px solid #F4EFE6; border-radius: 999px; background: transparent; color: #F4EFE6; font-weight: 600; font-size: 14px; cursor: pointer">{{rv.label}}</button>
 <figcaption style="font-size: 15px; font-weight: 600">Robyn Campbell</figcaption>
 </figure>
-<figure style="margin: 0; background: {{t.surface}}; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
-<div style="color: {{t.eyebrow}}; font-size: 18px; letter-spacing: 2px" role="img" aria-label="5 out of 5 stars">★★★★★</div>
-<blockquote style="margin: 0; font-size: 17px; line-height: 1.7">“Working with Ada was one of the best decisions I’ve made. She made me feel supported every step of the way, always took the time to answer my questions, and genuinely cared about finding the right fit for me. I can honestly say I trusted her completely, and that peace of mind meant everything. I would recommend her to anyone without hesitation!”</blockquote>
-<figcaption style="font-size: 14px; font-weight: 600">Brenna Gray</figcaption>
-</figure>
+<div class="rv-empty" aria-hidden="true" style="background: {{t.surface}}; border-radius: 24px; min-height: 200px"></div>
 <figure style="margin: 0; background: {{t.surface}}; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
 <div style="color: {{t.eyebrow}}; font-size: 18px; letter-spacing: 2px" role="img" aria-label="5 out of 5 stars">★★★★★</div>
 <blockquote style="margin: 0; font-size: 17px; line-height: 1.7">“Working with Ada was a wonderful experience. She is warm, personable, and genuinely takes the time to understand what you’re looking for. She was patient and always focused on my goals, never pushing or rushing me toward the wrong choice. Because of her care and commitment, I know I’ll end up with exactly the right fit. I can’t recommend her highly enough.”</blockquote>

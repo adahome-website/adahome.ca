@@ -12,7 +12,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&amp;family=EB+Garamond:wght@400;500;600&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>@media (max-width:760px){.rv-empty{display:none!important}}
+<style>
 html{scroll-behavior:smooth}
 #buying,#selling,#contact{scroll-margin-top:16px}
 body{margin:0}
@@ -75,7 +75,11 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <button type="button" aria-expanded="{{rv.open}}" aria-controls="robyn-review" onClick="{{rv.toggle}}" style="align-self: flex-start; min-height: 44px; padding: 0 20px; border: 1px solid #F4EFE6; border-radius: 999px; background: transparent; color: #F4EFE6; font-weight: 600; font-size: 14px; cursor: pointer">{{rv.label}}</button>
 <figcaption style="font-size: 15px; font-weight: 600">Robyn Campbell<span style="font-weight: 400; color: #C9BFAE"> · İngilizceden çevrilmiştir</span></figcaption>
 </figure>
-<div class="rv-empty" aria-hidden="true" style="background: {{t.surface}}; border-radius: 24px; min-height: 200px"></div>
+<figure style="margin: 0; background: {{t.surface}}; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="color: {{t.eyebrow}}; font-size: 18px; letter-spacing: 2px" role="img" aria-label="5 üzerinden 5 yıldız">★★★★★</div>
+<blockquote style="margin: 0; font-size: 17px; line-height: 1.7">“Ada tanıdığım en tatlı ve en çalışkan insanlardan biri! Hem eşime hem de bana birçok kez yardımcı oldu; her zaman ilgili, düşünceli ve fazlasını yapmaya hazır. Yardım ettiği insanları gerçekten dinliyor ve önemsiyor. Ev almak gibi önemli bir konuda ona gönül rahatlığıyla güvenirim ve onu arkadaşlarıma ve aileme tereddütsüz tavsiye ederim!”</blockquote>
+<figcaption style="font-size: 14px; font-weight: 600">Pauline Sutherland<span style="font-weight: 400; color: {{t.muted}}"> · İngilizceden çevrilmiştir</span></figcaption>
+</figure>
 <figure style="margin: 0; background: {{t.surface}}; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
 <div style="color: {{t.eyebrow}}; font-size: 18px; letter-spacing: 2px" role="img" aria-label="5 üzerinden 5 yıldız">★★★★★</div>
 <blockquote style="margin: 0; font-size: 17px; line-height: 1.7">“Ada ile çalışmak harika bir deneyimdi. Sıcakkanlı, cana yakın ve ne aradığınızı anlamak için gerçekten zaman ayırıyor. Sabırlıydı ve her zaman benim hedeflerime odaklandı; beni asla aceleye getirmedi ya da yanlış bir seçime yönlendirmedi. İlgisi ve özverisi sayesinde tam aradığım evi bulacağımı biliyorum. Onu ne kadar tavsiye etsem az.”</blockquote>

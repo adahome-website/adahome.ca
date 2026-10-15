@@ -12,7 +12,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&amp;family=EB+Garamond:wght@400;500;600&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>@media (max-width:760px){.rv-empty{display:none!important}}
+<style>
 html{scroll-behavior:smooth}
 #buying,#selling,#contact{scroll-margin-top:16px}
 body{margin:0}
@@ -75,7 +75,11 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <button type="button" aria-expanded="{{rv.open}}" aria-controls="robyn-review" onClick="{{rv.toggle}}" style="align-self: flex-start; min-height: 44px; padding: 0 20px; border: 1px solid #F4EFE6; border-radius: 999px; background: transparent; color: #F4EFE6; font-weight: 600; font-size: 14px; cursor: pointer">{{rv.label}}</button>
 <figcaption style="font-size: 15px; font-weight: 600">Robyn Campbell<span style="font-weight: 400; color: #C9BFAE"> · Traduit de l’anglais</span></figcaption>
 </figure>
-<div class="rv-empty" aria-hidden="true" style="background: {{t.surface}}; border-radius: 24px; min-height: 200px"></div>
+<figure style="margin: 0; background: {{t.surface}}; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="color: {{t.eyebrow}}; font-size: 18px; letter-spacing: 2px" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
+<blockquote style="margin: 0; font-size: 17px; line-height: 1.7">« Ada est sincèrement l’une des personnes les plus gentilles et les plus travaillantes que je connaisse! Elle nous a aidés, mon conjoint et moi, à de nombreuses reprises, et elle est toujours attentive, réfléchie et prête à se surpasser. Elle écoute vraiment et se soucie des gens qu’elle aide. Je lui confierais sans hésiter quelque chose d’aussi important que l’achat d’une maison, et je la recommanderais volontiers à mes amis et à ma famille! »</blockquote>
+<figcaption style="font-size: 14px; font-weight: 600">Pauline Sutherland<span style="font-weight: 400; color: {{t.muted}}"> · Traduit de l’anglais</span></figcaption>
+</figure>
 <figure style="margin: 0; background: {{t.surface}}; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
 <div style="color: {{t.eyebrow}}; font-size: 18px; letter-spacing: 2px" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
 <blockquote style="margin: 0; font-size: 17px; line-height: 1.7">« Travailler avec Ada a été une expérience merveilleuse. Elle est chaleureuse, avenante et prend vraiment le temps de comprendre ce que vous recherchez. Elle a été patiente et toujours centrée sur mes objectifs, sans jamais me pousser ni me presser vers le mauvais choix. Grâce à son attention et à son engagement, je sais que je trouverai exactement ce qu’il me faut. Je ne saurais trop la recommander. »</blockquote>

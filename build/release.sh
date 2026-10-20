@@ -8,6 +8,8 @@ cd "$(dirname "$0")/.."
 
 # Web3Forms access key. It is public by design (it ships in every page's HTML).
 export FORM_KEY="${FORM_KEY:-50a8d043-6c60-478b-9ce7-25ecadeb6a6b}"
+# Cloudflare Web Analytics site token (public by design; cookie-free visit counts).
+export CF_BEACON="${CF_BEACON:-c1e1444a6cf542368f5ce7a1330483e6}"
 
 rm -rf docs-new
 node build/build.js source source/images docs-new

@@ -13,4 +13,4 @@ Website of Ada Celik, REALTOR®, Century 21 Masters, Calgary.
 3. Run `bash build/release.sh` from the repository root. It rebuilds `docs/` (pages, sitemap, robots.txt, llms.txt, 404, images) and stops if anything looks wrong.
 4. Review `git diff --stat`, commit and push to `main`. GitHub Pages publishes within a minute or two.
 
-Forms send to Ada's inbox through Web3Forms. Cloudflare Web Analytics can be added later by setting `CF_BEACON=<token>` when running the release script.
+Forms send to Ada's inbox through Web3Forms. Visits are counted with Cloudflare Web Analytics (no cookies); its token is set in `build/release.sh`.

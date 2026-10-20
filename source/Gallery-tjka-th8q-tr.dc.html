@@ -228,7 +228,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <div role="tablist" aria-label="Konut tipi" style="display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{marketTabs}}" as="tab" hint-placeholder-count="3">
-<button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{tab.border}}; background: {{tab.bg}}; color: {{tab.color}}; font-weight: 600; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{tab.icon}}"></path></svg>{{tab.label}}</button>
+<button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid {{tab.border}}; background: {{tab.bg}}; color: {{tab.color}}; font-weight: 600; font-size: 14px; white-space: nowrap; cursor: pointer">{{tab.label}}</button>
 </sc-for>
 </div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
@@ -403,7 +403,7 @@ class Component extends DCLogic {
     const marketTabs = Object.keys(markets).map((k) => {
       const on = k === mk;
       return {
-        label: markets[k].label, icon: HI[k],
+        label: markets[k].label,
         selected: on ? 'true' : 'false',
         bg: on ? t.btnBg : t.surface,
         color: on ? t.btnText : t.ink,

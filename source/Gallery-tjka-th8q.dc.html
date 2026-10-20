@@ -139,7 +139,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 </div>
 <div style="display: grid; flex: 1.6 1 520px; min-width: 0"><div aria-hidden="{{forms.home_brief.formHid}}" style="grid-area: 1 / 1; min-width: 0; visibility: {{forms.home_brief.formVis}}"><form data-form="home-brief" data-send-to="ada.celik@century21.ca" style="min-width: 0; padding: 40px; display: flex; flex-direction: column; gap: 28px">
 <div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Budget</div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{budgetChips}}" as="c" hint-placeholder-count="5"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer">{{c.label}}</button></sc-for></div></div>
-<div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Home type <span style="font-weight: 400; letter-spacing: 0.05em; text-transform: none; color: {{t.muted}}">· choose any</span></div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{typeChips}}" as="c" hint-placeholder-count="4"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer">{{c.label}}</button></sc-for></div></div>
+<div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Home type <span style="font-weight: 400; letter-spacing: 0.05em; text-transform: none; color: {{t.muted}}">· choose any</span></div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{typeChips}}" as="c" hint-placeholder-count="4"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px 0 14px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{c.icon}}"></path></svg>{{c.label}}</button></sc-for></div></div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px">
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="beds" style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; margin-bottom: 0">Bedrooms</label><select id="beds" name="Bedrooms" style="height: 52px; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; padding: 0 2px; font-size: 16px; color: {{t.ink}}; font-family: inherit"><option>Any</option><option>1+</option><option>2+</option><option>3+</option><option>4+</option><option>5+</option></select></div>
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="baths" style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; margin-bottom: 0">Bathrooms</label><select id="baths" name="Bathrooms" style="height: 52px; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; padding: 0 2px; font-size: 16px; color: {{t.ink}}; font-family: inherit"><option>Any</option><option>1+</option><option>1.5+</option><option>2+</option><option>2.5+</option><option>3+</option></select></div>
@@ -228,7 +228,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <div role="tablist" aria-label="Property type" style="display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{marketTabs}}" as="tab" hint-placeholder-count="3">
-<button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{tab.border}}; background: {{tab.bg}}; color: {{tab.color}}; font-weight: 600; font-size: 15px; cursor: pointer">{{tab.label}}</button>
+<button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{tab.border}}; background: {{tab.bg}}; color: {{tab.color}}; font-weight: 600; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{tab.icon}}"></path></svg>{{tab.label}}</button>
 </sc-for>
 </div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
@@ -393,6 +393,7 @@ class Component extends DCLogic {
     const hd = { navLogo: true, navJustify: 'space-between', heroPad: '0 16px', heroMax: '1360px', headerBg: t.bg, headerInk: t.ink, headerBtnBg: t.btnBg, headerBtnText: t.btnText };
     Object.keys(hd).forEach((k) => { if (t[k] === undefined) t[k] = hd[k]; });
 
+    const HI = {detached: 'M3 11l9-7 9 7M5 9.5V20h14V9.5M10 20v-5h4v5', semi: 'M2 11l5-5 5 4 5-4 5 5M4 9.5V20h16V9.5M12 10v10M6 20v-4h3v4M15 20v-4h3v4', townhouse: 'M2 10l3.5-4L9 10l3-4 3 4 3.5-4L22 10M3 9v11h18V9M9 10v10M15 10v10', condo: 'M6 21V3h12v18M3 21h18M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3'};
     const markets = {
       detached: { label: 'Detached', headline: 'detached homes hold steady', summary: 'Detached prices are nearly flat year over year, and sales are up. Well-priced homes are still moving quickly.', price: '$739,400', yoy: '−0.95%', sales: '896', inventory: '2,968', dom: '38 days', mos: '3.3' },
       townhouse: { label: 'Townhouses', headline: 'townhouse prices ease', summary: 'More townhouses on the market have nudged prices down, giving buyers more choice and time to decide.', price: '$412,400', yoy: '−5.5%', sales: '248', inventory: '1,103', dom: '50 days', mos: '4.5' },
@@ -402,7 +403,7 @@ class Component extends DCLogic {
     const marketTabs = Object.keys(markets).map((k) => {
       const on = k === mk;
       return {
-        label: markets[k].label,
+        label: markets[k].label, icon: HI[k],
         selected: on ? 'true' : 'false',
         bg: on ? t.btnBg : t.surface,
         color: on ? t.btnText : t.ink,
@@ -447,7 +448,7 @@ class Component extends DCLogic {
     const pillc = (on) => ({ on: on ? 'true' : 'false', bg: on ? '#0D0D0D' : 'transparent', color: on ? '#F4EFE6' : '#0D0D0D' });
     const budgetChips = ['Under $400K', '$400K–$600K', '$600K–$800K', '$800K–$1M', '$1M+'].map((l) => Object.assign({ label: l, pick: () => this.setState({ bBudget: l }) }, pillc(st0.bBudget === l)));
     const tsel = st0.bTypes || {};
-    const typeChips = ['Detached', 'Semi-detached', 'Townhouse', 'Condo'].map((l) => Object.assign({ label: l, pick: () => this.setState({ bTypes: Object.assign({}, tsel, { [l]: !tsel[l] }) }) }, pillc(!!tsel[l])));
+    const typeChips = ['Detached', 'Semi-detached', 'Townhouse', 'Condo'].map((l, i) => Object.assign({ label: l, icon: [HI.detached, HI.semi, HI.townhouse, HI.condo][i], pick: () => this.setState({ bTypes: Object.assign({}, tsel, { [l]: !tsel[l] }) }) }, pillc(!!tsel[l])));
     const timeChips = ['ASAP', '1–3 months', '3–6 months', 'Just browsing'].map((l) => Object.assign({ label: l, pick: () => this.setState({ bTime: l }) }, pillc(st0.bTime === l)));
     const per = 3;
     const pages = Math.ceil(hoods.length / per);

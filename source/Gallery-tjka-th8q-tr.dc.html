@@ -139,7 +139,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 </div>
 <div style="display: grid; flex: 1.6 1 520px; min-width: 0"><div aria-hidden="{{forms.home_brief.formHid}}" style="grid-area: 1 / 1; min-width: 0; visibility: {{forms.home_brief.formVis}}"><form data-form="home-brief" data-send-to="ada.celik@century21.ca" style="min-width: 0; padding: 40px; display: flex; flex-direction: column; gap: 28px">
 <div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Bütçe</div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{budgetChips}}" as="c" hint-placeholder-count="5"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer">{{c.label}}</button></sc-for></div></div>
-<div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Konut tipi <span style="font-weight: 400; letter-spacing: 0.05em; text-transform: none; color: {{t.muted}}">· birden fazla seçebilirsiniz</span></div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{typeChips}}" as="c" hint-placeholder-count="4"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer">{{c.label}}</button></sc-for></div></div>
+<div><div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px">Konut tipi <span style="font-weight: 400; letter-spacing: 0.05em; text-transform: none; color: {{t.muted}}">· birden fazla seçebilirsiniz</span></div><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{typeChips}}" as="c" hint-placeholder-count="4"><button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="min-height: 44px; padding: 0 18px 0 14px; border-radius: 999px; border: 1px solid #0D0D0D; background: {{c.bg}}; color: {{c.color}}; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{c.icon}}"></path></svg>{{c.label}}</button></sc-for></div></div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px">
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="beds" style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; margin-bottom: 0">Yatak odası</label><select id="beds" name="Bedrooms" style="height: 52px; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; padding: 0 2px; font-size: 16px; color: {{t.ink}}; font-family: inherit"><option>Fark etmez</option><option>1+</option><option>2+</option><option>3+</option><option>4+</option><option>5+</option></select></div>
 <div style="display: flex; flex-direction: column; gap: 6px"><label for="baths" style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; margin-bottom: 0">Banyo</label><select id="baths" name="Bathrooms" style="height: 52px; border: 0; border-bottom: 1px solid #0D0D0D; background: transparent; padding: 0 2px; font-size: 16px; color: {{t.ink}}; font-family: inherit"><option>Fark etmez</option><option>1+</option><option>1.5+</option><option>2+</option><option>2.5+</option><option>3+</option></select></div>
@@ -228,7 +228,7 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}.c
 <div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <div role="tablist" aria-label="Konut tipi" style="display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{marketTabs}}" as="tab" hint-placeholder-count="3">
-<button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{tab.border}}; background: {{tab.bg}}; color: {{tab.color}}; font-weight: 600; font-size: 15px; cursor: pointer">{{tab.label}}</button>
+<button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{tab.border}}; background: {{tab.bg}}; color: {{tab.color}}; font-weight: 600; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{tab.icon}}"></path></svg>{{tab.label}}</button>
 </sc-for>
 </div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
@@ -393,6 +393,7 @@ class Component extends DCLogic {
     const hd = { navLogo: true, navJustify: 'space-between', heroPad: '0 16px', heroMax: '1360px', headerBg: t.bg, headerInk: t.ink, headerBtnBg: t.btnBg, headerBtnText: t.btnText };
     Object.keys(hd).forEach((k) => { if (t[k] === undefined) t[k] = hd[k]; });
 
+    const HI = {detached: 'M3 11l9-7 9 7M5 9.5V20h14V9.5M10 20v-5h4v5', semi: 'M2 11l5-5 5 4 5-4 5 5M4 9.5V20h16V9.5M12 10v10M6 20v-4h3v4M15 20v-4h3v4', townhouse: 'M2 10l3.5-4L9 10l3-4 3 4 3.5-4L22 10M3 9v11h18V9M9 10v10M15 10v10', condo: 'M6 21V3h12v18M3 21h18M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3'};
     const markets = {
       detached: { label: 'Müstakil evler', headline: 'müstakil evler dengede', summary: 'Müstakil ev fiyatları yıllık bazda neredeyse sabit ve satışlar artıyor. Doğru fiyatlanan evler hâlâ hızlı satılıyor.', price: '739.400 $', yoy: '−%0,95', sales: '896', inventory: '2.968', dom: '38 gün', mos: '3,3' },
       townhouse: { label: 'Sıra evler', headline: 'sıra ev fiyatları geriliyor', summary: 'Piyasaya daha fazla sıra ev çıkması fiyatları biraz aşağı çekti; alıcılara daha fazla seçenek ve karar vermek için zaman tanıyor.', price: '412.400 $', yoy: '−%5,5', sales: '248', inventory: '1.103', dom: '50 gün', mos: '4,5' },
@@ -402,7 +403,7 @@ class Component extends DCLogic {
     const marketTabs = Object.keys(markets).map((k) => {
       const on = k === mk;
       return {
-        label: markets[k].label,
+        label: markets[k].label, icon: HI[k],
         selected: on ? 'true' : 'false',
         bg: on ? t.btnBg : t.surface,
         color: on ? t.btnText : t.ink,
@@ -447,7 +448,7 @@ class Component extends DCLogic {
     const pillc = (on) => ({ on: on ? 'true' : 'false', bg: on ? '#0D0D0D' : 'transparent', color: on ? '#F4EFE6' : '#0D0D0D' });
     const budgetChips = ['400 bin $ altı', '400 bin – 600 bin $', '600 bin – 800 bin $', '800 bin – 1 milyon $', '$1M+'].map((l) => Object.assign({ label: l, pick: () => this.setState({ bBudget: l }) }, pillc(st0.bBudget === l)));
     const tsel = st0.bTypes || {};
-    const typeChips = ['Müstakil evler', 'İkiz ev', 'Sıra ev', 'Daire'].map((l) => Object.assign({ label: l, pick: () => this.setState({ bTypes: Object.assign({}, tsel, { [l]: !tsel[l] }) }) }, pillc(!!tsel[l])));
+    const typeChips = ['Müstakil evler', 'İkiz ev', 'Sıra ev', 'Daire'].map((l, i) => Object.assign({ label: l, icon: [HI.detached, HI.semi, HI.townhouse, HI.condo][i], pick: () => this.setState({ bTypes: Object.assign({}, tsel, { [l]: !tsel[l] }) }) }, pillc(!!tsel[l])));
     const timeChips = ['En kısa sürede', '1–3 ay', '3–6 ay', 'Sadece bakıyorum'].map((l) => Object.assign({ label: l, pick: () => this.setState({ bTime: l }) }, pillc(st0.bTime === l)));
     const per = 3;
     const pages = Math.ceil(hoods.length / per);

@@ -40,7 +40,7 @@
 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 24px">
 <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(36px, 4vw, 56px); line-height: 1.05"><span style="display: grid"><sc-for list="{{stackAll}}" as="ly" hint-placeholder-count="20"><span aria-hidden="{{ly.hid}}" style="grid-area: 1 / 1; visibility: {{ly.vis}}">{{ly.label}} prices across the city <em>in {{ly.monthShort}}</em></span></sc-for></span></h2>
 <div role="tablist" aria-label="Home type" style="display: flex; flex-wrap: wrap; gap: 8px">
-<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4"><button type="button" role="tab" aria-selected="{{tb.on}}" onClick="{{tb.pick}}" style="min-height: 44px; padding: 0 18px; border: 1px solid #0D0D0D; border-radius: 999px; background: {{tb.bg}}; color: {{tb.color}}; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer">{{tb.l}}</button></sc-for>
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4"><button type="button" role="tab" aria-selected="{{tb.on}}" onClick="{{tb.pick}}" style="min-height: 44px; padding: 0 18px; border: 1px solid #0D0D0D; border-radius: 999px; background: {{tb.bg}}; color: {{tb.color}}; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{tb.icon}}"></path></svg>{{tb.l}}</button></sc-for>
 </div>
 </div>
 <div style="background: #FBF8F2; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
@@ -187,6 +187,7 @@ class Component extends DCLogic {
     const col = (y) => (y > 0 ? '#2F6B3A' : '#8C2F1A');
     const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'];
     const mo = M.find((x) => x.k === (mk || this.state.m)) || M[0];
+    const HI = {detached: 'M3 11l9-7 9 7M5 9.5V20h14V9.5M10 20v-5h4v5', semi: 'M2 11l5-5 5 4 5-4 5 5M4 9.5V20h16V9.5M12 10v10M6 20v-4h3v4M15 20v-4h3v4', townhouse: 'M2 10l3.5-4L9 10l3-4 3 4 3.5-4L22 10M3 9v11h18V9M9 10v10M15 10v10', condo: 'M6 21V3h12v18M3 21h18M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3'};
     const K = ['det', 'semi', 'row', 'apt'];
     const T = {};
     K.forEach((k) => { const r = mo.d[k]; T[k] = { k, l: L[k][0], pl: L[k][1], city: r[0], yoy: r[1], sales: r[2], inv: r[3], mos: r[4], dom: r[5], v: r[6] }; });
@@ -215,7 +216,7 @@ class Component extends DCLogic {
       viewing: mo.k === M[0].k ? '' : ' · Past month',
       summary: all.map((r) => ({ k: r.l, v: money(r.city), y: pct(r.yoy) + ' year over year', c: r.yoy > 0 ? '#9FC08A' : '#E9A27E' })),
       types: all.map((r) => ({ l: r.l, price: money(r.city), y: pct(r.yoy), c: col(r.yoy), sales: r.sales.toLocaleString('en-CA'), inv: r.inv.toLocaleString('en-CA'), mos: r.mos.toFixed(2), dom: r.dom + ' days' })),
-      tabs: all.map((r) => ({ l: r.l, on: r.k === cur ? 'true' : 'false', bg: r.k === cur ? '#0D0D0D' : 'transparent', color: r.k === cur ? '#F4EFE6' : '#0D0D0D', pick: () => this.setState({ t: r.k }) })),
+      tabs: all.map((r) => ({ l: r.l, icon: ({ det: HI.detached, semi: HI.semi, row: HI.townhouse, apt: HI.condo })[r.k], on: r.k === cur ? 'true' : 'false', bg: r.k === cur ? '#0D0D0D' : 'transparent', color: r.k === cur ? '#F4EFE6' : '#0D0D0D', pick: () => this.setState({ t: r.k }) })),
       label: t.l, city: money(t.city),
       bars: rows.map((r) => ({ n: r.n, v: money(r.p), w: Math.round((r.p / max) * 100) + '%', c: r.p >= t.city ? '#0D0D0D' : '#B5AC9C', y: pct(r.y), yc: col(r.y) })),
       meter: all.map((r) => ({ l: r.l, v: r.mos.toFixed(2), x: Math.min(97, (r.mos / 6) * 100).toFixed(1) + '%' })),

@@ -41,6 +41,9 @@ for f in sorted(os.listdir(src)):
 print('images:', len(os.listdir(out)))
 PY
 
+# Private client reports (encrypted; not in the sitemap or menu).
+python3 build/private.py build docs-new
+
 # Icons are made once and carried over.
 cp docs/favicon.png docs/apple-touch-icon.png docs-new/
 

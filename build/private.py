@@ -6,9 +6,9 @@ with BOTH the secret in the link's #fragment (never sent to any server) AND the 
 last name. Without either, the page shows a friendly locked screen.
 
   Encrypt a report (prints the link to send):
-    python3 build/private.py encrypt REPORT.html --id r7k2q9 --name "Linda Rausch" [--link OLD_LINK]
+    python3 build/private.py encrypt REPORT.html --id r7k2q9 --name "Jane Doe" [--link OLD_LINK]
   Read a report back for editing (needs the link and the name):
-    python3 build/private.py decrypt r7k2q9 --link "https://adahome.ca/c/r7k2q9/#k=..." --name "Linda Rausch" > REPORT.html
+    python3 build/private.py decrypt r7k2q9 --link "https://adahome.ca/c/r7k2q9/#k=..." --name "Jane Doe" > REPORT.html
   Render shells into a built site (release.sh runs this):
     python3 build/private.py build docs-new
 """

@@ -194,6 +194,28 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 </div>
 </sc-if>
 
+<!-- LEGAL -->
+<sc-if value="{{p.legal}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px"><div><p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #5A564E">Legal &amp; paperwork · after conditions are removed</p><h3 style="margin: 4px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 40px; line-height: 1.1">Signing with your lawyer</h3></div>
+<span style="background: #0D0D0D; color: #F4EFE6; border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600">Signing: around Tue Dec 8</span></div>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px">
+<li style="display: grid; grid-template-columns: 140px 1fr; gap: 16px; background: #F4EFE6; border-radius: 16px; padding: 16px 20px"><b>Once conditions are removed</b><span style="color: #5A564E">I send the firm deal to your lawyer and your lender, so they can start their work.</span></li>
+<li style="display: grid; grid-template-columns: 140px 1fr; gap: 16px; background: #F4EFE6; border-radius: 16px; padding: 16px 20px"><b>A few weeks before</b><span style="color: #5A564E">Your lender sends your mortgage instructions to your lawyer, and your lawyer reviews the title and condo details.</span></li>
+<li style="display: grid; grid-template-columns: 140px 1fr; gap: 16px; background: #F4EFE6; border-radius: 16px; padding: 16px 20px"><b>About a week before</b><span style="color: #5A564E">You meet your lawyer to sign the mortgage and transfer papers and hand over the rest of your down payment.</span></li>
+<li style="display: grid; grid-template-columns: 140px 1fr; gap: 16px; background: #0D0D0D; color: #F4EFE6; border-radius: 16px; padding: 16px 20px"><b>Possession day</b><span style="color: #C9BFAE">Your lawyer registers the home in your name at Alberta Land Titles and releases the funds, then I hand you the keys.</span></li>
+</ol>
+<div class="cp-g3">
+<div style="background: #F4EFE6; border-radius: 20px; padding: 22px"><p style="margin: 0 0 10px; font-weight: 700; font-size: 17px">What to bring</p><ul style="margin: 0; padding-left: 18px; display: grid; gap: 6px; color: #5A564E"><li>Two pieces of ID, one with a photo</li><li>The rest of your down payment, sent the way your lawyer asks</li><li>Proof of home insurance starting on possession day</li></ul></div>
+<div style="background: #F4EFE6; border-radius: 20px; padding: 22px"><p style="margin: 0 0 10px; font-weight: 700; font-size: 17px">What you&#8217;ll sign</p><ul style="margin: 0; padding-left: 18px; display: grid; gap: 6px; color: #5A564E"><li>Your mortgage papers</li><li>The transfer of land into your name</li><li>The statement of adjustments, which splits property taxes and condo fees as of possession day</li></ul></div>
+<div style="background: #F4EFE6; border-radius: 20px; padding: 22px"><p style="margin: 0 0 10px; font-weight: 700; font-size: 17px">Good questions to ask</p><ul style="margin: 0; padding-left: 18px; display: grid; gap: 6px; color: #5A564E"><li>What is my final amount, and how should I send it?</li><li>Do you recommend title insurance?</li><li>When will the title be in my name?</li></ul></div>
+</div>
+<div><p style="margin: 0 0 12px; font-weight: 700; font-size: 17px">Your to-dos in this step</p>
+<ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px"><sc-for list="{{todosLegal}}" as="t" hint-placeholder-count="4"><li><button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.toggle}}" style="width: 100%; min-height: 54px; display: flex; align-items: center; gap: 14px; text-align: left; background: #F4EFE6; border: 1px solid #E2D9C9; border-radius: 14px; padding: 10px 16px; cursor: pointer; color: #0D0D0D"><span aria-hidden="true" style="flex: none; width: 24px; height: 24px; border-radius: 7px; border: 2px solid #0D0D0D; background: {{t.box}}; color: #F4EFE6; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700">{{t.check}}</span><span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 600; text-decoration: {{t.strike}}; color: {{t.color}}">{{t.label}}</span><span style="display: block; font-size: 13px; color: #5A564E">{{t.note}}</span></span></button></li></sc-for></ul></div>
+<p style="margin: 0; color: #5A564E">Before you send any money, call your lawyer's office at a number you already know to confirm their banking details. Never trust payment instructions that arrive by email alone.</p>
+</div>
+</sc-if>
+
 <!-- KEYS -->
 <sc-if value="{{p.keys}}" hint-placeholder-val="{{false}}">
 <div style="display: grid; gap: 24px">
@@ -365,7 +387,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     // Until someone picks a step, rotate through the clickable steps every 7 seconds.
-    const ORDER = ['consult', 'pre', 'viewed', 'cond', 'keys'];
+    const ORDER = ['consult', 'pre', 'viewed', 'cond', 'legal', 'keys'];
     this._t = setInterval(() => {
       if (this.state.picked) { clearInterval(this._t); return; }
       const i = ORDER.indexOf(this.state.open);
@@ -391,7 +413,7 @@ class Component extends DCLogic {
       ['offer', 'Offer made', 'Oct 26', false],
       ['accepted', 'Offer accepted', 'Expected Oct 27', false],
       ['cond', 'Conditions', 'Deadline Nov 6', true],
-      ['legal', 'Legal & paperwork', 'Around Dec 8', false],
+      ['legal', 'Legal & paperwork', 'Around Dec 8', true],
       ['keys', 'Keys in hand', 'Dec 15 (requested)', true]
     ];
     // Offer made and Offer accepted are events, so "You are here" sits on a completed (ticked) step.
@@ -437,7 +459,7 @@ class Component extends DCLogic {
     const CLICK = STEPS.filter((x) => x[3]);
     const openTitle = (CLICK.find((x) => x[0] === st.open) || CLICK[0])[1];
     const pips = CLICK.map((x) => ({ w: x[0] === st.open ? '26px' : '8px', bg: x[0] === st.open ? '#0D0D0D' : '#C9BFAE' }));
-    const p = { consult: st.open === 'consult', pre: st.open === 'pre', viewed: st.open === 'viewed', cond: st.open === 'cond', keys: st.open === 'keys' };
+    const p = { consult: st.open === 'consult', pre: st.open === 'pre', viewed: st.open === 'viewed', cond: st.open === 'cond', legal: st.open === 'legal', keys: st.open === 'keys' };
 
     const completed = steps.filter((x) => x.mark === '\u2713').length;
     const C = 2 * Math.PI * 54;
@@ -502,6 +524,12 @@ class Component extends DCLogic {
       ['insp', 'Choose your inspection time', 'I’ll send three options once the offer is accepted.'],
       ['lend', 'Send your lender the accepted offer', 'I’ll send it to them too.'],
       ['docs', 'Read the condo document summary', 'I’ll highlight anything worth a closer look.']
+    ]);
+    const todosLegal = todo([
+      ['lawyer', 'Book your signing appointment', 'About a week before possession. I can share times with your lawyer.'],
+      ['funds', 'Line up the rest of your down payment', 'Ask your bank how long a transfer or draft takes, and book ahead if needed.'],
+      ['proof', 'Send your lawyer proof of insurance', 'Your insurance broker can email it directly.'],
+      ['id', 'Bring two pieces of ID to the signing', 'One with a photo, both current.']
     ]);
     const todosKeys = todo([
       ['ins', 'Arrange home insurance from possession day', 'Your lender needs it before releasing funds.'],
@@ -610,7 +638,7 @@ class Component extends DCLogic {
     return {
       calOpen: !!calRow, calTitle, calWhen, calOpts, calClose: () => this.setState({ calFor: null }),
       cur, kdates, kdShown, kdRange, kdPrev, kdNext, upNext, ring, homeTag, steps, p, congrats, openTitle, pips,
-      todosCond, todosKeys,
+      todosCond, todosLegal, todosKeys,
       homes, loved, noLoved: loved.length === 0, compareRows,
       showCompare: st.compare, compareOpen: st.compare ? 'true' : 'false',
       compareLabel: st.compare ? 'Hide comparison' : 'Compare side by side',

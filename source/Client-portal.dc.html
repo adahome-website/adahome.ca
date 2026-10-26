@@ -83,9 +83,10 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <div class="cp-wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 24px">
 <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">Key dates</p>
 <h2 style="margin: 0 0 8px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(34px, 4vw, 52px); line-height: 1.05">Mark your calendar</h2>
-<p style="margin: 0 0 28px; color: #5A564E">The dates that matter to you once your offer is accepted, and what to have ready for each.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin: 0 0 24px"><p style="margin: 0; color: #5A564E; max-width: 640px">The dates that matter to you once your offer is accepted, and what to have ready for each.</p>
+<div style="display: flex; align-items: center; gap: 10px"><span aria-live="polite" style="font-size: 13px; color: #5A564E">{{kdRange}}</span><button type="button" onClick="{{kdPrev}}" aria-label="Earlier dates" style="min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; background: #FBF8F2; font-weight: 600; font-size: 14px; cursor: pointer; color: #0D0D0D">↑</button><button type="button" onClick="{{kdNext}}" aria-label="Later dates" style="min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; background: #FBF8F2; font-weight: 600; font-size: 14px; cursor: pointer; color: #0D0D0D">↓</button></div></div>
 <ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: 12px">
-<sc-for list="{{kdates}}" as="d" hint-placeholder-count="5">
+<sc-for list="{{kdShown}}" as="d" hint-placeholder-count="3">
 <li style="background: {{d.bg}}; color: {{d.fg}}; border-radius: 20px; padding: 16px 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap">
 <div aria-hidden="true" style="flex: none; width: 72px; border-radius: 14px; overflow: hidden; text-align: center; border: 1px solid {{d.tileBorder}}"><div style="background: {{d.tileTop}}; color: {{d.tileTopFg}}; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; padding: 4px 0">{{d.mon}}</div><div style="background: {{d.tileBg}}; color: {{d.tileFg}}; font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1; height: 50px; display: flex; align-items: center; justify-content: center; padding-bottom: 4px; box-sizing: border-box">{{d.day}}</div></div>
 <div style="flex: 1 1 260px; min-width: 0"><p style="margin: 0; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: {{d.muted}}">{{d.when}}</p><p style="margin: 2px 0 2px; font-weight: 700; font-size: 18px">{{d.title}}</p><p style="margin: 0; font-size: 14px; color: {{d.muted}}">{{d.text}}</p></div>
@@ -365,8 +366,13 @@ class Component extends DCLogic {
       const i = ORDER.indexOf(this.state.open);
       this.setState({ open: ORDER[(i + 1) % ORDER.length] });
     }, 7000);
+    // Key dates: show three at a time and move along every 6 seconds until someone uses the arrows.
+    this._k = setInterval(() => {
+      if (this.state.kdPicked) { clearInterval(this._k); return; }
+      this.setState({ kdOff: ((this.state.kdOff || 0) + 1) % 3 });
+    }, 6000);
   }
-  componentWillUnmount() { clearInterval(this._t); }
+  componentWillUnmount() { clearInterval(this._t); clearInterval(this._k); }
   renderVals() {
     const st = this.state;
     const stage = parseInt(this.props.stage || '4', 10);
@@ -449,6 +455,11 @@ class Component extends DCLogic {
         addLabel: on ? 'Added' : 'Add to calendar',
         add: () => this.setState({ cal: Object.assign({}, added, { [k]: true }) }) };
     });
+    const kdOff = st.kdOff || 0, kdMax = kdates.length - 3;
+    const kdShown = kdates.slice(kdOff, kdOff + 3);
+    const kdRange = (kdOff + 1) + '–' + (kdOff + 3) + ' of ' + kdates.length;
+    const kdPrev = () => this.setState({ kdOff: kdOff <= 0 ? kdMax : kdOff - 1, kdPicked: true });
+    const kdNext = () => this.setState({ kdOff: kdOff >= kdMax ? 0 : kdOff + 1, kdPicked: true });
     const today = new Date(2026, 9, 26);
     const dleft = Math.round((new Date(2026, 9, 30) - today) / 86400000);
     const upNext = Object.assign({}, kdates[0], { title: 'Deposit due', left: 'in ' + dleft + ' days, if your offer is accepted' });
@@ -558,7 +569,7 @@ class Component extends DCLogic {
     });
 
     return {
-      cur, kdates, upNext, ring, homeTag, steps, p, congrats, openTitle, pips,
+      cur, kdates, kdShown, kdRange, kdPrev, kdNext, upNext, ring, homeTag, steps, p, congrats, openTitle, pips,
       todosCond, todosKeys,
       homes, loved, noLoved: loved.length === 0, compareRows,
       showCompare: st.compare, compareOpen: st.compare ? 'true' : 'false',

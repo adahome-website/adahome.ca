@@ -5,7 +5,7 @@ The repo only ever holds ciphertext (source/private/<id>.json). A report opens i
 with BOTH the secret in the link's #fragment (never sent to any server) AND the client's first and
 last name. Without either, the page shows a friendly locked screen.
 
-  Encrypt a report (prints the link to send):
+  Encrypt a report (prints the link to send). Add --no-key for a short link that opens with the names alone:
     python3 build/private.py encrypt REPORT.html --id r7k2q9 --name "Jane Doe" [--name "John Doe" ...] [--link OLD_LINK]
   Read a report back for editing (needs the link and the name):
     python3 build/private.py decrypt r7k2q9 --link "https://adahome.ca/r7k2q9/#k=..." --name "Jane Doe" > REPORT.html
@@ -40,6 +40,8 @@ def secret_from_link(link):
 def encrypt(a):
     html = open(a.report, encoding='utf-8').read()
     secret = secret_from_link(a.link) if a.link else secrets.token_bytes(16)
+    if a.no_key:  # names alone open it; the salt lives in the page instead of the link
+        secret = ub64u(json.load(open(os.path.join(SRC, a.id + '.json'))).get('salt', '')) if a.keep_salt else secrets.token_bytes(16)
     # One random report key, wrapped once per person, so each of their names opens the same report.
     ck, iv = secrets.token_bytes(32), secrets.token_bytes(12)
     ct = AESGCM(ck).encrypt(iv, html.encode('utf-8'), None)
@@ -49,12 +51,14 @@ def encrypt(a):
         slots.append({'iv': b64u(siv), 'k': b64u(AESGCM(key(secret, n)).encrypt(siv, ck, None))})
     secrets.SystemRandom().shuffle(slots)
     os.makedirs(SRC, exist_ok=True)
-    json.dump({'v': 2, 'iter': ITER, 'iv': b64u(iv), 'ct': b64u(ct), 'slots': slots}, open(os.path.join(SRC, a.id + '.json'), 'w'))
-    print(f'https://adahome.ca/{a.id}/#k={b64u(secret)}')
+    d = {'v': 2, 'iter': ITER, 'iv': b64u(iv), 'ct': b64u(ct), 'slots': slots}
+    if a.no_key: d['salt'] = b64u(secret)
+    json.dump(d, open(os.path.join(SRC, a.id + '.json'), 'w'))
+    print(f'https://adahome.ca/{a.id}/' + ('' if a.no_key else f'#k={b64u(secret)}'))
 
 def decrypt(a):
     d = json.load(open(os.path.join(SRC, a.id + '.json')))
-    k = key(secret_from_link(a.link), a.name)
+    k = key(ub64u(d['salt']) if d.get('salt') else secret_from_link(a.link), a.name)
     if d.get('slots'):
         for sl in d['slots']:
             try: k = AESGCM(k).decrypt(ub64u(sl['iv']), ub64u(sl['k']), None); break
@@ -80,8 +84,8 @@ def build(a):
 
 p = argparse.ArgumentParser()
 sp = p.add_subparsers(dest='cmd', required=True)
-e = sp.add_parser('encrypt'); e.add_argument('report'); e.add_argument('--id', required=True); e.add_argument('--name', required=True, action='append'); e.add_argument('--link')
-d = sp.add_parser('decrypt'); d.add_argument('id'); d.add_argument('--link', required=True); d.add_argument('--name', required=True)
+e = sp.add_parser('encrypt'); e.add_argument('report'); e.add_argument('--id', required=True); e.add_argument('--name', required=True, action='append'); e.add_argument('--link'); e.add_argument('--no-key', action='store_true', help='open with names only, no #k= in the link'); e.add_argument('--keep-salt', action='store_true')
+d = sp.add_parser('decrypt'); d.add_argument('id'); d.add_argument('--link'); d.add_argument('--name', required=True)
 b = sp.add_parser('build'); b.add_argument('out')
 a = p.parse_args()
 {'encrypt': encrypt, 'decrypt': decrypt, 'build': build}[a.cmd](a)

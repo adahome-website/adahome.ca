@@ -151,13 +151,13 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
   var m = /[#&]k=([A-Za-z0-9_-]+)/.exec(location.hash);
   function ub64(s){ s = s.replace(/-/g,'+').replace(/_/g,'/'); while (s.length % 4) s += '='; var b = atob(s), u = new Uint8Array(b.length); for (var i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; }
   function norm(n){ return n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 \-']/g,' ').replace(/\s+/g,' ').trim(); }
-  if (!m || !window.crypto || !crypto.subtle) {
+  if ((!m && !P.salt) || !window.crypto || !crypto.subtle) {
     $('g-title').textContent = 'This report is private.';
     $('g-text').textContent = 'It opens from the personal link I sent you. Please use that link, or call me at (403) 464-1595 and I\u2019ll send it again.';
     $('g-form').hidden = true;
     return;
   }
-  var secret = ub64(m[1]);
+  var secret = P.salt ? ub64(P.salt) : ub64(m[1]);
   function open(full){
     return crypto.subtle.importKey('raw', new TextEncoder().encode(norm(full)), 'PBKDF2', false, ['deriveKey'])
       .then(function(base){ return crypto.subtle.deriveKey({name:'PBKDF2', salt: secret, iterations: P.iter, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['decrypt']); })

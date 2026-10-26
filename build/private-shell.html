@@ -71,6 +71,7 @@ input,button{font:inherit}
 .sec{padding:88px 0 24px;scroll-margin-top:16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
 .grid.three{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+@media (min-width:760px){.grid.three .wide{grid-column:span 2}}
 .grid.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
 .card{background:var(--card);border-radius:24px;padding:28px;min-width:0}
 .card.dark{background:var(--ink);color:var(--cream)}
@@ -117,7 +118,7 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
 <body>
 <header class="top"><div class="top-in">
 <a class="brand" href="/">Ada Celik<small>REALTOR® · Calgary</small></a>
-<div class="top-r"><span class="lock hide-s"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Private report</span><a class="pill" href="tel:+14034641595" aria-label="Call Ada at (403) 464-1595">Call Ada</a></div>
+<div class="top-r"><span class="lock hide-s"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Private report</span><a class="pill" href="tel:+14034641595" aria-label="Call me at (403) 464-1595">Call me</a></div>
 </div></header>
 <main id="main" tabindex="-1" style="outline:none">
 <section class="gate" id="gate"><div class="gate-in">
@@ -130,7 +131,7 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
 <p class="err" id="g-err" role="alert" aria-live="assertive"></p>
 <button type="submit" id="g-btn">Open my report</button>
 </form>
-<p class="fine">Questions? Call Ada at <a href="tel:+14034641595" style="color:inherit">(403) 464-1595</a>.</p>
+<p class="fine">Questions? Call me at <a href="tel:+14034641595" style="color:inherit">(403) 464-1595</a>.</p>
 </div></section>
 <div id="report" hidden></div>
 </main>
@@ -148,7 +149,7 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
   function norm(n){ return n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 \-']/g,' ').replace(/\s+/g,' ').trim(); }
   if (!m || !window.crypto || !crypto.subtle) {
     $('g-title').textContent = 'This report is private.';
-    $('g-text').textContent = 'It opens from the personal link Ada sent you. Please use that link, or call Ada and she will send it again.';
+    $('g-text').textContent = 'It opens from the personal link I sent you. Please use that link, or call me at (403) 464-1595 and I\u2019ll send it again.';
     $('g-form').hidden = true;
     return;
   }
@@ -174,7 +175,7 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
     if (!norm(f) || !norm(l)) { $('g-err').textContent = 'Please enter both your first and last name.'; return; }
     $('g-btn').disabled = true; $('g-btn').textContent = 'Opening…'; $('g-err').textContent = '';
     open(f + ' ' + l).catch(function(){
-      $('g-err').textContent = "That name doesn't match this report. Check the spelling, or call Ada at (403) 464-1595.";
+      $('g-err').textContent = "That name doesn't match this report. Check the spelling, or call me at (403) 464-1595.";
       $('g-btn').disabled = false; $('g-btn').textContent = 'Open my report';
     });
   });

@@ -317,7 +317,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <p style="margin: 6px 0 12px; font-size: 13px; color: #5A564E">{{m.source}}</p>
 <sc-if value="{{m.notPh}}" hint-placeholder-val="{{false}}"><div style="display: flex; gap: 8px; flex-wrap: wrap">
 <a href="{{m.tel}}" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #0D0D0D; color: #F4EFE6; font-weight: 600; font-size: 13px; text-decoration: none">Call</a>
-<a href="{{m.mail}}" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; font-weight: 600; font-size: 13px; text-decoration: none">Email</a>
+<sc-if value="{{m.hasMail}}" hint-placeholder-val="{{true}}"><a href="{{m.mail}}" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; font-weight: 600; font-size: 13px; text-decoration: none">Email</a></sc-if>
 <sc-if value="{{m.notPh}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{m.change}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: transparent; text-decoration: underline; text-underline-offset: 3px">Change</button></sc-if>
 </div></sc-if>
 <sc-if value="{{m.isPh}}" hint-placeholder-val="{{true}}"><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto"><button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Browse recommendations</button><button type="button" onClick="{{m.showOwn}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Add my own</button></div></sc-if>
@@ -333,22 +333,21 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 </sc-if>
 
 <sc-if value="{{m.suggesting}}" hint-placeholder-val="{{false}}">
-<p style="margin: 2px 0 6px; font-size: 13px; color: #5A564E">People I've worked with and trust. Pick one and I'll make the introduction.</p>
-<ul style="list-style: none; margin: 0; padding: 0 4px 0 0; display: grid; gap: 8px; align-content: start; flex: 1; min-height: 0; overflow-y: auto">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 2px 0 4px"><p style="margin: 0; font-size: 13px; color: #5A564E">Highly rated in Calgary. Pick one and I'll make the introduction.</p><button type="button" onClick="{{m.cancel}}" style="flex: none; min-height: 32px; padding: 0 4px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: transparent; text-decoration: underline; text-underline-offset: 3px; color: #0D0D0D">Back</button></div>
+<ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 6px">
 <sc-for list="{{m.options}}" as="o" hint-placeholder-count="3">
-<li><button type="button" onClick="{{o.pick}}" style="width: 100%; text-align: left; background: #F4EFE6; border: 1px solid #E2D9C9; border-radius: 14px; padding: 12px 14px; cursor: pointer; color: #0D0D0D"><b style="display: block; font-size: 15px">{{o.name}}</b><span style="display: block; font-size: 13px">{{o.firm}}</span><span style="display: block; font-size: 12px; color: #5A564E; margin-top: 2px">{{o.note}}</span></button></li>
+<li><button type="button" onClick="{{o.pick}}" style="width: 100%; min-height: 50px; text-align: left; background: #F4EFE6; border: 1px solid #E2D9C9; border-radius: 12px; padding: 7px 12px; cursor: pointer; color: #0D0D0D"><b style="display: block; font-size: 14px; line-height: 1.3">{{o.name}}</b><span style="display: block; font-size: 12px; line-height: 1.35; color: #5A564E">{{o.note}}</span></button></li>
 </sc-for>
 </ul>
-<button type="button" onClick="{{m.cancel}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 8px; border: 0; background: transparent; text-decoration: underline; text-underline-offset: 3px; align-self: flex-start">Back</button>
 </sc-if>
 
 <sc-if value="{{m.adding}}" hint-placeholder-val="{{false}}">
-<div style="display: grid; gap: 8px; margin-top: 6px; align-content: start; flex: 1; min-height: 0; overflow-y: auto; padding: 2px 4px 2px 2px">
-<label style="display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #5A564E">Name<input value="{{m.dName}}" onChange="{{m.setName}}" style="min-height: 44px; border-radius: 12px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; font-weight: 400; letter-spacing: normal; text-transform: none; color: #0D0D0D"></label>
-<label style="display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #5A564E">Company<input value="{{m.dFirm}}" onChange="{{m.setFirm}}" style="min-height: 44px; border-radius: 12px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; font-weight: 400; letter-spacing: normal; text-transform: none; color: #0D0D0D"></label>
-<label style="display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #5A564E">Phone<input type="tel" value="{{m.dPhone}}" onChange="{{m.setPhone}}" style="min-height: 44px; border-radius: 12px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; font-weight: 400; letter-spacing: normal; text-transform: none; color: #0D0D0D"></label>
-<label style="display: grid; gap: 4px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #5A564E">Email<input type="email" value="{{m.dEmail}}" onChange="{{m.setEmail}}" style="min-height: 44px; border-radius: 12px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; font-weight: 400; letter-spacing: normal; text-transform: none; color: #0D0D0D"></label>
-<p role="alert" style="margin: 0; min-height: 18px; font-size: 13px; color: #B3261E">{{m.err}}</p>
+<div style="display: grid; gap: 6px; margin-top: 4px">
+<input aria-label="Name" placeholder="Name" autocomplete="name" value="{{m.dName}}" onChange="{{m.setName}}" style="min-height: 40px; border-radius: 10px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; color: #0D0D0D; width: 100%; box-sizing: border-box">
+<input aria-label="Company (optional)" placeholder="Company (optional)" autocomplete="organization" value="{{m.dFirm}}" onChange="{{m.setFirm}}" style="min-height: 40px; border-radius: 10px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; color: #0D0D0D; width: 100%; box-sizing: border-box">
+<input type="tel" aria-label="Phone" placeholder="Phone" autocomplete="tel" value="{{m.dPhone}}" onChange="{{m.setPhone}}" style="min-height: 40px; border-radius: 10px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; color: #0D0D0D; width: 100%; box-sizing: border-box">
+<input type="email" aria-label="Email" placeholder="Email" autocomplete="email" value="{{m.dEmail}}" onChange="{{m.setEmail}}" style="min-height: 40px; border-radius: 10px; border: 1px solid #C9BFAE; background: #FFFFFF; padding: 0 12px; font-size: 15px; color: #0D0D0D; width: 100%; box-sizing: border-box">
+<p role="alert" style="margin: 0; min-height: 16px; font-size: 12px; color: #B3261E">{{m.err}}</p>
 <div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{m.save}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Save</button><button type="button" onClick="{{m.cancel}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Cancel</button></div>
 </div>
 </sc-if>
@@ -585,30 +584,30 @@ class Component extends DCLogic {
     const LABELS = ['Price', 'Size above grade', 'Beds / baths', 'Style', 'Lot', 'Your rating'];
     const compareRows = LABELS.map((label, i) => ({ label, vals: homes.map((h) => ({ t: h.cmp[i] })) }));
 
+    // Real, highly rated Calgary businesses (Google ratings, Oct 2026). Phone numbers are their public business lines.
     const ROLES = [
       ['law', 'Real estate lawyer', 'Reviews your contract, handles the money and registers your title.', [
-        ['Jordan Lee', 'Lee & Partners Law', 'Clear, calm and quick to reply.'],
-        ['Amelia Grant', 'Grant Real Estate Law', 'Great with condo purchases.'],
-        ['Daniel Okafor', 'Okafor Legal', 'Flexible evening and weekend signings.']]],
+        ['Property Law Firm CB LLP', 'Crowfoot NW and Southport SW', '+14038008000'],
+        ['LawyerG', '16 Avenue NW', '+14034545294'],
+        ['Altadore Law', '34 Avenue SW, Altadore', '+14039302590']]],
       ['mort', 'Mortgage specialist', 'Holds your rate and arranges the mortgage for this home.', [
-        ['Priya Shah', 'Bow River Mortgage', 'Compares rates across many lenders.'],
-        ['Tom Becker', 'Foothills Lending', 'Patient with first-time questions.'],
-        ['Sofia Martins', 'Chinook Mortgage Group', 'Fast approvals on tight deadlines.']]],
+        ['Mortgage Connection', '20 Avenue NW', '+15878302059'],
+        ['Rock Solid Mortgages', '11 Street SE', '+14036179740'],
+        ['Mortgages for Less', '14 Street NW', '+15876024835']]],
       ['insp', 'Home inspector', 'Checks the structure and systems before your conditions deadline.', [
-        ['Marc Dubois', 'Prairie Home Inspections', 'Explains the report in plain language.'],
-        ['Leah Park', 'Sentinel Home Inspections', 'Thorough with older homes.'],
-        ['Raj Patel', 'Summit Inspection Co.', 'Same-week availability.']]],
+        ['Twenty20 & Co. Inspections', '27 Avenue SW', '+14038365528'],
+        ['Nook & Cranny Home Inspections', 'Country Hills NE', '+15875754440'],
+        ['BOCC Inspections', 'Tuscany NW', '+14033897121']]],
       ['insb', 'Home insurance broker', 'Gets your home insured from possession day, which your lender requires.', [
-        ['Hannah Wright', 'Chinook Insurance Brokers', 'Shops several insurers for condo and bare-land coverage.'],
-        ['Omar Haddad', 'Westridge Insurance', 'Quick quotes, often same day.'],
-        ['Claire Fontaine', 'Bowview Insurance Group', 'Great at bundling home and auto.']]],
+        ['Ted Yan, Desjardins Insurance', 'Elbow Drive SW', '+14032812828'],
+        ['Westland Insurance', 'Olympic Way SE', '+14035081111'],
+        ['MKMK Insurance', 'Christie Park SW', '+14036681139']]],
       ['cdr', 'Condo document reviewer', 'Reads the budget, reserve fund study and minutes so you know what you are buying into.', [
-        ['Nadia Kowalski', 'ClearView Condo Reviews', 'Plain-language summary within 3 business days.'],
-        ['Ben Arcand', 'Condo Docs Alberta', 'Flags special assessments early.'],
-        ['Grace Liu', 'Keystone Document Review', 'Calls you to walk through the findings.']]]
+        ['CondoDocs.com', '23 Street NE', '+14039022166'],
+        ['CondoScan', '9 Avenue SW, Beltline', '+15879000139'],
+        ['Condo Docs Review', 'Centre A Street NE', '+14039987888']]]
     ];
     const defTeam = {};
-    ROLES.forEach((r) => { const o = r[3][0]; defTeam[r[0]] = { name: o[0], firm: o[1], phone: '+14035550101', email: o[0].split(' ')[0].toLowerCase() + '@example.com', ph: true }; });
     const team = st.team || defTeam, mode = st.tmode || {}, draft = st.tdraft || {}, terr = st.terr || {};
     const setT = (k, v) => this.setState({ team: Object.assign({}, team, { [k]: v }), tmode: Object.assign({}, mode, { [k]: null }) });
     const setM = (k, v) => this.setState({ tmode: Object.assign({}, mode, { [k]: v }), terr: Object.assign({}, terr, { [k]: '' }) });
@@ -620,12 +619,12 @@ class Component extends DCLogic {
         role, why,
         has: !!t && !m, empty: !t && !m, suggesting: m === 'suggest', adding: m === 'own',
         name: t ? t.name : '', firm: t ? t.firm : '', initials: t ? ini(t.name) : '',
-        source: t ? (t.ph ? 'Placeholder until you choose' : t.mine ? 'Added by you' : "Recommended by me · I'll make the introduction") : '',
+        source: t ? (t.ph ? 'Placeholder until you choose' : t.mine ? 'Added by you' : "Your pick · I'll make the introduction") : '',
         isPh: !!(t && t.ph), notPh: !(t && t.ph),
-        tel: t && t.phone ? 'tel:' + t.phone.replace(/[^0-9+]/g, '') : '#', mail: t && t.email ? 'mailto:' + t.email : '#',
+        tel: t && t.phone ? 'tel:' + t.phone.replace(/[^0-9+]/g, '') : '#', mail: t && t.email ? 'mailto:' + t.email : '#', hasMail: !!(t && t.email),
         change: () => setM(k, 'suggest'),
         showSuggest: () => setM(k, 'suggest'), showOwn: () => setM(k, 'own'), cancel: () => setM(k, null),
-        options: opts.map(([name, firm, note], j) => ({ name, firm, note, pick: () => setT(k, { name, firm, phone: '+1403555010' + (j + 1), email: name.split(' ')[0].toLowerCase() + '@example.com' }) })),
+        options: opts.map(([name, area, phone]) => ({ name, note: area + ' · Calgary', pick: () => setT(k, { name, firm: area + ', Calgary', phone, email: '' }) })),
         dName: d.name || '', dFirm: d.firm || '', dPhone: d.phone || '', dEmail: d.email || '', err: terr[k] || '',
         setName: setD(k, 'name'), setFirm: setD(k, 'firm'), setPhone: setD(k, 'phone'), setEmail: setD(k, 'email'),
         save: () => {

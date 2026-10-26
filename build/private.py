@@ -81,6 +81,22 @@ def build(a):
         open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(SHELL.replace('__PAYLOAD__', data))
         n += 1
     print('private reports:', n)
+    # Public demo reports (no names, no encryption): source/demo/<id>.html -> /client/<id>/, same look as a private report.
+    demo = os.path.join(ROOT, 'source', 'demo')
+    if not os.path.isdir(demo): return
+    for f in sorted(os.listdir(demo)):
+        if not f.endswith('.html'): continue
+        body = open(os.path.join(demo, f), encoding='utf-8').read()
+        page = re.sub(r'<section class="gate" id="gate">.*?</section>\n', '', SHELL, count=1, flags=re.S)
+        page = re.sub(r'<script>.*?</script>\n', '', page, count=1, flags=re.S)
+        page = page.replace('<div id="report" hidden></div>', '<div id="report">' + body + '</div>', 1)
+        page = page.replace('Private report</span>', 'Demo report</span>', 1)
+        m = re.search(r'<span data-title hidden>(.*?)</span>', body)
+        if m: page = re.sub(r'<title>.*?</title>', '<title>' + m.group(1) + '</title>', page, count=1)
+        out = os.path.join(a.out, 'client', f[:-5])
+        os.makedirs(out, exist_ok=True)
+        open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(page)
+        print('demo report:', '/client/' + f[:-5] + '/')
 
 p = argparse.ArgumentParser()
 sp = p.add_subparsers(dest='cmd', required=True)

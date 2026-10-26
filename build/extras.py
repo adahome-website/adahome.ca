@@ -3,7 +3,7 @@ OUT = sys.argv[1]
 SITE = 'https://adahome.ca'
 urls = []
 for root, dirs, files in os.walk(OUT):
-    if 'index.html' in files and '/assets' not in root:
+    if 'index.html' in files and '/assets' not in root and not os.path.relpath(root, OUT).replace(os.sep, '/').startswith('client'):
         rel = os.path.relpath(root, OUT)
         urls.append('/' if rel == '.' else '/' + rel.replace(os.sep, '/') + '/')
 urls.sort(key=lambda u: (u.count('/'), u))

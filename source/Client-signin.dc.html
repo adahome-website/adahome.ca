@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Client sign-in · Ada Celik, REALTOR®</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#0D0D0D}a{color:inherit}input,button{font:inherit}.ci-in:focus{outline:2px solid #F4EFE6;outline-offset:2px}</style>
+</helmet>
+<div style="font-family: 'Montserrat', system-ui, sans-serif; background: #0D0D0D; color: #F4EFE6; width: 100%; min-height: 900px; line-height: 1.6; display: flex; flex-direction: column">
+<header style="border-bottom: 1px solid #2A2925">
+<div style="max-width: 1240px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<a href="Gallery-tjka-th8q.dc.html" style="text-decoration: none; color: #F4EFE6"><span style="display: block; font-family: 'Cormorant Garamond', serif; font-size: 30px; line-height: 1">Ada Celik</span><span style="display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C9BFAE; margin-top: 6px">REALTOR® · Calgary</span></a>
+<a href="Gallery-tjka-th8q.dc.html" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 20px; border: 1px solid #F4EFE6; border-radius: 999px; font-weight: 600; font-size: 14px; text-decoration: none">← Back to adahome.ca</a>
+</div>
+</header>
+<main style="flex: 1; display: flex; align-items: center">
+<div style="max-width: 560px; width: 100%; margin: 0 auto; padding: 64px 24px 96px; box-sizing: border-box">
+<p style="margin: 0 0 14px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #C9BFAE">Client portal</p>
+<h1 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(44px, 7vw, 72px); line-height: 1">Welcome back.</h1>
+<p style="margin: 0 0 28px; font-size: 17px; color: #C9BFAE">Sign in with your first and last name to see where you are in your home journey, the homes you've seen and what's coming next.</p>
+<sc-if value="{{notOk}}" hint-placeholder-val="{{true}}">
+<div style="display: grid; gap: 14px">
+<label style="display: grid; gap: 8px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9BFAE">First name<input class="ci-in" autocomplete="given-name" value="{{first}}" onChange="{{setFirst}}" style="min-height: 52px; border-radius: 14px; border: 1px solid #3A3833; background: #1B1A18; color: #F4EFE6; padding: 0 16px; font-size: 17px; letter-spacing: normal; text-transform: none"></label>
+<label style="display: grid; gap: 8px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9BFAE">Last name<input class="ci-in" autocomplete="family-name" value="{{last}}" onChange="{{setLast}}" style="min-height: 52px; border-radius: 14px; border: 1px solid #3A3833; background: #1B1A18; color: #F4EFE6; padding: 0 16px; font-size: 17px; letter-spacing: normal; text-transform: none"></label>
+<p role="alert" style="margin: 0; min-height: 24px; color: #F2B8B5; font-size: 15px">{{err}}</p>
+<button type="button" onClick="{{submit}}" style="min-height: 52px; border-radius: 999px; border: 0; background: #F4EFE6; color: #0D0D0D; font-weight: 600; font-size: 16px; cursor: pointer">Open my portal</button>
+</div>
+</sc-if>
+<sc-if value="{{ok}}" hint-placeholder-val="{{false}}">
+<div style="background: #1B1A18; border: 1px solid #3A3833; border-radius: 20px; padding: 28px; display: grid; gap: 16px">
+<p style="margin: 0; font-size: 17px">Welcome back, <b>{{who}}</b>.</p>
+<a href="Client-portal.dc.html" style="min-height: 52px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; font-weight: 600; font-size: 16px; text-decoration: none">Continue to your portal →</a>
+</div>
+</sc-if>
+<p style="margin: 20px 0 0; font-size: 13px; color: #8E877B; border: 1px dashed #3A3833; border-radius: 12px; padding: 10px 14px">Want to see how it works? Sign in as <b style="color: #C9BFAE">Jane Doe</b> to explore a demo portal.</p>
+<p style="margin: 20px 0 0; font-size: 13px; color: #8E877B">New to working with me? <a href="Gallery-tjka-th8q.dc.html" style="color: #C9BFAE">Book a private consultation</a>. Trouble signing in? Call me at <a href="tel:+14034641595" style="color: #C9BFAE">(403) 464-1595</a>.</p>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { first: '', last: '', err: '', who: '' }; }
+  renderVals() {
+    const s = this.state;
+    const norm = (n) => (n || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 \-']/g, ' ').replace(/\s+/g, ' ').trim();
+    // Demo client for previewing the portal. Real client portals are added per client and stay private.
+    const CLIENTS = { 'jane doe': 'Jane and John', 'john doe': 'Jane and John' };
+    return {
+      first: s.first, last: s.last, err: s.err, who: s.who,
+      ok: !!s.who, notOk: !s.who,
+      setFirst: (e) => this.setState({ first: e.target.value, err: '' }),
+      setLast: (e) => this.setState({ last: e.target.value, err: '' }),
+      submit: () => {
+        const f = norm(s.first), l = norm(s.last);
+        if (!f || !l) { this.setState({ err: 'Please enter both your first and last name.' }); return; }
+        const who = CLIENTS[f + ' ' + l];
+        this.setState(who ? { who, err: '' } : { err: "That name doesn't match a client portal. Check the spelling, or call me at (403) 464-1595." });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -32,6 +32,10 @@ const LANGS = ['en', 'fr', 'tr'];
 const BASE_PAGES = PAGES.slice();
 PAGES.length = 0;
 for (const l of LANGS) for (const [n, u] of BASE_PAGES) PAGES.push(l === 'en' ? [n, u] : [n + '-' + l, '/' + l + u]);
+// Client portal pages: English only, not linked in the menu, kept out of search and the sitemap.
+const PRIVATE_PAGES = [['Client-signin', '/client/'], ['Client-portal', '/client/portal/']];
+const PRIVATE = new Set(PRIVATE_PAGES.map(([n]) => n));
+PAGES.push(...PRIVATE_PAGES);
 const langOf = (name) => (/-(fr|tr)$/.exec(name) || [, 'en'])[1];
 const baseOf = (name) => name.replace(/-(fr|tr)$/, '');
 const PAGES_BY_PATH = Object.fromEntries(BASE_PAGES.map(([n, u]) => [u, n]));
@@ -282,7 +286,8 @@ for (const [name, url] of PAGES) {
   let html = DC.renderToString(defs, 'Page', {});
   const lang = langOf(name), base = baseOf(name);
   if (lang === 'en') EN_HTML[base] = html;
-  const alternates = LANGS.map((l) => `<link rel="alternate" hreflang="${HTML_LANG[l]}" href="${SITE}${urlFor(base, l)}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${SITE}${urlFor(base, 'en')}">`;
+  const priv = PRIVATE.has(name);
+  const alternates = priv ? '' : LANGS.map((l) => `<link rel="alternate" hreflang="${HTML_LANG[l]}" href="${SITE}${urlFor(base, l)}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${SITE}${urlFor(base, 'en')}">`;
   const title = (/<title>([\s\S]*?)<\/title>/.exec(p.head) || [])[1] || 'Ada Celik, REALTOR®';
   const desc = (/<meta name="description" content="([^"]*)">/.exec(p.head) || [])[1] || '';
 
@@ -312,20 +317,20 @@ ${alternates}
 <meta property="og:url" content="${canon}">
 <meta property="og:image" content="${ogImg}">
 <meta property="og:locale" content="${OG_LOCALE[lang]}">
-${LANGS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternate" content="${OG_LOCALE[l]}">`).join('\n')}
+${priv ? '' : LANGS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternate" content="${OG_LOCALE[l]}">`).join('\n')}
 <meta property="og:image:alt" content="${ogAlt}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${title}">
 <meta name="twitter:description" content="${desc}">
 <meta name="twitter:image" content="${ogImg}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="robots" content="${priv ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}">
 <meta name="theme-color" content="#0D0D0D">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${headStyles}
-${schema(name, url, p, html, decode(title), decode(desc))}
+${priv ? '' : schema(name, url, p, html, decode(title), decode(desc))}
 </head>
 <body>
 <div id="dc-root">${html}</div>

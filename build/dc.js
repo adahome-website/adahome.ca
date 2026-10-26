@@ -277,6 +277,8 @@
         (window.requestAnimationFrame || setTimeout)(function () { pending = false; patchKids(rootEl, app.render(), false); });
       });
       patchKids(rootEl, app.render(), false);
+      // lifecycle: let components start timers etc. once they're on the page
+      Object.keys(app.instances).forEach(function (k) { var i = app.instances[k]; if (i.componentDidMount && !i.__mounted) { i.__mounted = true; i.componentDidMount(); } });
       return app;
     }
   };

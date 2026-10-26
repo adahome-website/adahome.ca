@@ -161,7 +161,14 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
   function open(full){
     return crypto.subtle.importKey('raw', new TextEncoder().encode(norm(full)), 'PBKDF2', false, ['deriveKey'])
       .then(function(base){ return crypto.subtle.deriveKey({name:'PBKDF2', salt: secret, iterations: P.iter, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['decrypt']); })
-      .then(function(k){ return crypto.subtle.decrypt({name:'AES-GCM', iv: ub64(P.iv)}, k, ub64(P.ct)); })
+      .then(function(k){
+        if (!P.slots) return crypto.subtle.decrypt({name:'AES-GCM', iv: ub64(P.iv)}, k, ub64(P.ct));
+        // Several people can open the same report: each name unlocks a copy of the report key.
+        var tries = P.slots.map(function(sl){ return crypto.subtle.decrypt({name:'AES-GCM', iv: ub64(sl.iv)}, k, ub64(sl.k)); });
+        return Promise.any(tries)
+          .then(function(raw){ return crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']); })
+          .then(function(ck){ return crypto.subtle.decrypt({name:'AES-GCM', iv: ub64(P.iv)}, ck, ub64(P.ct)); });
+      })
       .then(function(buf){
         var r = $('report');
         r.innerHTML = new TextDecoder().decode(buf);

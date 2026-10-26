@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Private client reports: encrypted pages at /c/<id>/ that are not in the menu, sitemap or search.
+"""Private client reports: encrypted pages at /<id>/ (e.g. /123-main-street-sw-market-analysis/) that are not in the menu, sitemap or search.
 
 The repo only ever holds ciphertext (source/private/<id>.json). A report opens in the browser only
 with BOTH the secret in the link's #fragment (never sent to any server) AND the client's first and
 last name. Without either, the page shows a friendly locked screen.
 
   Encrypt a report (prints the link to send):
-    python3 build/private.py encrypt REPORT.html --id r7k2q9 --name "Jane Doe" [--link OLD_LINK]
+    python3 build/private.py encrypt REPORT.html --id r7k2q9 --name "Jane Doe" [--name "John Doe" ...] [--link OLD_LINK]
   Read a report back for editing (needs the link and the name):
-    python3 build/private.py decrypt r7k2q9 --link "https://adahome.ca/c/r7k2q9/#k=..." --name "Jane Doe" > REPORT.html
+    python3 build/private.py decrypt r7k2q9 --link "https://adahome.ca/r7k2q9/#k=..." --name "Jane Doe" > REPORT.html
   Render shells into a built site (release.sh runs this):
     python3 build/private.py build docs-new
 """
@@ -40,15 +40,27 @@ def secret_from_link(link):
 def encrypt(a):
     html = open(a.report, encoding='utf-8').read()
     secret = secret_from_link(a.link) if a.link else secrets.token_bytes(16)
-    iv = secrets.token_bytes(12)
-    ct = AESGCM(key(secret, a.name)).encrypt(iv, html.encode('utf-8'), None)
+    # One random report key, wrapped once per person, so each of their names opens the same report.
+    ck, iv = secrets.token_bytes(32), secrets.token_bytes(12)
+    ct = AESGCM(ck).encrypt(iv, html.encode('utf-8'), None)
+    slots = []
+    for n in a.name:
+        siv = secrets.token_bytes(12)
+        slots.append({'iv': b64u(siv), 'k': b64u(AESGCM(key(secret, n)).encrypt(siv, ck, None))})
+    secrets.SystemRandom().shuffle(slots)
     os.makedirs(SRC, exist_ok=True)
-    json.dump({'v': 1, 'iter': ITER, 'iv': b64u(iv), 'ct': b64u(ct)}, open(os.path.join(SRC, a.id + '.json'), 'w'))
-    print(f'https://adahome.ca/c/{a.id}/#k={b64u(secret)}')
+    json.dump({'v': 2, 'iter': ITER, 'iv': b64u(iv), 'ct': b64u(ct), 'slots': slots}, open(os.path.join(SRC, a.id + '.json'), 'w'))
+    print(f'https://adahome.ca/{a.id}/#k={b64u(secret)}')
 
 def decrypt(a):
     d = json.load(open(os.path.join(SRC, a.id + '.json')))
-    sys.stdout.write(AESGCM(key(secret_from_link(a.link), a.name)).decrypt(ub64u(d['iv']), ub64u(d['ct']), None).decode('utf-8'))
+    k = key(secret_from_link(a.link), a.name)
+    if d.get('slots'):
+        for sl in d['slots']:
+            try: k = AESGCM(k).decrypt(ub64u(sl['iv']), ub64u(sl['k']), None); break
+            except Exception: pass
+        else: sys.exit('name does not open this report')
+    sys.stdout.write(AESGCM(k).decrypt(ub64u(d['iv']), ub64u(d['ct']), None).decode('utf-8'))
 
 SHELL = open(os.path.join(ROOT, 'build', 'private-shell.html'), encoding='utf-8').read() if os.path.exists(os.path.join(ROOT, 'build', 'private-shell.html')) else ''
 
@@ -59,7 +71,8 @@ def build(a):
         if not f.endswith('.json'): continue
         rid = f[:-5]
         data = open(os.path.join(SRC, f)).read().strip()
-        out = os.path.join(a.out, 'c', rid)
+        out = os.path.join(a.out, rid)
+        if os.path.exists(os.path.join(out, 'index.html')): sys.exit(f'{rid} clashes with a site page')
         os.makedirs(out, exist_ok=True)
         open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(SHELL.replace('__PAYLOAD__', data))
         n += 1
@@ -67,7 +80,7 @@ def build(a):
 
 p = argparse.ArgumentParser()
 sp = p.add_subparsers(dest='cmd', required=True)
-e = sp.add_parser('encrypt'); e.add_argument('report'); e.add_argument('--id', required=True); e.add_argument('--name', required=True); e.add_argument('--link')
+e = sp.add_parser('encrypt'); e.add_argument('report'); e.add_argument('--id', required=True); e.add_argument('--name', required=True, action='append'); e.add_argument('--link')
 d = sp.add_parser('decrypt'); d.add_argument('id'); d.add_argument('--link', required=True); d.add_argument('--name', required=True)
 b = sp.add_parser('build'); b.add_argument('out')
 a = p.parse_args()

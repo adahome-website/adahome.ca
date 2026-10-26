@@ -283,8 +283,8 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <div class="cp-wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 24px">
 <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">Your team</p>
 <h2 style="margin: 0 0 32px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(34px, 4vw, 52px); line-height: 1.05">The people on your side</h2>
-<div class="cp-g3" style="align-items: start">
-<div style="background: #0D0D0D; color: #F4EFE6; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 4px">
+<div class="cp-g3">
+<div style="background: #0D0D0D; color: #F4EFE6; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 4px; min-height: 480px; box-sizing: border-box">
 <span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 10px">AC</span>
 <p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #8E877B">Your REALTOR®</p>
 <p style="margin: 0; font-weight: 700; font-size: 17px">Ada Celik</p>
@@ -293,7 +293,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <div style="display: flex; gap: 8px; flex-wrap: wrap"><a href="tel:+14034641595" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; font-weight: 600; font-size: 13px; text-decoration: none">Call</a><a href="mailto:ada.celik@century21.ca" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; border: 1px solid #F4EFE6; font-weight: 600; font-size: 13px; text-decoration: none">Email</a></div>
 </div>
 <sc-for list="{{pros}}" as="m" hint-placeholder-count="3">
-<div style="background: #FBF8F2; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 4px">
+<div style="background: #FBF8F2; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 4px; min-height: 480px; box-sizing: border-box">
 <p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #5A564E">{{m.role}}</p>
 
 <sc-if value="{{m.has}}" hint-placeholder-val="{{false}}">
@@ -306,14 +306,14 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <a href="{{m.mail}}" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; font-weight: 600; font-size: 13px; text-decoration: none">Email</a>
 <sc-if value="{{m.notPh}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{m.change}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: transparent; text-decoration: underline; text-underline-offset: 3px">Change</button></sc-if>
 </div>
-<sc-if value="{{m.isPh}}" hint-placeholder-val="{{true}}"><div style="display: grid; gap: 8px; margin-top: 10px"><button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Who do you recommend?</button><button type="button" onClick="{{m.showOwn}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Add my own</button></div></sc-if>
+<sc-if value="{{m.isPh}}" hint-placeholder-val="{{true}}"><div style="display: grid; gap: 8px; margin-top: 10px"><button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Browse recommendations</button><button type="button" onClick="{{m.showOwn}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Add my own</button></div></sc-if>
 </sc-if>
 
 <sc-if value="{{m.empty}}" hint-placeholder-val="{{true}}">
 <p style="margin: 6px 0 2px; font-weight: 700; font-size: 17px">Not chosen yet</p>
 <p style="margin: 0 0 12px; font-size: 14px; color: #5A564E">{{m.why}}</p>
 <div style="display: grid; gap: 8px">
-<button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Who do you recommend?</button>
+<button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Browse recommendations</button>
 <button type="button" onClick="{{m.showOwn}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Add my own</button>
 </div>
 </sc-if>

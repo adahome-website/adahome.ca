@@ -311,7 +311,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <div class="cp-wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 24px">
 <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">Your favourites</p>
 <h2 style="margin: 0 0 8px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(34px, 4vw, 52px); line-height: 1.05">Homes you loved</h2>
-<p style="margin: 0 0 28px; color: #5A564E">Tap the heart on any home under Homes viewed to keep it here.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px; margin: 0 0 28px"><p style="margin: 0; color: #5A564E">Tap the heart on any home under Homes viewed to keep it here.</p><button type="button" onClick="{{seeViewed}}" style="min-height: 44px; padding: 0; border: 0; background: transparent; color: #0D0D0D; font-weight: 600; font-size: 15px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px">View all the homes you saw to add to this list ↑</button></div>
 <sc-if value="{{noLoved}}" hint-placeholder-val="{{false}}"><p style="margin: 0; background: #FBF8F2; border-radius: 20px; padding: 24px; color: #5A564E">No favourites yet.</p></sc-if>
 <div class="cp-g2">
 <sc-for list="{{loved}}" as="h" hint-placeholder-count="1">
@@ -699,6 +699,7 @@ class Component extends DCLogic {
     return {
       calOpen: !!calRow, calTitle, calWhen, calOpts, calClose: () => this.setState({ calFor: null }),
       cur, kdates, kdShown, kdRange, kdPrev, kdNext, upNext, ring, homeTag, steps, p, congrats, openTitle, pips,
+      seeViewed: () => { this.setState({ open: 'viewed', picked: true }); this._panelTop(); const j = document.getElementById('journey'); if (j) j.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
       todosCond, todosLegal, todosKeys,
       homes, loved, noLoved: loved.length === 0, compareRows,
       showCompare: st.compare, compareOpen: st.compare ? 'true' : 'false',

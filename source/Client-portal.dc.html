@@ -323,10 +323,11 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <button type="button" onClick="{{h.heart}}" aria-pressed="{{h.lovedAttr}}" aria-label="{{h.heartLabel}}" style="flex: none; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #0D0D0D; background: #F4EFE6; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="{{h.heartFill}}" stroke="#0D0D0D" stroke-width="1.6" stroke-linejoin="round"></path></svg></button>
 </div>
 <h3 style="margin: 0; font-size: 20px">{{h.addr}}</h3>
-<p style="margin: 0; color: #5A564E; font-size: 14px">{{h.price}} · {{h.spec}}</p>
-<p style="margin: 0; font-size: 14px">"{{h.theirNote}}"</p>
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1">{{h.price}}</p>
+<dl style="margin: 4px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px"><div><dt style="font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5A564E">Beds / baths</dt><dd style="margin: 2px 0 0; font-weight: 600; font-size: 15px">{{h.fBB}}</dd></div><div><dt style="font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5A564E">Size above grade</dt><dd style="margin: 2px 0 0; font-weight: 600; font-size: 15px">{{h.fSize}}</dd></div><div><dt style="font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5A564E">Style</dt><dd style="margin: 2px 0 0; font-weight: 600; font-size: 15px">{{h.fStyle}}</dd></div><div><dt style="font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5A564E">Lot</dt><dd style="margin: 2px 0 0; font-weight: 600; font-size: 15px">{{h.fLot}}</dd></div></dl>
 <div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px">
 <sc-if value="{{h.hasReport}}" hint-placeholder-val="{{true}}"><a href="{{h.report}}" target="_blank" rel="noopener" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 18px; border-radius: 999px; background: #0D0D0D; color: #F4EFE6; font-weight: 600; font-size: 14px; text-decoration: none">Open market analysis ↗</a></sc-if>
+<sc-if value="{{h.hasListing}}" hint-placeholder-val="{{true}}"><a href="{{h.listing}}" target="_blank" rel="noopener" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 18px; border-radius: 999px; border: 1px solid #0D0D0D; color: #0D0D0D; font-weight: 600; font-size: 14px; text-decoration: none">REALTOR.ca ↗</a></sc-if>
 </div>
 </div>
 </article>
@@ -632,6 +633,7 @@ class Component extends DCLogic {
           notes: Object.assign({}, st.notes, { [h.id]: st.fbNote.trim() || h.theirNote }),
           ratings: Object.assign({}, st.ratings, { [h.id]: st.fbStar || h.rating }) }),
         cancelFb: () => this.setState({ fb: null }),
+        fSize: h.cmp[1], fBB: h.cmp[2], fStyle: h.cmp[3], fLot: h.cmp[4],
         hasReport: !!h.report, hasListing: !!h.listing, noListing: !h.listing, hasPhoto: !!h.photo, noPhoto: !h.photo,
         heartFill: isLoved ? '#0D0D0D' : 'none', lovedAttr: isLoved ? 'true' : 'false',
         heartLabel: isLoved ? 'Remove ' + h.addr + ' from favourites' : 'Add ' + h.addr + ' to favourites',

@@ -437,12 +437,12 @@ class Component extends DCLogic {
       this.setState({ open: ORDER[(i + 1) % ORDER.length] });
       this._panelTop();
     }, 7000);
-    // Key dates: show three at a time and move along every 6 seconds until someone uses the arrows.
+    // Key dates: show three at a time and move along every 15 seconds until someone uses the arrows.
     this._k = setInterval(() => {
       if (this.state.kdPicked) { clearInterval(this._k); return; }
       this.setState({ kdOff: ((this.state.kdOff || 0) + 1) % 3 });
       this._kdSoon();
-    }, 6000);
+    }, 15000);
     this._kdSoon();
     this._kdResize = () => this._kdLayout();
     window.addEventListener('resize', this._kdResize);

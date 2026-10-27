@@ -62,6 +62,29 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}</
 </div>
 </section>
 
+<!-- CLIENT PORTAL (moved from the home page) -->
+<section id="client-portal" style="background: {{t.bg}}">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 24px 96px">
+<div id="portal" style="background: #e6dfd3; border-radius: 28px; padding: clamp(24px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column">
+<p style="margin: 0 0 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: {{t.eyebrow}}">Müşteri portalım</p>
+<div style="margin-top: auto; padding-top: 24px">
+<h3 style="margin: 0 0 10px; font-family: {{t.display}}; font-weight: {{t.displayWeight}}; font-size: clamp(26px, 2.8vw, 36px); line-height: 1.15">Ev sürecinizin her adımı tek bir yerde.</h3>
+<p style="margin: 0 0 14px; font-size: 16px; color: {{t.muted}}">Alıcılar ve satıcılar her adımı takip edebilir: zaman çizelgeniz, önemli tarihler, evler ve tüm ekibiniz tek bir özel portalda.</p>
+<p style="margin: 0 0 20px; font-size: 16px; font-weight: 600">Bu portalı müşterilerim için kendim geliştirdim, bu yüzden başka emlakçılarda bulamazsınız. Bir kez denediğinizde her şeyin tek bir yerde olmasını çok seveceksiniz.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding-top: 6px"><a href="Client-signin.dc.html" style="background: {{t.btnBg}}; color: {{t.btnText}}; text-decoration: none; padding: 15px 26px; border-radius: {{t.radius}}; font-weight: 600; font-size: 16px">Demoyu deneyin →</a><span style="font-size: 14px; color: {{t.muted}}">Örnek bir portalı incelemek için Jane Doe olarak giriş yapın.</span></div>
+</div>
+</div>
+<div role="group" aria-label="Müşteri portalı önizlemesi" onMouseLeave="{{pv.reset}}" style="flex: 1 1 320px; min-width: 0; max-width: 400px; margin: 0 auto; background: #0D0D0D; color: #F4EFE6; border-radius: 24px; padding: 22px; box-sizing: border-box; display: grid; gap: 14px; box-shadow: 0 24px 60px rgba(13,13,13,0.18)">
+<div style="display: flex; gap: 18px; align-items: center"><div aria-hidden="true" style="flex: none; width: 96px; height: 96px; border-radius: 999px; background: {{pv.ring}}; display: flex; align-items: center; justify-content: center"><div style="width: 78px; height: 78px; border-radius: 999px; background: #0D0D0D; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 40px">{{pv.n}}</div></div><div aria-live="polite"><p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9BFAE">İlerlemeniz · {{pv.step}}</p><p style="margin: 4px 0 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; line-height: 1.05">{{pv.title}}</p></div></div>
+<div aria-hidden="true" style="display: flex; gap: 6px"><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b0}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b1}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b2}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b3}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b4}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b5}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b6}}; transition: background 0.3s"></span><span style="flex: 1; height: 6px; border-radius: 999px; background: {{pv.b7}}; transition: background 0.3s"></span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px"><p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9BFAE">Sıradaki</p><p style="margin: 0; font-size: 11px; color: #8E877B">İlerlemek için bir tarihin üzerine gelin veya dokunun</p></div>
+<div style="display: grid; gap: 8px; font-size: 15px"><button type="button" onMouseEnter="{{pv.r0.go}}" onFocus="{{pv.r0.go}}" onClick="{{pv.r0.go}}" aria-pressed="{{pv.r0.on}}" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; border: 0; width: 100%; font: inherit; text-align: left; cursor: pointer; background: {{pv.r0.bg}}; color: {{pv.r0.fg}}; transition: background 0.25s, color 0.25s, transform 0.25s; transform: {{pv.r0.tf}}"><span style="font-weight: 600">Depozito</span><span style="opacity: 0.8">30 Ekim Cuma</span></button><button type="button" onMouseEnter="{{pv.r1.go}}" onFocus="{{pv.r1.go}}" onClick="{{pv.r1.go}}" aria-pressed="{{pv.r1.on}}" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; border: 0; width: 100%; font: inherit; text-align: left; cursor: pointer; background: {{pv.r1.bg}}; color: {{pv.r1.fg}}; transition: background 0.25s, color 0.25s, transform 0.25s; transform: {{pv.r1.tf}}"><span style="font-weight: 600">Ekspertiz</span><span style="opacity: 0.8">2 Kasım Pazartesi</span></button><button type="button" onMouseEnter="{{pv.r2.go}}" onFocus="{{pv.r2.go}}" onClick="{{pv.r2.go}}" aria-pressed="{{pv.r2.on}}" style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; border: 0; width: 100%; font: inherit; text-align: left; cursor: pointer; background: {{pv.r2.bg}}; color: {{pv.r2.fg}}; transition: background 0.25s, color 0.25s, transform 0.25s; transform: {{pv.r2.tf}}"><span style="font-weight: 600">Teslim</span><span style="opacity: 0.8">15 Aralık Salı</span></button></div>
+</div>
+</div>
+</div>
+</section>
+
 <!-- WHY CLIENTS HIRE ME (moved from the home page) -->
 <section id="why" style="background: #e6dfd3">
 <div style="max-width: 1240px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start">
@@ -93,6 +116,9 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}</
 <p style="margin: 0 0 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: {{t.muted}}">Sürpriz yok</p>
 <h2 style="margin: 0 0 14px; font-family: {{t.display}}; font-weight: {{t.displayWeight}}; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.05">Benimle sattığınızda tam olarak ne alıyorsunuz.</h2>
 <p style="margin: 0 0 36px; max-width: 720px; font-size: 18px; color: {{t.muted}}">Emlak işleri bazen belirsiz görünebilir. İşte dahil olan her şey, sade bir dille.</p>
+<button type="button" onClick="{{inc.toggle}}" aria-expanded="{{inc.open}}" aria-controls="included-table" style="min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid {{t.ink}}; background: transparent; color: {{t.ink}}; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; margin-bottom: 20px">{{inc.label}}</button>
+<sc-if value="{{inc.show}}" hint-placeholder-val="{{false}}">
+<div id="included-table">
 <div style="overflow-x: auto; background: #FBF8F2; border-radius: 24px">
 <table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 16px">
 <thead><tr><th scope="col" style="text-align: left; padding: 20px 24px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">Neler dahil</th><th scope="col" style="padding: 20px 16px; width: 200px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: {{t.muted}}">Basit bir ilan</th><th scope="col" style="padding: 20px 16px; width: 260px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; background: #0D0D0D; color: #F4EFE6; border-radius: 0 24px 0 0">Ada ile</th></tr></thead>
@@ -120,6 +146,8 @@ input:user-invalid{border-color:#B3261E !important;box-shadow:0 1px 0 #B3261E}</
 </tbody>
 </table>
 </div>
+</div>
+</sc-if>
 <p style="margin: 12px 0 0; font-size: 13px; color: {{t.muted}}">"Basit bir ilan" genel olarak asgari bir MLS® ilanını ifade eder; belirli bir emlakçıyı veya ofisi kastetmez.</p>
 </div>
 </section>
@@ -151,7 +179,17 @@ class Component extends DCLogic {
     const sent = (this.state && this.state.sent) || {};
     const forms = {};
     ["consultation"].forEach((k) => { forms[k] = { show: !sent[k], done: !!sent[k], formVis: sent[k] ? 'hidden' : 'visible', doneVis: sent[k] ? 'visible' : 'hidden', formHid: sent[k] ? 'true' : 'false', doneHid: sent[k] ? 'false' : 'true', submit: (e) => { if (e && e.preventDefault) e.preventDefault(); const fm = e && e.target && e.target.form; if (fm && fm.reportValidity && !fm.reportValidity()) return; this.setState({ sent: Object.assign({}, sent, { [k]: true }) }); }, reset: () => this.setState({ sent: Object.assign({}, sent, { [k]: false }) }) }; });
-    return Object.assign({}, this._vals(), { forms });
+    // Portal preview: hovering a date moves the progress ahead to that stage.
+    const pvi = (this.state && this.state.pv != null) ? this.state.pv : -1;
+    const PVS = [[4, "Teklif verildi"], [5, "Teklif kabul edildi"], [6, "Şartlar"], [8, "Anahtar teslimi"]];
+    const pvc = PVS[pvi + 1], pvN = pvc[0], n = String(pvN);
+    const pv = { n, title: pvc[1], step: '8 adımdan ' + n + '.', ring: 'conic-gradient(#F4EFE6 0 ' + (pvN * 45) + 'deg, #2A2925 ' + (pvN * 45) + 'deg 360deg)',
+      reset: () => this.setState({ pv: null }) };
+    for (let i = 0; i < 8; i++) pv['b' + i] = i < pvN ? '#F4EFE6' : '#2A2925';
+    for (let i = 0; i < 3; i++) { const on = pvi === -1 ? i === 0 : pvi === i; pv['r' + i] = { on: pvi === i ? 'true' : 'false', bg: on ? '#F4EFE6' : '#1B1A18', fg: on ? '#0D0D0D' : '#F4EFE6', tf: pvi === i ? 'translateX(4px)' : 'none', go: () => { if ((this.state && this.state.pv) !== i) this.setState({ pv: i }); } }; }
+    const incO = !!(this.state && this.state.incOpen);
+    const inc = { show: incO, open: incO ? 'true' : 'false', label: incO ? 'Listeyi gizle' + ' ↑' : 'Dahil olan her şeyi görün' + ' ↓', toggle: () => this.setState({ incOpen: !incO }) };
+    return Object.assign({}, this._vals(), { forms, pv, inc });
   }
   _vals() {
     const themes = {

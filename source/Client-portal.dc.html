@@ -11,19 +11,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inherit}
-.cp-track{display:grid;grid-template-columns:repeat(8,minmax(0,1fr))}
-.cp-step{position:relative;text-align:center}
-.cp-line{position:absolute;top:21px;left:0;right:0;height:3px}
-.cp-stepbtn{position:relative;width:100%;background:transparent;border:0;padding:0 6px 10px;cursor:pointer;color:#0D0D0D;text-align:inherit;border-radius:16px;transition:background .3s}
+.cp-jgrid{display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);gap:28px;align-items:start}
+.cp-jgrid .cp-g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cp-track{display:grid;grid-template-columns:1fr;gap:4px}
+.cp-step{position:relative;text-align:left}
+.cp-line{position:absolute;top:0;bottom:-4px;left:33px;width:3px}
+.cp-step:last-child .cp-line{bottom:50%}
+.cp-stepbtn{position:relative;width:100%;background:transparent;border:0;cursor:pointer;color:#0D0D0D;border-radius:16px;transition:background .3s}
+.cp-stepbtn,.cp-stepplain{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center;text-align:left;padding:10px 12px}
+.cp-dot{margin:0!important}
 .cp-panel{transition:opacity .35s}
 .cp-stepbtn:hover .cp-dot{box-shadow:0 0 0 6px #E2D9C9}
-.cp-stepplain{position:relative;padding:0 6px 10px}
+.cp-stepplain{position:relative}
 .cp-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 @media (max-width:640px){.cp-pro{height:370px!important}}
 .cp-g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .cp-g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 @media (max-width:980px){.cp-g4,.cp-g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:860px){.cp-track{grid-template-columns:1fr}.cp-step{text-align:left}.cp-line{top:0;bottom:0;left:21px;right:auto;width:3px;height:auto}.cp-stepbtn,.cp-stepplain{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:start;padding:0 0 18px}.cp-dot{margin:0!important}}
+@media (max-width:860px){.cp-jgrid{grid-template-columns:1fr;gap:18px}}
 @media (max-width:640px){.cp-g2,.cp-g3,.cp-g4{grid-template-columns:1fr}.cp-sec{padding:44px 0!important}.cp-wrap{padding:0 16px!important}.cp-panel{padding:22px!important}}
 .cp-love{position:relative;padding-left:42%;min-height:240px}.cp-lovepic{position:absolute;top:0;bottom:0;left:0;width:42%}
 @media (max-width:640px){.cp-love{padding-left:0;padding-top:200px}.cp-lovepic{width:100%;height:200px;bottom:auto}}
@@ -86,12 +91,13 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #5A564E">Your journey</p>
 <h2 style="margin: 0 0 8px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(34px, 4vw, 52px); line-height: 1.05">Step by step</h2>
 <p style="margin: 0 0 32px; color: #5A564E">Tap a step to see the details.</p>
+<div class="cp-jgrid">
 <ol class="cp-track" style="list-style: none; margin: 0; padding: 0">
 <sc-for list="{{steps}}" as="s" hint-placeholder-count="8">
 <li class="cp-step" aria-current="{{s.aria}}">
 <span class="cp-line" aria-hidden="true" style="background: {{s.line}}"></span>
 <sc-if value="{{s.click}}" hint-placeholder-val="{{true}}">
-<button type="button" class="cp-stepbtn" style="background: {{s.tint}}; padding-top: 10px; margin-top: -10px" onClick="{{s.pick}}" aria-expanded="{{s.expanded}}" aria-controls="cp-panel">
+<button type="button" class="cp-stepbtn" style="background: {{s.tint}}" onClick="{{s.pick}}" aria-expanded="{{s.expanded}}" aria-controls="cp-panel">
 <span class="cp-dot" aria-hidden="true" style="position: relative; width: 44px; height: 44px; margin: 0 auto 12px; border-radius: 999px; background: {{s.bg}}; color: {{s.fg}}; border: 2px solid {{s.border}}; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; box-sizing: border-box; outline: {{s.ring}}; outline-offset: 3px">{{s.mark}}</span>
 <span style="display: block"><b style="display: block; font-size: 14px; line-height: 1.3">{{s.title}}</b><span style="display: block; font-size: 12px; color: #5A564E; margin-top: 2px">{{s.date}}</span><sc-if value="{{s.here}}" hint-placeholder-val="{{false}}"><span style="display: inline-block; margin-top: 6px; background: #0D0D0D; color: #F4EFE6; border-radius: 999px; padding: 2px 10px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700">You are here</span></sc-if><span style="display: block; font-size: 12px; font-weight: 600; margin-top: 6px; text-decoration: underline; text-underline-offset: 3px; color: {{s.linkColor}}">{{s.linkLabel}}</span></span>
 </button>
@@ -106,7 +112,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 </sc-for>
 </ol>
 
-<div id="cp-panel" class="cp-panel" style="margin-top: 18px; background: #FBF8F2; border-radius: 28px; padding: 36px; border-top: 6px solid #0D0D0D">
+<div id="cp-panel" class="cp-panel" style="background: #FBF8F2; border-radius: 28px; padding: 36px; border-top: 6px solid #0D0D0D">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: -12px 0 22px"><span style="display: inline-flex; align-items: center; gap: 8px; background: #E2D9C9; border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase">Showing: {{openTitle}}</span><span style="display: inline-flex; gap: 6px" aria-hidden="true"><sc-for list="{{pips}}" as="pp" hint-placeholder-count="5"><span style="width: {{pp.w}}; height: 8px; border-radius: 999px; background: {{pp.bg}}; transition: width .3s"></span></sc-for></span></div>
 
 <!-- CONSULTATION -->
@@ -120,7 +126,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <div style="background: #F4EFE6; border-radius: 16px; padding: 18px"><p style="margin: 0; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #5A564E">Timing</p><p style="margin: 4px 0 0; font-weight: 600">Moved in before the new year</p></div>
 </div>
 <div class="cp-g2">
-<div style="border: 1px solid #E2D9C9; border-radius: 20px; padding: 22px"><p style="margin: 0 0 10px; font-weight: 700; font-size: 17px">Must-haves</p><ul style="margin: 0; padding-left: 18px; display: grid; gap: 6px"><li>Primary bedroom on the main floor</li><li>Attached garage</li><li>Lawn care and snow removal handled for you</li><li>An easy drive to your church in Airdrie</li><li>Close to a hospital and everyday shopping</li></ul></div>
+<div style="border: 1px solid #E2D9C9; border-radius: 20px; padding: 22px"><p style="margin: 0 0 10px; font-weight: 700; font-size: 17px">Must-haves</p><ul style="margin: 0; padding-left: 18px; display: grid; gap: 6px"><li>Primary bedroom on the main floor</li><li>Attached garage</li><li>Lawn care and snow removal handled for you</li><li>Quick access to Stoney Trail</li><li>Close to a hospital and everyday shopping</li></ul></div>
 <div style="border: 1px solid #E2D9C9; border-radius: 20px; padding: 22px"><p style="margin: 0 0 10px; font-weight: 700; font-size: 17px">Nice-to-haves</p><ul style="margin: 0; padding-left: 18px; display: grid; gap: 6px"><li>Backs onto green space</li><li>A sunny, south-facing yard</li><li>A finished basement for visiting family</li><li>Central air conditioning</li><li>Walking distance to the CTrain</li></ul></div>
 </div>
 <div style="background: #0D0D0D; color: #F4EFE6; border-radius: 20px; padding: 24px"><p style="margin: 0 0 8px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #8E877B">My notes</p><p style="margin: 0 0 10px; color: #E2D9C9">You're downsizing from a two-storey home and want to keep stairs to a minimum day to day. Jane would love a bright kitchen that opens to the living room. John wants a garage with room for a small workbench.</p><p style="margin: 0; color: #E2D9C9">You'd rather spend a little more for a quiet, well-kept complex than save on one that needs work. Possession is flexible as long as you're settled before the holidays.</p></div>
@@ -242,6 +248,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 
 </div>
 </div>
+</div>
 </section>
 
 <!-- KEY DATES -->
@@ -251,15 +258,17 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <h2 style="margin: 0 0 8px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(34px, 4vw, 52px); line-height: 1.05">Mark your calendar</h2>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin: 0 0 24px"><p style="margin: 0; color: #5A564E; max-width: 640px">The dates that matter to you once your offer is accepted, and what to have ready for each.</p>
 <div style="display: flex; align-items: center; gap: 10px"><span aria-live="polite" style="font-size: 13px; color: #5A564E">{{kdRange}}</span><button type="button" onClick="{{kdPrev}}" aria-label="Earlier dates" style="min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; background: #FBF8F2; font-weight: 600; font-size: 14px; cursor: pointer; color: #0D0D0D">↑</button><button type="button" onClick="{{kdNext}}" aria-label="Later dates" style="min-height: 44px; min-width: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; background: #FBF8F2; font-weight: 600; font-size: 14px; cursor: pointer; color: #0D0D0D">↓</button></div></div>
-<ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: 12px">
-<sc-for list="{{kdShown}}" as="d" hint-placeholder-count="3">
-<li style="background: {{d.bg}}; color: {{d.fg}}; border-radius: 20px; padding: 16px 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap">
+<div id="kd-view" style="overflow: hidden; transition: height 0.6s ease">
+<ol id="kd-list" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; transition: transform 0.6s ease">
+<sc-for list="{{kdates}}" as="d" hint-placeholder-count="5">
+<li aria-hidden="{{d.hid}}" style="background: {{d.bg}}; color: {{d.fg}}; border-radius: 20px; padding: 16px 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap">
 <div aria-hidden="true" style="flex: none; width: 72px; border-radius: 14px; overflow: hidden; text-align: center; border: 1px solid {{d.tileBorder}}"><div style="background: {{d.tileTop}}; color: {{d.tileTopFg}}; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; padding: 4px 0">{{d.mon}}</div><div style="background: {{d.tileBg}}; color: {{d.tileFg}}; font-family: 'Cormorant Garamond', serif; font-size: 34px; line-height: 1; height: 50px; display: flex; align-items: center; justify-content: center; padding-bottom: 4px; box-sizing: border-box">{{d.day}}</div></div>
 <div style="flex: 1 1 260px; min-width: 0"><p style="margin: 0; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: {{d.muted}}">{{d.when}}</p><p style="margin: 2px 0 2px; font-weight: 700; font-size: 18px">{{d.title}}</p><p style="margin: 0; font-size: 14px; color: {{d.muted}}">{{d.text}}</p></div>
-<button type="button" onClick="{{d.add}}" style="flex: none; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{d.fg}}; background: {{d.btnBg}}; color: {{d.btnFg}}; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>{{d.addLabel}}</button>
+<button type="button" tabindex="{{d.tab}}" onClick="{{d.add}}" style="flex: none; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid {{d.fg}}; background: {{d.btnBg}}; color: {{d.btnFg}}; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>{{d.addLabel}}</button>
 </li>
 </sc-for>
 </ol>
+</div>
 </div>
 </section>
 
@@ -326,9 +335,9 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <sc-if value="{{m.empty}}" hint-placeholder-val="{{true}}">
 <p style="margin: 6px 0 2px; font-weight: 700; font-size: 17px">Not chosen yet</p>
 <p style="margin: 0 0 12px; font-size: 14px; color: #5A564E">{{m.why}}</p>
-<div style="display: grid; gap: 8px">
-<button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Browse recommendations</button>
-<button type="button" onClick="{{m.showOwn}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Add my own</button>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto">
+<button type="button" onClick="{{m.showSuggest}}" style="min-height: 36px; padding: 0 14px; border-radius: 999px; font-weight: 600; font-size: 12px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Browse recommendations</button>
+<button type="button" onClick="{{m.showOwn}}" style="min-height: 36px; padding: 0 14px; border-radius: 999px; font-weight: 600; font-size: 12px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent; color: #0D0D0D">Add my own</button>
 </div>
 </sc-if>
 
@@ -396,9 +405,22 @@ class Component extends DCLogic {
     this._k = setInterval(() => {
       if (this.state.kdPicked) { clearInterval(this._k); return; }
       this.setState({ kdOff: ((this.state.kdOff || 0) + 1) % 3 });
+      this._kdSoon();
     }, 6000);
+    this._kdSoon();
+    this._kdResize = () => this._kdLayout();
+    window.addEventListener('resize', this._kdResize);
   }
-  componentWillUnmount() { clearInterval(this._t); clearInterval(this._k); }
+  // Key dates slide smoothly: the list moves up or down and the window resizes to fit three dates.
+  _kdSoon() { setTimeout(() => this._kdLayout(), 30); setTimeout(() => this._kdLayout(), 300); }
+  _kdLayout() {
+    const v = document.getElementById('kd-view'), l = document.getElementById('kd-list');
+    if (!v || !l || !l.children.length) return;
+    const it = l.children, o = Math.min(this.state.kdOff || 0, it.length - 1), last = it[Math.min(o + 2, it.length - 1)];
+    l.style.transform = 'translateY(' + (-(it[o].offsetTop - it[0].offsetTop)) + 'px)';
+    v.style.height = (last.offsetTop + last.offsetHeight - it[o].offsetTop) + 'px';
+  }
+  componentWillUnmount() { clearInterval(this._t); clearInterval(this._k); window.removeEventListener('resize', this._kdResize); }
   renderVals() {
     const st = this.state;
     const stage = parseInt(this.props.stage || '4', 10);
@@ -508,8 +530,9 @@ class Component extends DCLogic {
     const kdOff = st.kdOff || 0, kdMax = kdates.length - 3;
     const kdShown = kdates.slice(kdOff, kdOff + 3);
     const kdRange = (kdOff + 1) + '–' + (kdOff + 3) + ' of ' + kdates.length;
-    const kdPrev = () => this.setState({ kdOff: kdOff <= 0 ? kdMax : kdOff - 1, kdPicked: true });
-    const kdNext = () => this.setState({ kdOff: kdOff >= kdMax ? 0 : kdOff + 1, kdPicked: true });
+    const kdPrev = () => { this.setState({ kdOff: kdOff <= 0 ? kdMax : kdOff - 1, kdPicked: true }); this._kdSoon(); };
+    const kdNext = () => { this.setState({ kdOff: kdOff >= kdMax ? 0 : kdOff + 1, kdPicked: true }); this._kdSoon(); };
+    kdates.forEach((d, i) => { const vis = i >= kdOff && i < kdOff + 3; d.hid = vis ? 'false' : 'true'; d.tab = vis ? '0' : '-1'; });
     const today = new Date(2026, 9, 26);
     const dleft = Math.round((new Date(2026, 9, 30) - today) / 86400000);
     const upNext = Object.assign({}, kdates[0], { title: 'Deposit due', left: 'in ' + dleft + ' days, if your offer is accepted' });

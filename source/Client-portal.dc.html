@@ -11,7 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inherit}
-.cp-jgrid{display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);gap:28px;align-items:start}
+.cp-jgrid{display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);gap:28px;align-items:stretch}
+.cp-pwrap{position:relative;min-height:0}
+.cp-pwrap>.cp-panel{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
 .cp-jgrid .cp-g4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .cp-track{display:grid;grid-template-columns:1fr;gap:4px}
 .cp-step{position:relative;text-align:left}
@@ -28,7 +30,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 .cp-g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .cp-g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 @media (max-width:980px){.cp-g4,.cp-g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:860px){.cp-jgrid{grid-template-columns:1fr;gap:18px}}
+@media (max-width:860px){.cp-jgrid{grid-template-columns:1fr;gap:18px}.cp-pwrap>.cp-panel{position:static;max-height:75vh}}
 @media (max-width:640px){.cp-g2,.cp-g3,.cp-g4{grid-template-columns:1fr}.cp-sec{padding:44px 0!important}.cp-wrap{padding:0 16px!important}.cp-panel{padding:22px!important}}
 .cp-love{position:relative;padding-left:42%;min-height:240px}.cp-lovepic{position:absolute;top:0;bottom:0;left:0;width:42%}
 @media (max-width:640px){.cp-love{padding-left:0;padding-top:200px}.cp-lovepic{width:100%;height:200px;bottom:auto}}
@@ -112,6 +114,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 </sc-for>
 </ol>
 
+<div class="cp-pwrap">
 <div id="cp-panel" class="cp-panel" style="background: #FBF8F2; border-radius: 28px; padding: 36px; border-top: 6px solid #0D0D0D">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: -12px 0 22px"><span style="display: inline-flex; align-items: center; gap: 8px; background: #E2D9C9; border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase">Showing: {{openTitle}}</span><span style="display: inline-flex; gap: 6px" aria-hidden="true"><sc-for list="{{pips}}" as="pp" hint-placeholder-count="5"><span style="width: {{pp.w}}; height: 8px; border-radius: 999px; background: {{pp.bg}}; transition: width .3s"></span></sc-for></span></div>
 
@@ -246,6 +249,7 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 </div>
 </sc-if>
 
+</div>
 </div>
 </div>
 </div>
@@ -400,6 +404,7 @@ class Component extends DCLogic {
       if (this.state.picked) { clearInterval(this._t); return; }
       const i = ORDER.indexOf(this.state.open);
       this.setState({ open: ORDER[(i + 1) % ORDER.length] });
+      this._panelTop();
     }, 7000);
     // Key dates: show three at a time and move along every 6 seconds until someone uses the arrows.
     this._k = setInterval(() => {
@@ -420,6 +425,7 @@ class Component extends DCLogic {
     l.style.transform = 'translateY(' + (-(it[o].offsetTop - it[0].offsetTop)) + 'px)';
     v.style.height = (last.offsetTop + last.offsetHeight - it[o].offsetTop) + 'px';
   }
+  _panelTop() { setTimeout(() => { const el = document.getElementById('cp-panel'); if (el) el.scrollTop = 0; }, 30); }
   componentWillUnmount() { clearInterval(this._t); clearInterval(this._k); window.removeEventListener('resize', this._kdResize); }
   renderVals() {
     const st = this.state;
@@ -468,7 +474,7 @@ class Component extends DCLogic {
         expanded: sel ? 'true' : 'false',
         linkLabel: sel ? 'Showing details' : 'View details',
         linkColor: sel ? '#0D0D0D' : '#5A564E',
-        pick: () => this.setState({ open: id, picked: true })
+        pick: () => { this.setState({ open: id, picked: true }); this._panelTop(); }
       };
     });
     const c = STEPS[stage - 1];

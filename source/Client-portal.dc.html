@@ -331,8 +331,8 @@ body{margin:0;background:#F4EFE6}a{color:inherit}input,button,textarea{font:inhe
 <sc-if value="{{m.notPh}}" hint-placeholder-val="{{false}}"><div style="display: flex; gap: 8px; flex-wrap: wrap">
 <a href="{{m.tel}}" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #0D0D0D; color: #F4EFE6; font-weight: 600; font-size: 13px; text-decoration: none">Call</a>
 <sc-if value="{{m.hasMail}}" hint-placeholder-val="{{true}}"><a href="{{m.mail}}" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 999px; border: 1px solid #0D0D0D; font-weight: 600; font-size: 13px; text-decoration: none">Email</a></sc-if>
-<sc-if value="{{m.notPh}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{m.change}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: transparent; text-decoration: underline; text-underline-offset: 3px">Change</button></sc-if>
-</div></sc-if>
+</div>
+<div style="display: flex; gap: 4px 14px; flex-wrap: wrap; margin-top: auto; padding-top: 10px"><button type="button" onClick="{{m.change}}" style="min-height: 36px; padding: 0; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: transparent; color: #0D0D0D; text-decoration: underline; text-underline-offset: 3px">Pick another</button><button type="button" onClick="{{m.edit}}" style="min-height: 36px; padding: 0; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: transparent; color: #0D0D0D; text-decoration: underline; text-underline-offset: 3px">Edit or add my own</button></div></sc-if>
 <sc-if value="{{m.isPh}}" hint-placeholder-val="{{true}}"><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto"><button type="button" onClick="{{m.showSuggest}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: #0D0D0D; color: #F4EFE6">Browse recommendations</button><button type="button" onClick="{{m.showOwn}}" style="min-height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid #0D0D0D; background: transparent">Add my own</button></div></sc-if>
 </sc-if>
 
@@ -652,6 +652,7 @@ class Component extends DCLogic {
         isPh: !!(t && t.ph), notPh: !(t && t.ph),
         tel: t && t.phone ? 'tel:' + t.phone.replace(/[^0-9+]/g, '') : '#', mail: t && t.email ? 'mailto:' + t.email : '#', hasMail: !!(t && t.email),
         change: () => setM(k, 'suggest'),
+        edit: () => this.setState({ tmode: Object.assign({}, mode, { [k]: 'own' }), terr: Object.assign({}, terr, { [k]: '' }), tdraft: Object.assign({}, draft, { [k]: t ? { name: t.name, firm: t.firm || '', phone: t.phone || '', email: t.email || '' } : {} }) }),
         showSuggest: () => setM(k, 'suggest'), showOwn: () => setM(k, 'own'), cancel: () => setM(k, null),
         options: opts.map(([name, area, phone]) => ({ name, note: area + ' · Calgary', pick: () => setT(k, { name, firm: area + ', Calgary', phone, email: '' }) })),
         dName: d.name || '', dFirm: d.firm || '', dPhone: d.phone || '', dEmail: d.email || '', err: terr[k] || '',

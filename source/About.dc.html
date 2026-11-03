@@ -239,9 +239,9 @@ class Component extends DCLogic {
     Object.keys(hd).forEach((k) => { if (t[k] === undefined) t[k] = hd[k]; });
 
     const markets = {
-      detached: { label: 'Detached', headline: 'detached homes hold steady', summary: 'Detached prices are nearly flat year over year, and sales are up. Well-priced homes are still moving quickly.', price: '$739,400', yoy: '−0.95%', sales: '896', inventory: '2,968', dom: '38 days', mos: '3.3' },
-      townhouse: { label: 'Townhouses', headline: 'townhouse prices ease', summary: 'More townhouses on the market have nudged prices down, giving buyers more choice and time to decide.', price: '$412,400', yoy: '−5.5%', sales: '248', inventory: '1,103', dom: '50 days', mos: '4.5' },
-      condo: { label: 'Condos', headline: 'condo buyers gain leverage', summary: 'Condo prices are down year over year with plenty of supply, so buyers have real room to negotiate.', price: '$291,400', yoy: '−8.3%', sales: '343', inventory: '1,816', dom: '55 days', mos: '5.3' }
+      detached: { label: 'Detached', headline: 'detached homes hold steady', summary: 'Detached prices are nearly flat year over year, though fewer homes sold than last October. Well-priced homes are still selling.', price: '$735,100', yoy: '−0.72%', sales: '847', inventory: '2,832', dom: '39 days', mos: '3.3' },
+      townhouse: { label: 'Townhouses', headline: 'townhouse prices ease', summary: 'More townhouses on the market have nudged prices down, giving buyers more choice and time to decide.', price: '$407,500', yoy: '−5.1%', sales: '241', inventory: '1,069', dom: '46 days', mos: '4.4' },
+      condo: { label: 'Condos', headline: 'condo buyers gain leverage', summary: 'Condo prices are down year over year with plenty of supply, so buyers have real room to negotiate.', price: '$288,800', yoy: '−7.9%', sales: '320', inventory: '1,691', dom: '55 days', mos: '5.3' }
     };
     const mk = (this.state && this.state.market) || 'detached';
     const marketTabs = Object.keys(markets).map((k) => {
@@ -257,15 +257,15 @@ class Component extends DCLogic {
     });
 
     const hoods = [
-      { name: 'Mahogany', district: 'South East', price: '$698,900', yoy: '−1.55%', photo: 'Mahogany lake and beach', blurb: 'A lake community with a beach club, wetlands and pathways, plus a wide mix of newer homes.' },
-      { name: 'Auburn Bay', district: 'South East', price: '$698,900', yoy: '−1.55%', photo: 'Auburn Bay lake', blurb: 'A lake community near the South Health Campus, popular with young families.' },
-      { name: 'Seton', district: 'South East', price: '$698,900', yoy: '−1.55%', photo: 'Seton urban district', blurb: 'A growing urban hub with the South Health Campus, a large YMCA, shops and restaurants.' },
-      { name: 'Altadore', district: 'City Centre', price: '$981,300', yoy: '+0.72%', photo: 'Altadore infill street', blurb: 'Inner-city living near Marda Loop and River Park, known for modern infills.' },
-      { name: 'Kensington', district: 'City Centre', price: '$981,300', yoy: '+0.72%', photo: 'Kensington Road shops', blurb: 'Walkable streets of cafes and shops near the Bow River and CTrain.' },
-      { name: 'Aspen Woods', district: 'West', price: '$993,700', yoy: '+2.69%', photo: 'Aspen Woods homes', blurb: 'Larger west-side homes near private schools, with quick access to the mountains.' },
-      { name: 'Tuscany', district: 'North West', price: '$781,400', yoy: '−0.66%', photo: 'Tuscany ravine trail', blurb: 'An established family community with ravine trails and its own CTrain station.' },
-      { name: 'Evanston', district: 'North', price: '$640,200', yoy: '−3.80%', photo: 'Evanston park', blurb: 'Newer, more affordable family homes with parks and easy Stoney Trail access.' },
-      { name: 'Cranston', district: 'South East', price: '$698,900', yoy: '−1.55%', photo: 'Cranston ridge and Bow River valley', blurb: 'A family community beside Fish Creek Park, with Bow River valley pathways and a big residents\' club.' }
+      { name: 'Mahogany', district: 'South East', price: '$695,700', yoy: '−1.18%', photo: 'Mahogany lake and beach', blurb: 'A lake community with a beach club, wetlands and pathways, plus a wide mix of newer homes.' },
+      { name: 'Auburn Bay', district: 'South East', price: '$695,700', yoy: '−1.18%', photo: 'Auburn Bay lake', blurb: 'A lake community near the South Health Campus, popular with young families.' },
+      { name: 'Seton', district: 'South East', price: '$695,700', yoy: '−1.18%', photo: 'Seton urban district', blurb: 'A growing urban hub with the South Health Campus, a large YMCA, shops and restaurants.' },
+      { name: 'Altadore', district: 'City Centre', price: '$992,500', yoy: '+3.29%', photo: 'Altadore infill street', blurb: 'Inner-city living near Marda Loop and River Park, known for modern infills.' },
+      { name: 'Kensington', district: 'City Centre', price: '$992,500', yoy: '+3.29%', photo: 'Kensington Road shops', blurb: 'Walkable streets of cafes and shops near the Bow River and CTrain.' },
+      { name: 'Aspen Woods', district: 'West', price: '$988,400', yoy: '+3.15%', photo: 'Aspen Woods homes', blurb: 'Larger west-side homes near private schools, with quick access to the mountains.' },
+      { name: 'Tuscany', district: 'North West', price: '$765,500', yoy: '−2.53%', photo: 'Tuscany ravine trail', blurb: 'An established family community with ravine trails and its own CTrain station.' },
+      { name: 'Evanston', district: 'North', price: '$635,700', yoy: '−3.46%', photo: 'Evanston park', blurb: 'Newer, more affordable family homes with parks and easy Stoney Trail access.' },
+      { name: 'Cranston', district: 'South East', price: '$695,700', yoy: '−1.18%', photo: 'Cranston ridge and Bow River valley', blurb: 'A family community beside Fish Creek Park, with Bow River valley pathways and a big residents\' club.' }
     ];
     const mustDefs = [
       { k: 'garage', label: 'Garage', icon: 'M3 21V9l9-6 9 6v12M7 21v-8h10v8M7 17h10' },

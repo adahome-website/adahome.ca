@@ -61,7 +61,7 @@
 <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
 <div style="background: #FBF8F2; border-radius: 20px; padding: 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px">No land transfer tax</h3><p style="margin: 0; color: #5A564E; font-size: 15px">Alberta charges Land Titles fees instead, which are much smaller.</p></div>
 <div style="background: #FBF8F2; border-radius: 20px; padding: 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px">First-time buyer?</h3><p style="margin: 0; color: #5A564E; font-size: 15px">The FHSA and RRSP Home Buyers' Plan can help with your down payment.</p></div>
-<div style="background: #FBF8F2; border-radius: 20px; padding: 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px">Calgary benchmarks</h3><p style="margin: 0; color: #5A564E; font-size: 15px">Detached $739,400 · Townhouse $412,400 · Condo $291,400 (CREB, Sept 2026).</p></div>
+<div style="background: #FBF8F2; border-radius: 20px; padding: 24px"><h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px">Calgary benchmarks</h3><p style="margin: 0; color: #5A564E; font-size: 15px">Detached $735,100 · Townhouse $407,500 · Condo $288,800 (CREB, Oct 2026).</p></div>
 </div>
 </section>
 
@@ -148,7 +148,7 @@ class Component extends DCLogic {
     ["consultation"].forEach((k) => { forms[k] = { show: !sent[k], done: !!sent[k], formVis: sent[k] ? 'hidden' : 'visible', doneVis: sent[k] ? 'visible' : 'hidden', formHid: sent[k] ? 'true' : 'false', doneHid: sent[k] ? 'false' : 'true', submit: (e) => { if (e && e.preventDefault) e.preventDefault(); const fm = e && e.target && e.target.form; if (fm && fm.reportValidity && !fm.reportValidity()) return; this.setState({ sent: Object.assign({}, sent, { [k]: true }) }); }, reset: () => this.setState({ sent: Object.assign({}, sent, { [k]: false }) }) }; });
     return Object.assign({}, this._vals(), { forms });
   }
-  constructor(p) { super(p); this.state = { price: 550000, rate: 4.5, dp: 'min', iPrice: 412400, iRent: 2300, iRate: 4.5, cTax: 250, cIns: 75, cFees: 250, cMaint: 75, cVac: 5 }; }
+  constructor(p) { super(p); this.state = { price: 550000, rate: 4.5, dp: 'min', iPrice: 407500, iRent: 2300, iRate: 4.5, cTax: 250, cIns: 75, cFees: 250, cMaint: 75, cVac: 5 }; }
   _vals() {
     const s = this.state;
     const dr = s.drafts || {};
@@ -196,7 +196,7 @@ class Component extends DCLogic {
         const dr = (s.drafts || {})[k];
         const shown = (s.cVac || 0).toLocaleString('en-CA', { maximumFractionDigits: 1 });
         // Source shown next to the label; update when CMHC publishes a new Rental Market Survey (each December).
-        return { id: 'cost-' + k, label, src: 'https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/market-reports/rental-market-reports-major-centres', srcText: 'Calgary: 5.1% in 2025 (CMHC)', srcAria: 'Calgary\'s rental vacancy rate, from CMHC\'s Rental Market Survey (opens in a new tab)', hint: 'Share of rent, about ' + money(vacAmt) + '/mo', pre: '', suf: '%', val: dr !== undefined ? dr : shown,
+        return { id: 'cost-' + k, label, src: 'https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/market-reports/rental-market-reports-major-centres', srcText: 'Calgary: 5.0% in 2025 (CMHC)', srcAria: 'Calgary\'s rental vacancy rate, from CMHC\'s Rental Market Survey (opens in a new tab)', hint: 'Share of rent, about ' + money(vacAmt) + '/mo', pre: '', suf: '%', val: dr !== undefined ? dr : shown,
           set: (e) => { const raw = String(e.target.value); const v = parseFloat(raw.replace(',', '.').replace(/[^0-9.]/g, '')); this.setState({ drafts: Object.assign({}, this.state.drafts, { [k]: raw }), cVac: isNaN(v) ? 0 : Math.min(100, v) }); },
           blur: () => { const d = Object.assign({}, this.state.drafts); delete d[k]; this.setState({ drafts: d }); } };
       }
@@ -212,11 +212,11 @@ class Component extends DCLogic {
       priceVal: fPrice.val, setPrice: fPrice.set, priceBlur: fPrice.blur,
       iPriceVal: fIPrice.val, setIPrice: fIPrice.set, iPriceBlur: fIPrice.blur,
       iPriceUp: () => this.setState({ iPrice: s.iPrice + 10000 }), iPriceDown: () => this.setState({ iPrice: Math.max(10000, s.iPrice - 10000) }),
-      iPricePresets: [[291400, 'Condo $291K'], [412400, 'Townhouse $412K'], [685200, 'Semi $685K'], [739400, 'Detached $739K']].map(([v, l]) => ({ label: l, pick: () => this.setState({ iPrice: v }) })),
+      iPricePresets: [[288800, 'Condo $289K'], [407500, 'Townhouse $408K'], [685200, 'Semi $685K'], [735100, 'Detached $735K']].map(([v, l]) => ({ label: l, pick: () => this.setState({ iPrice: v }) })),
       iRentVal: fIRent.val, setIRent: fIRent.set, iRentBlur: fIRent.blur,
       iRentUp: () => this.setState({ iRent: s.iRent + 100 }), iRentDown: () => this.setState({ iRent: Math.max(0, s.iRent - 100) }),
       iRentPresets: [1800, 2300, 2900, 3500].map((v) => ({ label: money(v), pick: () => this.setState({ iRent: v }) })),
-      presets: [[291400, 'Condo $291K'], [412400, 'Townhouse $412K'], [739400, 'Detached $739K']].map(([v, l]) => ({ label: l, pick: () => setP(v) })),
+      presets: [[288800, 'Condo $289K'], [407500, 'Townhouse $408K'], [735100, 'Detached $735K']].map(([v, l]) => ({ label: l, pick: () => setP(v) })),
       downs: [['min', 'Minimum'], ['10', '10%'], ['15', '15%'], ['20', '20%']].map(([k, l]) => Object.assign({ label: l, pick: () => this.setState({ dp: k }) }, pill(s.dp === k))),
       rates: [[4, '4.0%'], [4.5, '4.5%'], [5, '5.0%']].map(([k, l]) => Object.assign({ label: l, pick: () => this.setState({ rate: k }) }, pill(s.rate === k))),
       dpVal: fDown.val, rateVal: fRate.val, downBlur: fDown.blur, rateBlur: fRate.blur,

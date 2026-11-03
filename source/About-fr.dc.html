@@ -239,9 +239,9 @@ class Component extends DCLogic {
     Object.keys(hd).forEach((k) => { if (t[k] === undefined) t[k] = hd[k]; });
 
     const markets = {
-      detached: { label: 'Maisons individuelles', headline: 'les maisons individuelles tiennent bon', summary: 'Les prix des maisons individuelles sont presque stables sur un an, et les ventes sont en hausse. Les maisons au bon prix se vendent encore rapidement.', price: '739 400 $', yoy: '−0,95 %', sales: '896', inventory: '2 968', dom: '38 jours', mos: '3,3' },
-      townhouse: { label: 'Maisons en rangée', headline: 'les prix des maisons en rangée s\'adoucissent', summary: 'Plus de maisons en rangée sur le marché ont fait baisser les prix, ce qui donne aux acheteurs plus de choix et de temps pour décider.', price: '412 400 $', yoy: '−5,5 %', sales: '248', inventory: '1 103', dom: '50 jours', mos: '4,5' },
-      condo: { label: 'Condos', headline: 'les acheteurs de condos gagnent du levier', summary: 'Les prix des condos sont en baisse sur un an avec beaucoup d\'offre, ce qui donne aux acheteurs une vraie marge de négociation.', price: '291 400 $', yoy: '−8,3 %', sales: '343', inventory: '1 816', dom: '55 jours', mos: '5,3' }
+      detached: { label: 'Maisons individuelles', headline: 'les maisons individuelles tiennent bon', summary: 'Les prix des maisons individuelles sont presque stables sur un an, même si les ventes ont été moins nombreuses qu\'en octobre dernier. Les maisons au bon prix se vendent encore.', price: '735 100 $', yoy: '−0,72 %', sales: '847', inventory: '2 832', dom: '39 jours', mos: '3,3' },
+      townhouse: { label: 'Maisons en rangée', headline: 'les prix des maisons en rangée s\'adoucissent', summary: 'Plus de maisons en rangée sur le marché ont fait baisser les prix, ce qui donne aux acheteurs plus de choix et de temps pour décider.', price: '407 500 $', yoy: '−5,1 %', sales: '241', inventory: '1 069', dom: '46 jours', mos: '4,4' },
+      condo: { label: 'Condos', headline: 'les acheteurs de condos gagnent du levier', summary: 'Les prix des condos sont en baisse sur un an avec beaucoup d\'offre, ce qui donne aux acheteurs une vraie marge de négociation.', price: '288 800 $', yoy: '−7,9 %', sales: '320', inventory: '1 691', dom: '55 jours', mos: '5,3' }
     };
     const mk = (this.state && this.state.market) || 'detached';
     const marketTabs = Object.keys(markets).map((k) => {
@@ -257,15 +257,15 @@ class Component extends DCLogic {
     });
 
     const hoods = [
-      { name: 'Mahogany', district: 'Sud-Est', price: '698 900 $', yoy: '−1,55 %', photo: 'Lac et plage de Mahogany', blurb: 'Un quartier lacustre avec club de plage, milieux humides et sentiers, et un grand choix de maisons récentes.' },
-      { name: 'Auburn Bay', district: 'Sud-Est', price: '698 900 $', yoy: '−1,55 %', photo: 'Lac d\'Auburn Bay', blurb: 'Un quartier lacustre près du South Health Campus, populaire auprès des jeunes familles.' },
-      { name: 'Seton', district: 'Sud-Est', price: '698 900 $', yoy: '−1,55 %', photo: 'Le quartier urbain de Seton', blurb: 'Un pôle urbain en pleine croissance avec le South Health Campus, un grand YMCA, des boutiques et des restaurants.' },
-      { name: 'Altadore', district: 'Centre-ville', price: '981 300 $', yoy: '+0,72 %', photo: 'Rue d\'Altadore avec maisons intercalaires', blurb: 'La vie au cœur de la ville, près de Marda Loop et de River Park, réputée pour ses maisons intercalaires modernes.' },
-      { name: 'Kensington', district: 'Centre-ville', price: '981 300 $', yoy: '+0,72 %', photo: 'Boutiques de Kensington Road', blurb: 'Des rues piétonnes bordées de cafés et de boutiques, près de la rivière Bow et du CTrain.' },
-      { name: 'Aspen Woods', district: 'Ouest', price: '993 700 $', yoy: '+2,69 %', photo: 'Maisons d\'Aspen Woods', blurb: 'De grandes maisons dans l\'ouest, près d\'écoles privées, avec un accès rapide aux montagnes.' },
-      { name: 'Tuscany', district: 'Nord-Ouest', price: '781 400 $', yoy: '−0,66 %', photo: 'Sentier du ravin de Tuscany', blurb: 'Un quartier familial établi avec des sentiers de ravin et sa propre station de CTrain.' },
-      { name: 'Evanston', district: 'Nord', price: '640 200 $', yoy: '−3,80 %', photo: 'Parc d\'Evanston', blurb: 'Des maisons familiales plus récentes et plus abordables, avec des parcs et un accès facile à Stoney Trail.' },
-      { name: 'Cranston', district: 'Sud-Est', price: '698 900 $', yoy: '−1,55 %', photo: 'Crête de Cranston et vallée de la rivière Bow', blurb: 'Un quartier familial en bordure du parc Fish Creek, avec des sentiers dans la vallée de la Bow et un grand centre communautaire.' }
+      { name: 'Mahogany', district: 'Sud-Est', price: '695 700 $', yoy: '−1,18 %', photo: 'Lac et plage de Mahogany', blurb: 'Un quartier lacustre avec club de plage, milieux humides et sentiers, et un grand choix de maisons récentes.' },
+      { name: 'Auburn Bay', district: 'Sud-Est', price: '695 700 $', yoy: '−1,18 %', photo: 'Lac d\'Auburn Bay', blurb: 'Un quartier lacustre près du South Health Campus, populaire auprès des jeunes familles.' },
+      { name: 'Seton', district: 'Sud-Est', price: '695 700 $', yoy: '−1,18 %', photo: 'Le quartier urbain de Seton', blurb: 'Un pôle urbain en pleine croissance avec le South Health Campus, un grand YMCA, des boutiques et des restaurants.' },
+      { name: 'Altadore', district: 'Centre-ville', price: '992 500 $', yoy: '+3,29 %', photo: 'Rue d\'Altadore avec maisons intercalaires', blurb: 'La vie au cœur de la ville, près de Marda Loop et de River Park, réputée pour ses maisons intercalaires modernes.' },
+      { name: 'Kensington', district: 'Centre-ville', price: '992 500 $', yoy: '+3,29 %', photo: 'Boutiques de Kensington Road', blurb: 'Des rues piétonnes bordées de cafés et de boutiques, près de la rivière Bow et du CTrain.' },
+      { name: 'Aspen Woods', district: 'Ouest', price: '988 400 $', yoy: '+3,15 %', photo: 'Maisons d\'Aspen Woods', blurb: 'De grandes maisons dans l\'ouest, près d\'écoles privées, avec un accès rapide aux montagnes.' },
+      { name: 'Tuscany', district: 'Nord-Ouest', price: '765 500 $', yoy: '−2,53 %', photo: 'Sentier du ravin de Tuscany', blurb: 'Un quartier familial établi avec des sentiers de ravin et sa propre station de CTrain.' },
+      { name: 'Evanston', district: 'Nord', price: '635 700 $', yoy: '−3,46 %', photo: 'Parc d\'Evanston', blurb: 'Des maisons familiales plus récentes et plus abordables, avec des parcs et un accès facile à Stoney Trail.' },
+      { name: 'Cranston', district: 'Sud-Est', price: '695 700 $', yoy: '−1,18 %', photo: 'Crête de Cranston et vallée de la rivière Bow', blurb: 'Un quartier familial en bordure du parc Fish Creek, avec des sentiers dans la vallée de la Bow et un grand centre communautaire.' }
     ];
     const mustDefs = [
       { k: 'garage', label: 'Garage', icon: 'M3 21V9l9-6 9 6v12M7 21v-8h10v8M7 17h10' },

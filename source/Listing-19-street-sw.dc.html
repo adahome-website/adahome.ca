@@ -120,7 +120,7 @@ class Component extends DCLogic {
     const PH = IDS.map((id) => '/_blob/' + id);
     const price = 315000, tax = 2121;
     // Mortgage rate: lowest 5-year fixed rate for a 20%-down purchase, checked and updated every month.
-    const RATE = 4.44, RATE_MONTH = '2026-10';
+    const RATE = 4.44, RATE_MONTH = '2026-11';
     const rateMonth = new Date(RATE_MONTH + '-15T12:00:00').toLocaleDateString({en:'en-CA',fr:'fr-CA',tr:'tr-TR'}['en'], { month: 'long', year: 'numeric' });
     // Canadian fixed-rate mortgages compound semi-annually.
     const r = Math.pow(1 + RATE / 200, 1 / 6) - 1, n = 300, loan = price * 0.8;

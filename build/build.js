@@ -33,7 +33,7 @@ const BASE_PAGES = PAGES.slice();
 PAGES.length = 0;
 for (const l of LANGS) for (const [n, u] of BASE_PAGES) PAGES.push(l === 'en' ? [n, u] : [n + '-' + l, '/' + l + u]);
 // Client portal pages: English only, not linked in the menu, kept out of search and the sitemap.
-const PRIVATE_PAGES = [['Client-signin', '/client/'], ['Client-portal', '/client/portal/']];
+const PRIVATE_PAGES = [['Client-signin', '/client/'], ['Client-choose', '/client/choose/'], ['Client-portal', '/client/portal/']];
 const PRIVATE = new Set(PRIVATE_PAGES.map(([n]) => n));
 PAGES.push(...PRIVATE_PAGES);
 const langOf = (name) => (/-(fr|tr)$/.exec(name) || [, 'en'])[1];

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Choose your report · Ada Celik, REALTOR®</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#0D0D0D}a{color:inherit}.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.ch-card{background:#1B1A18;border:1px solid #3A3833;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#F4EFE6;transition:border-color .2s,transform .2s}.ch-card:hover,.ch-card:focus-visible{border-color:#F4EFE6;transform:translateY(-2px);outline:none}.ch-card.light{background:#F4EFE6;color:#0D0D0D;border-color:#F4EFE6}.ch-btn{margin-top:auto;min-height:48px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-weight:600;font-size:15px}@media (max-width:760px){.ch-grid{grid-template-columns:1fr}}</style>
+</helmet>
+<div style="font-family: 'Montserrat', system-ui, sans-serif; background: #0D0D0D; color: #F4EFE6; width: 100%; min-height: 900px; line-height: 1.6; display: flex; flex-direction: column">
+<header style="border-bottom: 1px solid #2A2925">
+<div style="max-width: 1240px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<a href="Gallery-tjka-th8q.dc.html" style="text-decoration: none; color: #F4EFE6"><span style="display: block; font-family: 'Cormorant Garamond', serif; font-size: 30px; line-height: 1">Ada Celik</span><span style="display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C9BFAE; margin-top: 6px">REALTOR® · Calgary</span></a>
+<a href="Client-signin.dc.html" onClick="{{signOut}}" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 20px; border: 1px solid #F4EFE6; border-radius: 999px; font-weight: 600; font-size: 14px; text-decoration: none">Not you? Sign out</a>
+</div>
+</header>
+<main style="flex: 1; display: flex; align-items: center">
+<div style="max-width: 880px; width: 100%; margin: 0 auto; padding: 64px 24px 96px; box-sizing: border-box">
+<p style="margin: 0 0 14px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #C9BFAE">Client portal</p>
+<h1 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(40px, 6vw, 64px); line-height: 1.05">{{heading}}</h1>
+<p style="margin: 0 0 32px; font-size: 17px; color: #C9BFAE; max-width: 560px">{{intro}}</p>
+<sc-if value="{{signedIn}}" hint-placeholder-val="{{true}}">
+<div class="ch-grid">
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="2"><a class="ch-card" href="{{r.href}}" style="background: {{r.bg}}; color: {{r.fg}}; border-color: {{r.bd}}">
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: {{r.muted}}">{{r.kicker}}</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 34px; line-height: 1.1">{{r.title}}</h2>
+<p style="margin: 0; font-size: 15px; color: {{r.muted}}">{{r.text}}</p>
+<p style="margin: 4px 0 8px; font-size: 14px"><b>{{r.addr}}</b><br><span style="color: #8E877B">{{r.date}}</span></p>
+<span class="ch-btn" style="background: {{r.btnBg}}; color: {{r.btnFg}}; border: 1px solid {{r.btnBd}}">{{r.btn}}</span>
+</a></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{signedOut}}" hint-placeholder-val="{{false}}">
+<a href="Client-signin.dc.html" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; border-radius: 999px; background: #F4EFE6; color: #0D0D0D; font-weight: 600; text-decoration: none">Sign in →</a>
+</sc-if>
+<p style="margin: 20px 0 0; font-size: 13px; color: #8E877B">Questions about either report? Call me at <a href="tel:+14034641595" style="color: #C9BFAE">(403) 464-1595</a>.</p>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // Shown after sign-in when a client has more than one report. The sign-in page leaves the client's
+    // card (who they are and which private reports they have) in this browser tab's session storage.
+    let card = null;
+    try { card = JSON.parse(sessionStorage.getItem('client-card') || 'null'); } catch (e) {}
+    const onLive = typeof location !== 'undefined' && /\/client\/choose/.test(location.pathname);
+    if (!card && typeof location !== 'undefined' && !onLive) {
+      // Design preview on the canvas: sample client.
+      card = { who: 'Jane and John', reports: [
+        { type: 'buy', url: 'https://adahome.ca/client/demo-market-analysis/', addr: 'Sample home · Calgary SW', date: 'October 2026' },
+        { type: 'sell', url: 'Seller-analysis.dc.html', addr: 'Sample home · Calgary SW', date: 'November 2026' }] };
+    }
+    const T = {
+      buy: { kicker: 'Buying', title: 'Buyer analysis', text: 'What the home you\'re buying is worth, how it compares to recent sales, and my offer range.', btn: 'Open buyer analysis →', bg: '#1B1A18', fg: '#F4EFE6', bd: '#3A3833', muted: '#C9BFAE', btnBg: 'transparent', btnFg: '#F4EFE6', btnBd: '#F4EFE6' },
+      sell: { kicker: 'Selling', title: 'Seller analysis', text: 'What your home could sell for, when to list, and what you\'d walk away with.', btn: 'Open seller analysis →', bg: '#F4EFE6', fg: '#0D0D0D', bd: '#F4EFE6', muted: '#5A564E', btnBg: '#0D0D0D', btnFg: '#F4EFE6', btnBd: '#0D0D0D' }
+    };
+    const reports = card ? card.reports.map((r) => Object.assign({}, T[r.type] || T.buy, { href: r.url, addr: r.addr, date: 'Shared ' + r.date })) : [];
+    return {
+      signedIn: !!card, signedOut: !card,
+      heading: card ? 'Welcome back, ' + card.who + '.' : 'Please sign in first.',
+      intro: card ? (reports.length > 1 ? 'You have ' + (reports.length === 2 ? 'two' : reports.length) + ' reports with me. Which one would you like to open?' : 'Here\'s your report.') : 'For your privacy, your reports open after you sign in with your first and last name.',
+      reports,
+      signOut: () => { try { sessionStorage.clear(); } catch (e) {} }
+    };
+  }
+}
+</script>
+</body>
+</html>

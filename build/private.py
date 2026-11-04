@@ -66,13 +66,35 @@ def decrypt(a):
         else: sys.exit('name does not open this report')
     sys.stdout.write(AESGCM(k).decrypt(ub64u(d['iv']), ub64u(d['ct']), None).decode('utf-8'))
 
+
+CLIENTS = os.path.join(SRC, 'clients.json')
+
+def client(a):
+    """Encrypted sign-in card: tells /client/ which reports a client has, without putting names on the site."""
+    card = {'who': a.who, 'reports': []}
+    for r in a.report:
+        t, url, addr, date = r.split('|')
+        card['reports'].append({'type': t, 'url': url, 'addr': addr, 'date': date})
+    ck, iv = secrets.token_bytes(32), secrets.token_bytes(12)
+    ct = AESGCM(ck).encrypt(iv, json.dumps(card).encode('utf-8'), None)
+    salt = secrets.token_bytes(16)
+    slots = []
+    for n in a.name:
+        siv = secrets.token_bytes(12)
+        slots.append({'iv': b64u(siv), 'k': b64u(AESGCM(key(salt, n)).encrypt(siv, ck, None))})
+    secrets.SystemRandom().shuffle(slots)
+    cards = json.load(open(CLIENTS)) if os.path.exists(CLIENTS) else {}
+    cards[a.id] = {'iter': ITER, 'salt': b64u(salt), 'iv': b64u(iv), 'ct': b64u(ct), 'slots': slots}
+    json.dump(cards, open(CLIENTS, 'w'), indent=1, sort_keys=True)
+    print('client card saved:', a.id, len(card['reports']), 'reports')
+
 SHELL = open(os.path.join(ROOT, 'build', 'private-shell.html'), encoding='utf-8').read() if os.path.exists(os.path.join(ROOT, 'build', 'private-shell.html')) else ''
 
 def build(a):
     if not os.path.isdir(SRC): return
     n = 0
     for f in sorted(os.listdir(SRC)):
-        if not f.endswith('.json'): continue
+        if not f.endswith('.json') or f == 'clients.json': continue
         rid = f[:-5]
         data = open(os.path.join(SRC, f)).read().strip()
         out = os.path.join(a.out, rid)
@@ -81,6 +103,11 @@ def build(a):
         open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(SHELL.replace('__PAYLOAD__', data))
         n += 1
     print('private reports:', n)
+    if os.path.exists(CLIENTS):
+        os.makedirs(os.path.join(a.out, 'client'), exist_ok=True)
+        cards = json.load(open(CLIENTS))
+        json.dump(list(cards.values()), open(os.path.join(a.out, 'client', 'directory.json'), 'w'))
+        print('client cards:', len(cards))
     # Public demo reports (no names, no encryption): source/demo/<id>.html -> /client/<id>/, same look as a private report.
     demo = os.path.join(ROOT, 'source', 'demo')
     if not os.path.isdir(demo): return
@@ -103,5 +130,6 @@ sp = p.add_subparsers(dest='cmd', required=True)
 e = sp.add_parser('encrypt'); e.add_argument('report'); e.add_argument('--id', required=True); e.add_argument('--name', required=True, action='append'); e.add_argument('--link'); e.add_argument('--no-key', action='store_true', help='open with names only, no #k= in the link'); e.add_argument('--keep-salt', action='store_true')
 d = sp.add_parser('decrypt'); d.add_argument('id'); d.add_argument('--link'); d.add_argument('--name', required=True)
 b = sp.add_parser('build'); b.add_argument('out')
+c = sp.add_parser('client'); c.add_argument('--id', required=True); c.add_argument('--who', required=True); c.add_argument('--name', required=True, action='append'); c.add_argument('--report', required=True, action='append', help='type|url|address|date')
 a = p.parse_args()
-{'encrypt': encrypt, 'decrypt': decrypt, 'build': build}[a.cmd](a)
+{'encrypt': encrypt, 'decrypt': decrypt, 'build': build, 'client': client}[a.cmd](a)

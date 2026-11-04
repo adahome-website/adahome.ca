@@ -170,8 +170,15 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
           .then(function(ck){ return crypto.subtle.decrypt({name:'AES-GCM', iv: ub64(P.iv)}, ck, ub64(P.ct)); });
       })
       .then(function(buf){
+        var html = new TextDecoder().decode(buf);
+        // A full interactive page (with its own scripts) replaces this one; a plain report fills the page.
+        if (/^\s*<!doctype/i.test(html)) {
+          try { sessionStorage.setItem('pr-' + location.pathname, full); } catch (e) {}
+          document.open(); document.write(html); document.close();
+          return;
+        }
         var r = $('report');
-        r.innerHTML = new TextDecoder().decode(buf);
+        r.innerHTML = html;
         $('gate').hidden = true; r.hidden = false;
         try { sessionStorage.setItem('pr-' + location.pathname, full); } catch (e) {}
         document.title = (r.querySelector('[data-title]') || {}).textContent || document.title;

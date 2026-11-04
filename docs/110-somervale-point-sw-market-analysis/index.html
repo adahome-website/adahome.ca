@@ -118,6 +118,8 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
 @media (max-width:600px){.wrap{padding:0 16px}.card{padding:22px}.cta{padding:32px 22px}.sec{padding-top:64px}}
 @media print{.top-r,.cta .btns{display:none}.sec{padding-top:40px}}
 </style>
+<script>try{if(sessionStorage.getItem('pr-'+location.pathname))document.documentElement.className+=' auto';}catch(e){}</script>
+<style>html.auto,html.auto body{background:#0D0D0D}html.auto body>*{visibility:hidden}</style>
 </head>
 <body>
 <header class="top"><div class="top-in">
@@ -155,6 +157,7 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
     $('g-title').textContent = 'This report is private.';
     $('g-text').textContent = 'It opens from the personal link I sent you. Please use that link, or call me at (403) 464-1595 and I\u2019ll send it again.';
     $('g-form').hidden = true;
+    document.documentElement.classList.remove('auto');
     return;
   }
   var secret = P.salt ? ub64(P.salt) : ub64(m[1]);
@@ -178,6 +181,7 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
           return;
         }
         var r = $('report');
+        document.documentElement.classList.remove('auto');
         r.innerHTML = html;
         $('gate').hidden = true; r.hidden = false;
         try { sessionStorage.setItem('pr-' + location.pathname, full); } catch (e) {}
@@ -186,7 +190,8 @@ svg text{font-family:'Montserrat',system-ui,sans-serif}
       });
   }
   var saved = null; try { saved = sessionStorage.getItem('pr-' + location.pathname); } catch (e) {}
-  if (saved) open(saved).catch(function(){});
+  function showGate(){ document.documentElement.classList.remove('auto'); }
+  if (saved) { open(saved).catch(showGate); setTimeout(showGate, 8000); } else showGate();
   $('g-form').addEventListener('submit', function(e){
     e.preventDefault();
     var f = $('g-first').value, l = $('g-last').value;

@@ -115,7 +115,8 @@ def build(a):
         if not f.endswith('.html'): continue
         body = open(os.path.join(demo, f), encoding='utf-8').read()
         page = re.sub(r'<section class="gate" id="gate">.*?</section>\n', '', SHELL, count=1, flags=re.S)
-        page = re.sub(r'<script>.*?</script>\n', '', page, count=1, flags=re.S)
+        page = re.sub(r'<script>.*?</script>\n', '', page, flags=re.S)  # drop the auto-open and unlock scripts; demo pages need neither
+        page = re.sub(r'<style>html\.auto.*?</style>\n', '', page, count=1)
         page = page.replace('<div id="report" hidden></div>', '<div id="report">' + body + '</div>', 1)
         page = page.replace('Private report</span>', 'Demo report</span>', 1)
         m = re.search(r'<span data-title hidden>(.*?)</span>', body)
